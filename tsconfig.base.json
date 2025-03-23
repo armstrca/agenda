@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "jsx": "react-native",
+        "strict": true,
+        "baseUrl": ".",
+        "paths": {
+            "@shared/*": [
+                "./apps/shared/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
