@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <Content Include="Assets\**" />
-    <PackageReference Include="Microsoft.ReactNative" Version="1.0.0" />
-    <PackageReference Include="Microsoft.ReactNative.Windows" Version="1.0.0" />
-  </ItemGroup>
-</Project>

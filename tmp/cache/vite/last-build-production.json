@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "errors": "✗ Build failed in 10ms\nerror during build:\nCould not resolve entry module \"index.html\".\n    at getRollupError (file:///home/calvin/GitHub/agenda/node_modules/rollup/dist/es/shared/parseAst.js:397:41)\n    at error (file:///home/calvin/GitHub/agenda/node_modules/rollup/dist/es/shared/parseAst.js:393:42)\n    at ModuleLoader.loadEntryModule (file:///home/calvin/GitHub/agenda/node_modules/rollup/dist/es/shared/node-entry.js:21275:20)\n    at async Promise.all (index 0)\nerror Command failed with exit code 1.\n",
+  "timestamp": "2025-04-05 21:25:33",
+  "vite_ruby": "3.9.1",
+  "digest": "47354f075b0087e454df5a4e07112c157fab7708"
+}
