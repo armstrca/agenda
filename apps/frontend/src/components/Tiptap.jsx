@@ -1,16 +1,16 @@
 import { Extension } from '@tiptap/core'
 import { Plugin } from 'prosemirror-state'
 import React, { useEffect, useRef } from 'react'
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 
-const CharacterLimiter = Extension.create({
-  name: 'characterLimiter',
+const NoWrapValidator = Extension.create({
+  name: 'noWrapValidator',
   addProseMirrorPlugins() {
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
-    context.font = "1.25rem 'Aref Ruqaa', Helvetica" // Match your CSS
+    context.font = "1.25rem 'Aref Ruqaa', Helvetica"
 
     return [
       new Plugin({
@@ -22,20 +22,16 @@ const CharacterLimiter = Extension.create({
             node => node.type.name === 'paragraph'
           ).length
 
-          // Enforce 5 paragraph maximum
           if (paragraphs > 5) return false
 
-          // Check only the 5th paragraph
-          if (paragraphs === 5) {
-            const lastParagraph = newDoc.content.content[4]
-            const textContent = lastParagraph.textContent
+          let allowed = true
+          newDoc.content.content.forEach(paragraph => {
+            const text = paragraph.textContent
+            const width = context.measureText(text).width
+            if (width > 870) allowed = false
+          })
 
-            // Measure text width
-            const metrics = context.measureText(textContent)
-            return metrics.width < 870 // 870px container width
-          }
-
-          return true
+          return allowed
         },
       }),
     ]
@@ -78,7 +74,7 @@ const Tiptap = () => {
           'modem', 'sms', 'smsto', 'mmsto', 'skype', 'callto', 'webcal'
         ],
       }),
-      CharacterLimiter,
+      NoWrapValidator,
     ],
   })
 
@@ -120,8 +116,46 @@ const Tiptap = () => {
   return (
     <div className="wl-textarea">
       <EditorContent editor={editor} />
-    </div>
-  );
-};
 
-export default Tiptap;
+      {editor && (
+        <BubbleMenu
+          editor={editor}
+          tippyOptions={{
+            duration: 100,
+            placement: 'top',
+            offset: [0, 10]
+          }}
+        >
+          <div className="bubble-menu">
+            <button
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              className={editor.isActive('bold') ? 'is-active' : ''}
+            >
+              Bold
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              className={editor.isActive('italic') ? 'is-active' : ''}
+            >
+              Italic
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleStrike().run()}
+              className={editor.isActive('strike') ? 'is-active' : ''}
+            >
+              Strike
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleLink({ href: '' }).run()}
+              className={editor.isActive('link') ? 'is-active' : ''}
+            >
+              Link
+            </button>
+          </div>
+        </BubbleMenu>
+      )}
+    </div>
+  )
+}
+
+export default Tiptap
