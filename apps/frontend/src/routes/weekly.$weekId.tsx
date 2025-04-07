@@ -27,12 +27,12 @@ export const Route = createFileRoute('/weekly/$weekId')({
       weekId: loaderData?.params.weekId || 'default_week',
       displayMonthYear: 'March 2025',
       mainDates: [
-        '2025-03-24',
         '2025-03-25',
         '2025-03-26',
         '2025-03-27',
         '2025-03-28',
         '2025-03-29',
+        '2025-03-30',
       ],
       holidays: {
         '2025-03-25': 'Holiday Example',

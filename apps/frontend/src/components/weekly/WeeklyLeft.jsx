@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/styles.css';
 import TlDrawComponent from '../TLDrawComponent';
-import Tiptap from '../Tiptap';
 import WLTextareaContainer from './WLTextareaContainer';
 import WLTextareaContainer2 from './WLTextareaContainer2';
 
@@ -21,6 +20,8 @@ export default function WeeklyLeft({
         {mainDates.map((date, index) => {
           const dateObj = new Date(date);
           const dateKey = dateObj.toISOString().split('T')[0];
+          const isSaturday = dateObj.getDay() === 6; // 6 = Saturday
+
           return (
             <div
               key={index}
@@ -43,12 +44,13 @@ export default function WeeklyLeft({
                   {moonPhases[dateKey]?.emoji}
                 </div>
               </div>
-              <WLTextareaContainer />
-              <WLTextareaContainer />
-              <WLTextareaContainer />
-              <WLTextareaContainer />
-              <WLTextareaContainer />
-              <WLTextareaContainer2 />
+
+              {/* Render different container based on day */}
+              {isSaturday ? (
+                <WLTextareaContainer2 />
+              ) : (
+                <WLTextareaContainer />
+              )}
             </div>
           );
         })}
