@@ -1,6 +1,6 @@
 import { Extension } from '@tiptap/core'
 import { Plugin } from 'prosemirror-state'
-import React, { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
@@ -38,9 +38,15 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = () => {
+const Tiptap = ({ id }) => {
+  const storageKey = `tiptap-${id}`;
   const editor = useEditor({
     editable: true,
+    content: localStorage.getItem(storageKey) || '<p></p>',
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML()
+      localStorage.setItem(storageKey, html)
+    },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
       Link.configure({

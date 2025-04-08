@@ -1,7 +1,7 @@
 import React from 'react';
 import Tiptap from '../Tiptap';
 
-const WLTextareaContainer = () => {
+const WLTextareaContainer = ({ id }) => {
     return (
         <div className="textarea-container">
             <img
@@ -30,7 +30,7 @@ const WLTextareaContainer = () => {
                     alt="weekly left input line"
                     src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
                 />
-                <Tiptap />
+                <Tiptap id={id} />
             </div>
         </div>
     );

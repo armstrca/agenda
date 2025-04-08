@@ -20,7 +20,8 @@ export default function WeeklyLeft({
         {mainDates.map((date, index) => {
           const dateObj = new Date(date);
           const dateKey = dateObj.toISOString().split('T')[0];
-          const isSaturday = dateObj.getDay() === 6; // 6 = Saturday
+          const isSaturday = dateObj.getDay() === 6; 
+          const dayNumber = index + 1 
 
           return (
             <div
@@ -47,9 +48,9 @@ export default function WeeklyLeft({
 
               {/* Render different container based on day */}
               {isSaturday ? (
-                <WLTextareaContainer2 />
+                <WLTextareaContainer2 id={6} />
               ) : (
-                <WLTextareaContainer />
+                  <WLTextareaContainer id={dayNumber} />
               )}
             </div>
           );
