@@ -46,7 +46,6 @@ export default function WeeklyLeft({
                 </div>
               </div>
 
-              {/* Render different container based on day */}
               {isSaturday ? (
                 <WLTextareaContainer2 id={6} />
               ) : (
