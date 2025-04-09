@@ -32,4 +32,4 @@
 - Notifications for events/whatever
 - View format options - weekly pages side-by-side, vertical, etc.
 - Be able to show/hide toolbars/menus, etc.
-- Add TipTap UI thing
+- Enhance TipTap UI thing

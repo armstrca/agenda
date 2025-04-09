@@ -62,8 +62,8 @@ export default function TlDrawComponent() {
                 position: 'absolute',
                 top: '10px',
                 left: '10px',
-                zIndex: 20, // Ensure the button is always clickable
-                backgroundColor: 'hsl(204, 16%, 94%)',
+                zIndex: 4, // Ensure the button is always clickable
+                backgroundColor: 'hsl(0, 0.00%, 100.00%)',
                 color: 'black',
                 borderRadius: '6px', // Adjust border-radius as needed
                 border: 'none',
