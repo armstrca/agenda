@@ -1,7 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import React from 'react';
 import WeeklyLeft from '../components/weekly/WeeklyLeft';
-import TlDrawComponent from '../components/TLDrawComponent';
 
 export const Route = createFileRoute('/weekly/$weekId')({
   loader: async ({ params }: { params: { weekId: string; plannerId: string } }) => {
@@ -22,34 +20,20 @@ export const Route = createFileRoute('/weekly/$weekId')({
       return { params, data: null };
     }
   },
-  component: ({ loaderData }) => {
-    const defaultData = {
-      weekId: loaderData?.params.weekId || 'default_week',
-      displayMonthYear: 'March 2025',
-      mainDates: [
-        '2025-03-25',
-        '2025-03-26',
-        '2025-03-27',
-        '2025-03-28',
-        '2025-03-29',
-        '2025-03-30',
-      ],
-      holidays: {
-        '2025-03-25': 'Holiday Example',
-      },
-      moonPhases: {
-        '2025-03-25': { emoji: '🌕', aria_label: 'Full Moon', alt: 'Full Moon' },
-      },
-    };
 
-    // Use loaderData if available, otherwise fallback to defaultData
-    const data = loaderData?.data || defaultData;
+  component: ({ loaderData }) => {
+    const { weekId } = loaderData?.params;
+    const [weekNumber, year]: [string, string] = weekId.split('_').map((part: string) => part || '0');
+
+    // Merge API data with defaults using nullish coalescing
+    const apiData = loaderData?.data ?? {};
+    const data = { ...apiData };
 
     return (
       <div className="planner-container">
         <WeeklyLeft
-          weekNumber={data.weekId} // Assuming weekId corresponds to weekNumber
-          year={new Date().getFullYear()} // Replace with logic to extract year if needed
+          weekNumber={weekNumber}
+          year={parseInt(year, 10)}
           displayMonthYear={data.displayMonthYear}
           mainDates={data.mainDates}
           holidays={data.holidays}
