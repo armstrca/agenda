@@ -3,6 +3,7 @@ import TemplateRenderer from "./TemplateRenderer";
 
 const WeeklyLeft = ({
   template,
+  page_id,
   weekNumber,
   year,
   mainDates,
@@ -19,6 +20,7 @@ const WeeklyLeft = ({
   const templateData = parsedDates.map((date) => {
     const dateISOString = date.toISOString();
     return {
+      page_id: page_id,
       month_year: date.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
       day_number: date.getDate(),
       day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
@@ -32,6 +34,7 @@ const WeeklyLeft = ({
           template={template}
           data={templateData}
           components={components}
+          page_id={page_id}
         />
   );
 };

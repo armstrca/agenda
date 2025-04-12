@@ -23,7 +23,6 @@ export async function saveTemplate(template) {
 
     return await response.json();
   } catch (error) {
-    console.error('Error saving template:', error);
     throw error;
   }
 }

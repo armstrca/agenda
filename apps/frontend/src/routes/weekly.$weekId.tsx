@@ -17,7 +17,7 @@ export const Route = createFileRoute('/weekly/$weekId')({
 
       const data = await response.json();
 
-      if (!data.template || !data.weekData) {
+      if (!data.template || !data.weekData || !data.page_id) {
         throw new Error('Invalid response structure');
       }
 
@@ -26,10 +26,11 @@ export const Route = createFileRoute('/weekly/$weekId')({
         weekData: {
           ...data.weekData,
           mainDates: data.weekData.mainDates.map((dateStr: string) => new Date(dateStr))
-        }
+        },
+        page_id: data.page_id
       };
     } catch (error) {
-      console.error('Loader error:', error);
+      // console.error('Loader error:', error);
       throw error;
     }
   },
@@ -49,12 +50,13 @@ export const Route = createFileRoute('/weekly/$weekId')({
 });
 
 function WeeklyComponent() {
-  const { template, weekData } = useLoaderData({ from: Route.id });
+  const { template, weekData, page_id } = useLoaderData({ from: Route.id });
 
   return (
     <WeeklyLeft
       template={template}
       {...weekData}
+      page_id={page_id}
     />
   );
 }

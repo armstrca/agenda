@@ -7,12 +7,16 @@ const VOID_ELEMENTS = new Set([
   'base', 'col', 'embed', 'param', 'source', 'track', 'wbr',
 ]);
 
-const TemplateRenderer = ({ template, data, components }) => {
+const TemplateRenderer = ({ template, data, components, page_id }) => {
   const structure = template?.content?.structure || [];
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
+  const tiptapCounter = useRef(1);
 
-  useEffect(() => { dayIndexRef.current = 0; }, [data]);
+  useEffect(() => {
+    dayIndexRef.current = 0;
+    tiptapCounter.current = 1;
+  }, [data]);
 
   const renderComponent = (node, currentData) => {
     const {
@@ -25,7 +29,6 @@ const TemplateRenderer = ({ template, data, components }) => {
       styles = {},
       selfClosing,
     } = node;
-
 
     const Component = component_type ? components[component_type] : component;
     const isVoidElement = VOID_ELEMENTS.has(component);
@@ -61,16 +64,21 @@ const TemplateRenderer = ({ template, data, components }) => {
           {...attributes}
           {...component_props}
         >
-          {children?.map(child => renderComponent(child, dayData))}
+          {children?.map((child) => renderComponent(child, dayData))}
         </Component>
       );
     }
 
     if (className === "wl-textarea") {
+      const tiptapId = tiptapCounter.current++;
       return (
-        <Tiptap />
-      )
-    };
+        <Tiptap
+          key={uniqueKey}
+          tiptap_id={tiptapId}
+          pageId={page_id}
+        />
+      );
+    }
 
     return (
       <Component
@@ -81,7 +89,7 @@ const TemplateRenderer = ({ template, data, components }) => {
         {...component_props}
       >
         {textContent !== null && textContent}
-        {children?.map(child => renderComponent(child, currentData))}
+        {children?.map((child) => renderComponent(child, currentData))}
       </Component>
     );
   };
@@ -89,7 +97,7 @@ const TemplateRenderer = ({ template, data, components }) => {
   return (
     <div className="planner-container">
       <TlDrawComponent />
-      {structure.map(node => (
+      {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
           {renderComponent(node)}
         </React.Fragment>
