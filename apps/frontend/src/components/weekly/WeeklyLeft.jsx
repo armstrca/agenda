@@ -9,18 +9,20 @@ const WeeklyLeft = ({
   mainDates,
   holidays,
   moonPhases,
-  plannerId
+  plannerId,
+  tldraw_snapshots
 }) => {
   const components = {
     Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}`} />,
     TlDrawComponent: () => <TlDrawComponent
       persistenceKey={`weekly-${weekNumber}-${year}`}
       plannerId={plannerId}
+      tldraw_snapshots={tldraw_snapshots}
     />
   };
 
   const parsedDates = mainDates.map(dateStr => new Date(dateStr));
-  
+
   const templateData = parsedDates.map((date) => {
     const dateISOString = date.toISOString();
     return {
@@ -34,12 +36,13 @@ const WeeklyLeft = ({
   });
 
   return (
-        <TemplateRenderer
-          template={template}
-          data={templateData}
-          components={components}
-          page_id={page_id}
-        />
+    <TemplateRenderer
+      template={template}
+      data={templateData}
+      components={components}
+      page_id={page_id}
+      tldraw_snapshots={tldraw_snapshots}
+    />
   );
 };
 

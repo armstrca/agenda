@@ -28,7 +28,8 @@ export const Route = createFileRoute('/weekly/$weekId')({
           mainDates: data.weekData.mainDates.map((dateStr: string) => new Date(dateStr))
         },
         page_id: data.page_id,
-        planner_id: data.planner_id
+        planner_id: data.planner_id,
+        tldraw_snapshots: data.tldraw_snapshots,
       };
     } catch (error) {
       // console.error('Loader error:', error);
@@ -51,7 +52,7 @@ export const Route = createFileRoute('/weekly/$weekId')({
 });
 
 function WeeklyComponent() {
-  const { template, weekData, page_id, planner_id } = useLoaderData({ from: Route.id });
+  const { template, weekData, page_id, planner_id, tldraw_snapshots } = useLoaderData({ from: Route.id });
 
   return (
     <WeeklyLeft
@@ -59,6 +60,7 @@ function WeeklyComponent() {
       {...weekData}
       page_id={page_id}
       plannerId="38e012ec-0ab2-4fbe-8e68-8a75e4716a35"
+      tldraw_snapshots={tldraw_snapshots}
     />
   );
 }

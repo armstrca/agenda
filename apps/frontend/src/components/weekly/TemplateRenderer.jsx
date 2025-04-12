@@ -7,7 +7,7 @@ const VOID_ELEMENTS = new Set([
   'base', 'col', 'embed', 'param', 'source', 'track', 'wbr',
 ]);
 
-const TemplateRenderer = ({ template, data, components, page_id }) => {
+const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshots }) => {
   const structure = template?.content?.structure || [];
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
@@ -96,7 +96,11 @@ const TemplateRenderer = ({ template, data, components, page_id }) => {
 
   return (
     <div className="planner-container">
-      <TlDrawComponent persistenceKey={page_id} />
+      <TlDrawComponent
+        persistenceKey={page_id}
+        tldraw_snapshots={tldraw_snapshots}
+        plannerId="38e012ec-0ab2-4fbe-8e68-8a75e4716a35"
+      />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
           {renderComponent(node)}

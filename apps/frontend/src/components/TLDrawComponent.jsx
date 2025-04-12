@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Tldraw, createTLStore, getSnapshot } from 'tldraw';
+import { Tldraw, createTLStore, getSnapshot, loadSnapshot } from 'tldraw';
 import {
   DEFAULT_CAMERA_OPTIONS,
   DefaultQuickActions,
@@ -24,13 +24,34 @@ function CustomQuickActions({ onToggleTldraw }) {
   );
 }
 
-export default function TlDrawComponent({ persistenceKey, plannerId }) {
+export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snapshots }) {
+  const [storeWithStatus, setStoreWithStatus] = useState({ status: 'loading' });
+  const debounceTimer = useRef();
   const [showTldraw, setShowTldraw] = useState(true);
-  const [store] = useState(() => {
-    const store = createTLStore();
-    // Add custom migrations if needed
-    return store;
-  });
+
+  useEffect(() => {
+    const initializeStore = async () => {
+      const store = createTLStore();
+
+      if (tldraw_snapshots?.length > 0) {
+        try {
+          const latestSnapshot = tldraw_snapshots[0];
+          const documentData = latestSnapshot.document_data || {};
+          const schema = latestSnapshot.schema || { schemaVersion: 1 };
+          loadSnapshot(store, {
+            document: documentData,
+            schema
+          });
+        } catch (error) {
+          console.error('Error loading tldraw_snapshot:', error);
+        }
+      }
+
+      setStoreWithStatus({ store, status: 'ready' });
+    };
+
+    initializeStore();
+  }, [tldraw_snapshots]);
 
   const toggleTldrawVisibility = () => {
     setShowTldraw((prev) => !prev);
@@ -41,12 +62,11 @@ export default function TlDrawComponent({ persistenceKey, plannerId }) {
   };
 
   const handleMount = useCallback((editor) => {
-    // Listen for document changes
     const cleanup = editor.store.listen(
       (update) => {
         if (update.source === 'user') {
-          const snapshot = getSnapshot(editor.store);
-          saveToBackend(snapshot.document);
+          const tldraw_snapshot = getSnapshot(editor.store);
+          debouncedSave(tldraw_snapshot.document);
         }
       },
       { scope: 'document', source: 'user' }
@@ -54,19 +74,12 @@ export default function TlDrawComponent({ persistenceKey, plannerId }) {
 
     return () => cleanup();
   }, []);
-  const debounceTimer = useRef();
-  const debouncedSave = (data) => {
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(() => {
-      // Actual save logic
-    }, 350); // Matches Tldraw's default throttle
-  };
 
-  const saveToBackend = useCallback(async (documentData) => {
-    try {
-      clearTimeout(debounceTimer.current);
-      debounceTimer.current = setTimeout(async () => {
-        const response = await fetch(
+  const debouncedSave = useCallback((documentData) => {
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(async () => {
+      try {
+        await fetch(
           `http://localhost:3001/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${persistenceKey}/tldraw_snapshots`,
           {
             method: 'POST',
@@ -74,18 +87,17 @@ export default function TlDrawComponent({ persistenceKey, plannerId }) {
             body: JSON.stringify({
               tldraw_snapshot: {
                 document_data: documentData,
-                // schema: store.schema.serialize()
+                schema: storeWithStatus.store?.schema.serialize() // Add schema here
               }
             }),
           }
         );
-        if (!response.ok) throw new Error('Save failed');
-      }, 350);
-    } catch (error) {
-      console.error('Backend save error:', error);
-    }
-  }, [persistenceKey, plannerId]);
-  // store.schema
+      } catch (error) {
+        console.error('Save error:', error);
+      }
+    }, 350);
+  }, [plannerId, persistenceKey, storeWithStatus.store]); // Add store to dependencies
+
 
   const components = {
     QuickActions: () => (
@@ -100,9 +112,9 @@ export default function TlDrawComponent({ persistenceKey, plannerId }) {
           autoFocus={false}
           persistenceKey={persistenceKey}
           components={components}
-          store={store}
+          store={storeWithStatus.store}
           onMount={handleMount}
-          migrations={[/* Add custom migrations if needed */]}
+          // migrations={[/* Add custom migrations if needed */]}
         />
       )}
       {!showTldraw && (
