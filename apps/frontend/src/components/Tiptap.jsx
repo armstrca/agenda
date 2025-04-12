@@ -1,9 +1,9 @@
-import { Extension } from '@tiptap/core'
-import { Plugin } from 'prosemirror-state'
-import { useEffect } from 'react'
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
+import { Extension } from '@tiptap/core';
+import { Plugin } from 'prosemirror-state';
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link';
+import { useEffect, useState } from 'react';
 
 const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
@@ -38,14 +38,45 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ id }) => {
-  const storageKey = `tiptap-${id}`;
+const Tiptap = ({ tiptap_id, pageId }) => {
+  const storageKey = `tiptap-${tiptap_id}`;
+  const [initialContent, setInitialContent] = useState('<p></p>'); // Default empty content
+
+  // Fetch existing planner_entry data
+  useEffect(() => {
+    const fetchPlannerEntry = async () => {
+      try {
+        const response = await fetch(
+          `/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries?tiptap_id=${tiptap_id}`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          // Handle array response and extract the first entry's content
+          if (Array.isArray(data) && data.length > 0) {
+            setInitialContent(data[0].content);
+          } else if (data.content) { // Fallback for single object response
+            setInitialContent(data.content);
+          }
+        } else {
+          console.warn('No matching planner_entry found for tiptap_id:', tiptap_id);
+        }
+      } catch (error) {
+        console.error('Error fetching planner_entry:', error);
+      }
+    };
+
+    fetchPlannerEntry();
+  }, [pageId, tiptap_id]);
+
+  // Initialize the editor
   const editor = useEditor({
     editable: true,
-    content: localStorage.getItem(storageKey) || '<p></p>',
+    content: initialContent,
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML()
-      localStorage.setItem(storageKey, html)
+      const html = editor.getHTML();
+      // localStorage.setItem(storageKey, html);
+      savePlannerEntry(pageId, html, tiptap_id);
     },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
@@ -83,6 +114,31 @@ const Tiptap = ({ id }) => {
       NoWrapValidator,
     ],
   })
+
+  useEffect(() => {
+    if (editor && initialContent) {
+      editor.commands.setContent(initialContent);
+    }
+  }, [editor, initialContent]);
+
+  const savePlannerEntry = async (pageId, content, tiptap_id) => {
+    try {
+      console.log("Saving planner entry for pageId:", pageId, "Tiptap_id:", tiptap_id);
+      const response = await fetch(`/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content, tiptap_id }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to save planner entry:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving planner entry:', error);
+    }
+  };
 
   useEffect(() => {
     if (!editor) return;

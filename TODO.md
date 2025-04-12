@@ -32,4 +32,34 @@
 - Notifications for events/whatever
 - View format options - weekly pages side-by-side, vertical, etc.
 - Be able to show/hide toolbars/menus, etc.
-- Add TipTap UI thing
+- Enhance TipTap UI thing
+
+## MVP needs
+
+- One weekly left template
+- One weekly right template
+- One daily template
+- One monthly template
+- Connect API to frontend
+- Create logic to render user templates dynamically
+- Offline usability
+
+## Template rendering
+
+- Template rendering component should be expecting certain classes that match with css styles
+- Template JSON doesn't need to save TipTap/TLDraw stuff or any date-parsing logic
+
+### Every WeeklyLeft template must have these divs
+
+- month-name
+- header-footer?
+- w-l-day-section (allow inline styling)
+- day-inner-block
+- day-number-circle
+- day-number
+- day-name
+- holiday-box (optional)
+- moon-phase (optional)
+- textarea-container
+- textarea-bg
+- wl-textarea

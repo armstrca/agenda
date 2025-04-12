@@ -1,60 +1,42 @@
-import React from 'react';
-import '../../styles/styles.css';
-import TlDrawComponent from '../TLDrawComponent';
-import WLTextareaContainer from './WLTextareaContainer';
-import WLTextareaContainer2 from './WLTextareaContainer2';
+// import TlDrawComponent from "../TLDrawComponent";
+import TemplateRenderer from "./TemplateRenderer";
 
-export default function WeeklyLeft({
+const WeeklyLeft = ({
+  template,
+  page_id,
   weekNumber,
   year,
-  displayMonthYear,
   mainDates,
   holidays,
-  moonPhases,
-}) {
+  moonPhases
+}) => {
+  const components = {
+    Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}`} />,
+    TlDrawComponent: () => <TlDrawComponent persistenceKey={`weekly-${weekNumber}-${year}`} />
+  };
+
+  const parsedDates = mainDates.map(dateStr => new Date(dateStr));
+  
+  const templateData = parsedDates.map((date) => {
+    const dateISOString = date.toISOString();
+    return {
+      page_id: page_id,
+      month_year: date.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
+      day_number: date.getDate(),
+      day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
+      holiday: holidays[dateISOString] || '',
+      moon_phase: moonPhases[dateISOString]?.emoji || '',
+    };
+  });
+
   return (
-    <div className="planner-container" data-week-id={`${weekNumber}_${year}`}>
-      <TlDrawComponent />
-      <div className="month-name">{displayMonthYear}</div>
-      <div className="header-footer">
-        {mainDates.map((date, index) => {
-          const dateObj = new Date(date);
-          const dateKey = dateObj.toISOString().split('T')[0];
-          const isSaturday = dateObj.getDay() === 6; 
-          const dayNumber = index + 1 
-
-          return (
-            <div
-              key={index}
-              className="w-l-day-section"
-              style={{ top: `${90 + index * 210}px` }}
-            >
-              <div className="day-inner-block">
-                <div className="day-number-circle">
-                  <div className="day-number">{dateObj.getDate()}</div>
-                </div>
-                <div className="day-name">
-                  {dateObj.toLocaleDateString('en-US', { weekday: 'long' })}
-                </div>
-                <div className="holiday-box">{holidays[dateKey]}</div>
-                <div
-                  className="moon-phase"
-                  aria-label={moonPhases[dateKey]?.ariaLabel}
-                  title={moonPhases[dateKey]?.alt}
-                >
-                  {moonPhases[dateKey]?.emoji}
-                </div>
-              </div>
-
-              {isSaturday ? (
-                <WLTextareaContainer2 id={6} />
-              ) : (
-                  <WLTextareaContainer id={dayNumber} />
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
+        <TemplateRenderer
+          template={template}
+          data={templateData}
+          components={components}
+          page_id={page_id}
+        />
   );
-}
+};
+
+export default WeeklyLeft;
