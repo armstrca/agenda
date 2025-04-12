@@ -96,7 +96,7 @@ const TemplateRenderer = ({ template, data, components, page_id }) => {
 
   return (
     <div className="planner-container">
-      <TlDrawComponent />
+      <TlDrawComponent persistenceKey={page_id} />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
           {renderComponent(node)}

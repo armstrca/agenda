@@ -8,11 +8,15 @@ const WeeklyLeft = ({
   year,
   mainDates,
   holidays,
-  moonPhases
+  moonPhases,
+  plannerId
 }) => {
   const components = {
     Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}`} />,
-    TlDrawComponent: () => <TlDrawComponent persistenceKey={`weekly-${weekNumber}-${year}`} />
+    TlDrawComponent: () => <TlDrawComponent
+      persistenceKey={`weekly-${weekNumber}-${year}`}
+      plannerId={plannerId}
+    />
   };
 
   const parsedDates = mainDates.map(dateStr => new Date(dateStr));
