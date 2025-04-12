@@ -1,0 +1,617 @@
+{
+  "metadata": {
+    "type": "weekly-left",
+    "base_dimensions": {
+      "width": 960,
+      "height": 1440
+    },
+    "asset_base_url": "https://c.animaapp.com/eFfbxFd7/img/",
+    "default_styles": {
+      "planner-container": {
+        "position": "relative",
+        "width": "960px",
+        "height": "1440px"
+      }
+    }
+  },
+  "structure": [
+    {
+      "component": "div",
+      "class": "month-name"
+    },
+    {
+      "component": "div",
+      "class": "header-footer",
+      "children": [
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "90px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "img",
+                  "class": "divider-container",
+                  "attributes": {
+                    "alt": "weekly left divider line",
+                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                  },
+                  "selfClosing": true
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "300px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "img",
+                  "class": "divider-container",
+                  "attributes": {
+                    "alt": "weekly left divider line",
+                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                  },
+                  "selfClosing": true
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "510px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "img",
+                  "class": "divider-container",
+                  "attributes": {
+                    "alt": "weekly left divider line",
+                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                  },
+                  "selfClosing": true
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "720px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "img",
+                  "class": "divider-container",
+                  "attributes": {
+                    "alt": "weekly left divider line",
+                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                  },
+                  "selfClosing": true
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "930px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "img",
+                  "class": "divider-container",
+                  "attributes": {
+                    "alt": "weekly left divider line",
+                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                  },
+                  "selfClosing": true
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "div",
+          "class": "w-l-day-section",
+          "styles": {
+            "top": "1140px"
+          },
+          "children": [
+            {
+              "component": "div",
+              "class": "day-inner-block",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-number-circle",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "day-name"
+                },
+                {
+                  "component": "div",
+                  "class": "holiday-box"
+                },
+                {
+                  "component": "div",
+                  "class": "moon-phase"
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "textarea-container",
+              "children": [
+                {
+                  "component": "div",
+                  "class": "textarea-bg",
+                  "children": [
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-5",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-4",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-3",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-2",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "img",
+                      "class": "w-l-input-line-1",
+                      "attributes": {
+                        "alt": "weekly left input line",
+                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                      },
+                      "selfClosing": true
+                    },
+                    {
+                      "component": "div",
+                      "class": "wl-textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
