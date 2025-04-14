@@ -20,10 +20,10 @@
 - Ingest external calendars
 - Text recognition for handwriting
 - Turn handwriting into events
-- ~~Toolbar for inputs~~
 - Heavy duty responsiveness stuff
-- ~~What if user wants to differentiate between mouse/touch/stylus interaction?~~
 - UI accessibility, general accessibility
+- ~~Toolbar for inputs~~
+- ~~What if user wants to differentiate between mouse/touch/stylus interaction?~~
 
 ## Later
 
@@ -36,19 +36,19 @@
 
 ## MVP needs
 
-- ~~One weekly left template~~
 - One weekly right template
 - One daily template
 - One monthly template
+- Offline usability
+- ~~One weekly left template~~
 - ~~Connect API to frontend~~
 - ~~Create logic to render user templates dynamically~~
-- Offline usability
 
 ### Every WeeklyLeft template must have these divs
 
 - month-name
 - header-footer?
-- w-l-day-section (allow inline styling)
+- wl-day-section (allow inline styling)
 - day-inner-block
 - day-number-circle
 - day-number

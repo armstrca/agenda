@@ -38,9 +38,10 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ tiptap_id, pageId }) => {
-  const storageKey = `tiptap-${tiptap_id}`;
-  const [initialContent, setInitialContent] = useState('<p></p>'); // Default empty content
+const Tiptap = ({ tiptap_id, pageId, className }) => {
+  // const storageKey = `tiptap-${tiptap_id}`;
+  const [initialContent, setInitialContent] = useState('<p></p>');
+  const [dimensions, setDimensions] = useState({ width: '100%', height: 'auto' });
 
   // Fetch existing planner_entry data
   useEffect(() => {
@@ -59,15 +60,28 @@ const Tiptap = ({ tiptap_id, pageId }) => {
             setInitialContent(data.content);
           }
         } else {
-          console.warn('No matching planner_entry found for tiptap_id:', tiptap_id);
+
         }
       } catch (error) {
-        console.error('Error fetching planner_entry:', error);
+
       }
     };
 
     fetchPlannerEntry();
   }, [pageId, tiptap_id]);
+
+  // Extract dimensions from the className
+  // useEffect(() => {
+  //   if (className && className.includes('tiptap')) {
+  //     const element = document.querySelector(`.${className}`);
+  //     console.log('Element:', element);
+  //     console.log('ClassName:', className);
+  //     if (element) {
+  //       const { width, height } = getComputedStyle(element);
+  //       setDimensions({ width, height });
+  //     }
+  //   }
+  // }, [className]);
 
   // Initialize the editor
   const editor = useEditor({
@@ -123,7 +137,6 @@ const Tiptap = ({ tiptap_id, pageId }) => {
 
   const savePlannerEntry = async (pageId, content, tiptap_id) => {
     try {
-      console.log("Saving planner entry for pageId:", pageId, "Tiptap_id:", tiptap_id);
       const response = await fetch(`/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries`, {
         method: 'POST',
         headers: {
@@ -133,10 +146,8 @@ const Tiptap = ({ tiptap_id, pageId }) => {
       });
 
       if (!response.ok) {
-        console.error('Failed to save planner entry:', response.statusText);
       }
     } catch (error) {
-      console.error('Error saving planner entry:', error);
     }
   };
 
@@ -176,7 +187,9 @@ const Tiptap = ({ tiptap_id, pageId }) => {
   }, [editor]);
 
   return (
-    <div className="wl-textarea">
+    <div
+      className={className}
+    >
       <EditorContent editor={editor} />
 
       {editor && (
@@ -217,7 +230,7 @@ const Tiptap = ({ tiptap_id, pageId }) => {
         </BubbleMenu>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Tiptap

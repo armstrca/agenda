@@ -1,0 +1,16 @@
+<svg width="960" height="1440" viewBox="0 0 960 1440" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="planner-container">
+<g id="wr-bg-black">
+<path id="Vector" d="M495 690.5L915 690.5M495 660.5L915 660.5M495 630.5L915 630.5M495 600.5L915 600.5M495 570.5L915 570.5M495 540.5L915 540.5M495 510.5L915 510.5M495 480.5L915 480.5M495 450.5L915 450.5M495 420.5L915 420.5M495 390.5L915 390.5" stroke="black" stroke-opacity="0.54" stroke-dasharray="3 3"/>
+<path id="Vector_2" d="M30 1171L930 1171M30 300L930 300M480 310L480 1160M45 1350.5H915M45 1320.5H915M45 1290.5H915M45 1260.5H915M720 125.5L894 125.5M720 155.5L894 155.5M516 125.5L690 125.5M516 155.5L690 155.5M480 100V290" stroke="black" stroke-width="2"/>
+</g>
+<g id="wr-bg-primary-color">
+<path id="Vector_3" d="M30 90.0001L930 90M30 1383L930 1383" stroke="#FF0000" stroke-width="6"/>
+</g>
+<g id="wr-bg-secondary-color">
+<rect id="wr-cal-bg" x="495" y="100" width="420" height="190" fill="#FF7070" fill-opacity="0.3"/>
+<path id="w-date-circle" d="M90 1207.5C90 1219.93 79.9264 1230 67.5 1230C55.0736 1230 45 1219.93 45 1207.5C45 1195.07 55.0736 1185 67.5 1185C79.9264 1185 90 1195.07 90 1207.5Z" fill="#FCB6B6"/>
+<path id="Vector_4" d="M495 720.5H930M30 420.5L465 420.5" stroke="#FF7070"/>
+</g>
+</g>
+</svg>

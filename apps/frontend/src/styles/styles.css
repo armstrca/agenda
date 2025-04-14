@@ -18,6 +18,11 @@ body {
   overflow: hidden;
   z-index: 0;
   background-color: white;
+  background-image: url("/images/weekly_right/planner-container-2.svg");
+}
+
+.planner-container-wr {
+  background-image: url("/images/weekly_right/planner-container-2.svg");
 }
 
 .tl-toggle {
@@ -33,11 +38,6 @@ body {
   background-color: transparent !important;
   z-index: 2;
 }
-
-/* .absolute-position {
-  position: absolute !important;
-  left: 0 !important;
-} */
 
 .textarea-bg {
   position: absolute;
@@ -94,14 +94,16 @@ body {
   top: 3px;
   left: 525px;
   font-weight: normal;
+  font-family: "Aref Ruqaa", Helvetica;
   color: black;
   font-size: 15px;
   text-align: right;
+  font-weight: 400;
   letter-spacing: 0;
   line-height: normal;
 }
 
-.w-l-day-section {
+.wl-day-section {
   position: absolute;
   width: 900px;
   height: 200px;
@@ -165,7 +167,7 @@ body {
   left: 0;
 }
 
-.w-l-input-line-5 {
+.wl-input-line-5 {
   top: 145px !important;
   position: absolute;
   width: 870px;
@@ -174,7 +176,7 @@ body {
   object-fit: cover;
 }
 
-.w-l-input-line-4 {
+.wl-input-line-4 {
   top: 115px !important;
   position: absolute;
   width: 870px;
@@ -183,7 +185,7 @@ body {
   object-fit: cover;
 }
 
-.w-l-input-line-3 {
+.wl-input-line-3 {
   top: 85px !important;
   position: absolute;
   width: 870px;
@@ -192,7 +194,7 @@ body {
   object-fit: cover;
 }
 
-.w-l-input-line-2 {
+.wl-input-line-2 {
   top: 55px !important;
   position: absolute;
   width: 870px;
@@ -201,7 +203,7 @@ body {
   object-fit: cover;
 }
 
-.w-l-input-line-1 {
+.wl-input-line-1 {
   top: 25px !important;
   position: absolute;
   width: 870px;
@@ -210,7 +212,7 @@ body {
   object-fit: cover;
 }
 
-.wl-textarea {
+.wl-tiptap {
   position: absolute;
   overflow-y: hidden;
   resize: none;
@@ -223,18 +225,33 @@ body {
   font-size: 1.25rem;
   color: black;
   line-height: 30px;
-  /* Match the spacing of the input lines */
+  z-index: 1;
+}
+
+.wr-tiptap {
+  position: absolute;
+  overflow-y: hidden;
+  resize: none;
+  width: 870px;
+  height: 150px;
+  top: -4px;
+  left: -15px;
+  background: transparent;
+  font-weight: normal;
+  font-size: 1.25rem;
+  color: black;
+  line-height: 30px;
   z-index: 1;
 }
 
 p {
   margin: 0;
   padding: 0;
-  max-width:870px;
+  max-width: 870px;
   white-space: nowrap;
 }
 
-.wl-textarea-6 {
+.wl-tiptap-6 {
   position: absolute;
   overflow-y: hidden;
   resize: none;
@@ -322,4 +339,891 @@ p {
 
 .bubble-menu button.is-active:hover {
   background-color: #0056b3;
+}
+
+
+/* //////////////////////////////////////////////////////////////////// for weekly-right //////////////////////// */
+
+
+.overlap-group {
+  position: absolute;
+  width: 960px;
+  height: 1440px;
+  top: -25px;
+  left: -86px;
+}
+
+.wr-dividers {
+  position: absolute;
+  width: 1072px;
+  height: 900px;
+  top: 201px;
+  left: 0;
+  transform: rotate(90deg);
+}
+
+.div {
+  position: relative;
+  height: 900px;
+}
+
+.overlap-group-2 {
+  position: absolute;
+  width: 1072px;
+  height: 900px;
+  top: 0;
+  left: 0;
+}
+
+.wr-full-horizontal {
+  position: absolute;
+  width: 900px;
+  height: 2px;
+  top: 449px;
+  left: 621px;
+  transform: rotate(-90deg);
+}
+
+.wr-full-horizontal-2 {
+  position: absolute;
+  width: 900px;
+  height: 2px;
+  top: 449px;
+  left: -250px;
+  transform: rotate(-90deg);
+}
+
+.wr-lg-center {
+  position: absolute;
+  width: 2px;
+  height: 850px;
+  top: 25px;
+  left: 634px;
+  transform: rotate(-90deg);
+}
+
+.wr-sm-top-divider {
+  position: absolute;
+  width: 2px;
+  height: 190px;
+  top: 355px;
+  left: 94px;
+  transform: rotate(-90deg);
+}
+
+.wr-half-horizontal {
+  position: absolute;
+  width: 435px;
+  height: 1px;
+  top: 217px;
+  left: 403px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wr-half-horizontal-2 {
+  position: absolute;
+  width: 435px;
+  height: 1px;
+  top: 682px;
+  left: 103px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wr-text-boxes {
+  position: absolute;
+  width: 885px;
+  height: 1065px;
+  top: 110px;
+  left: 86px;
+}
+
+.overlap-2 {
+  position: absolute;
+  width: 420px;
+  height: 768px;
+  top: 296px;
+  left: 465px;
+}
+
+.wr-right-tiptap {
+  position: absolute;
+  width: 420px;
+  height: 435px;
+  top: 333px;
+  left: 0;
+  background-color: transparent;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wr-right-tiptap::placeholder {
+  color: #00000099;
+}
+
+.overlap-group-wrapper {
+  position: absolute;
+  width: 330px;
+  height: 420px;
+  top: -45px;
+  left: 45px;
+  transform: rotate(90deg);
+}
+
+.overlap-group-3 {
+  position: relative;
+  width: 416px;
+  height: 421px;
+  top: -1px;
+  left: -86px;
+}
+
+.wl-dashed-line {
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  left: 175px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-2 {
+  left: 145px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-3 {
+  left: 115px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-4 {
+  left: 85px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-5 {
+  left: 55px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-6 {
+  left: 25px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-7 {
+  left: -5px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-8 {
+  left: -35px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-9 {
+  left: -65px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-10 {
+  left: -95px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wl-dashed-line-11 {
+  left: -124px;
+  position: absolute;
+  width: 420px;
+  height: 1px;
+  top: 210px;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.wr-dashed-tiptap {
+  position: absolute;
+  width: 420px;
+  height: 416px;
+  top: 2px;
+  left: -2px;
+  background-color: transparent;
+  transform: rotate(-90deg);
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wr-dashed-tiptap::placeholder {
+  color: #00000099;
+}
+
+.wr-left-tiptap {
+  width: 420px;
+  height: 735px;
+  top: 329px;
+  left: 15px;
+  position: absolute;
+  background-color: transparent;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wr-left-tiptap::placeholder {
+  color: #00000099;
+}
+
+.wr-left-tiptap-2 {
+  width: 420px;
+  height: 110px;
+  top: 209px;
+  left: 15px;
+  position: absolute;
+  background-color: transparent;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wr-left-tiptap-2::placeholder {
+  color: #00000099;
+}
+
+.wr-left-tiptap-top {
+  width: 420px;
+  height: 188px;
+  top: 3px;
+  left: 15px;
+  position: absolute;
+  background-color: transparent;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wr-left-tiptap-top::placeholder {
+  color: #00000099;
+}
+
+.weekly-right {
+  position: absolute;
+  width: 190px;
+  height: 420px;
+  top: 5px;
+  left: 45px;
+}
+
+.overlap-3 {
+  position: relative;
+  height: 420px;
+}
+
+.weekly-right-2 {
+  position: absolute;
+  width: 174px;
+  height: 171px;
+  top: 226px;
+  left: 4px;
+  transform: rotate(-90deg);
+}
+
+.week-one {
+  width: 174px;
+  top: 50px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+  text-align: center;
+  justify-content: center;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  border-radius: 1px;
+  padding: 10px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+button {
+  background: rgba(255, 3, 3, 0.082);
+  border: none;
+  cursor: pointer;
+  border-radius: 5%;
+  align-items: center;
+
+}
+
+button:hover {
+  background-color: rgba(255, 3, 3, 0.39);
+}
+
+.text-wrapper {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 15px;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+  display: flex;
+  padding: 0;
+}
+
+.text-wrapper::first-line {
+  margin-bottom: 99px;
+}
+
+.calendar-day-1 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 25px;
+}
+
+.calendar-day-2 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 51px;
+}
+
+.calendar-day-3 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 76px;
+}
+
+.calendar-day-4 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 102px;
+}
+
+.calendar-day-5 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 127px;
+}
+
+.calendar-day-6 {
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 152px;
+}
+
+.week-two {
+  width: 174px;
+  top: 76px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+}
+
+.week-three {
+  width: 174px;
+  top: 101px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+}
+
+.week-four {
+  width: 174px;
+  top: 126px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+}
+
+.week-five {
+  width: 174px;
+  top: 151px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+}
+
+.week-header {
+  width: 174px;
+  top: 18px;
+  position: absolute;
+  height: 21px;
+  left: 0;
+}
+
+.week-days {
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  top: 0;
+  padding: 10px;
+  position: absolute;
+  align-self: stretch;
+  text-align: center;
+  color: black;
+  font-size: 14;
+  font-family: "Aref Ruqaa";
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.element {
+  align-self: stretch;
+  position: relative;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.element-wrapper {
+  left: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+.week-days-2 {
+  left: 51px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+.week-days-3 {
+  left: 76px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+.week-days-4 {
+  left: 102px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+.week-days-5 {
+  left: 127px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+.week-days-6 {
+  left: 152px;
+  display: flex;
+  flex-direction: column;
+  width: 22px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 6px;
+}
+
+wr-calendar-week-line {
+  top: -3px;
+  position: absolute;
+  width: 174px;
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+}
+
+wr-calendar-week-line-2 {
+  top: 27px;
+  position: absolute;
+  width: 174px;
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+}
+
+.month-header {
+  display: flex;
+  flex-direction: column;
+  width: 174px;
+  height: 19px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 10px;
+  position: absolute;
+  top: -1px;
+  left: 0;
+}
+
+.month-year {
+  position: absolute;
+  width: 174px;
+  height: 22px;
+  margin-top: -1.50px;
+  margin-bottom: -1.50px;
+  left: 10px;
+  top: 2.5px;
+  position: absolute;
+  width: 174px;
+  font-size: 14px;
+  text-align: center;
+  line-height: normal;
+}
+
+.month-year-2 {
+  position: absolute;
+  width: 174px;
+  top: 0;
+  left: 0;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  word-wrap: break-word;
+}
+
+.weekly-right-3 {
+  position: absolute;
+  width: 174px;
+  height: 171px;
+  top: 22px;
+  left: 4px;
+  transform: rotate(-90deg);
+}
+
+.weekly-right-cal-bg {
+  position: absolute;
+  width: 420px;
+  height: 190px;
+  top: 115px;
+  left: -115px;
+  background-color: #ff6f6f4c;
+  transform: rotate(-90deg);
+}
+
+.wr-day-section {
+  position: absolute;
+  width: 900px;
+  height: 200px;
+  top: 1172px;
+  left: 15px;
+}
+
+.overlap-4 {
+  position: relative;
+  width: 878px;
+  height: 198px;
+  top: -1px;
+  left: 15px;
+}
+
+.w-day-header {
+  width: 878px;
+  height: 72px;
+  top: 0;
+  position: absolute;
+  left: 0;
+}
+
+.w-day-header-date-wrapper {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  top: 3px;
+  left: 0;
+  background-color: #fbb5b5;
+  border-radius: 22.5px;
+}
+
+.w-day-header-date {
+  position: absolute;
+  width: 45px;
+  top: 0;
+  left: 0;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+/* .w-day-name-textbox {
+  position: absolute;
+  width: 146px;
+  height: 47px;
+  top: 1px;
+  left: 59px;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 28px;
+  letter-spacing: 0;
+  line-height: normal;
+} */
+
+/* .span {
+  color: #000000;
+} */
+
+.moon-phase {
+  position: absolute;
+  height: 31px;
+  top: 0;
+  left: 205px;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.w-day-lines {
+  width: 872px;
+  height: 145px;
+  top: 53px;
+  position: absolute;
+  left: 0;
+}
+
+.overlap-5 {
+  position: relative;
+  width: 870px;
+  height: 145px;
+}
+
+.wl-input-line {
+  position: absolute;
+  width: 870px;
+  height: 1px;
+  top: 115px;
+  left: 0;
+  object-fit: cover;
+}
+
+.wl-input-line-2 {
+  top: 85px;
+  position: absolute;
+  width: 870px;
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+}
+
+.wl-input-line-3 {
+  top: 55px;
+  position: absolute;
+  width: 870px;
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+}
+
+.wl-input-line-4 {
+  top: 25px;
+  position: absolute;
+  width: 870px;
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+}
+
+.wl-textbox {
+  position: absolute;
+  width: 870px;
+  height: 145px;
+  top: 0;
+  left: 0;
+  /* background-color: transparent; */
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  /* color: transparent; */
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 30px;
+  border: 0;
+  padding: 0;
+}
+
+.wl-textbox::placeholder {
+  color: transparent;
+}
+
+.wr-calendar-button {
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  padding-bottom: 4px;
+  flex-direction: column;
+  color: black;
+  font-size: 14;
+  font-family: "Aref Ruqaa", Helvetica;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.wr-cal-container {
+  width: 420px;
+  height: 190px;
+  left: 495px;
+  top: 100px;
+  position: absolute;
+}
+
+.wr-cal-right {
+  width: 174px;
+  height: 171px;
+  left: 225px;
+  top: 6px;
+  position: absolute;
+}
+
+.wr-cal-left {
+  width: 174px;
+  height: 171px;
+  left: 21px;
+  top: 6px;
+  position: absolute;
 }

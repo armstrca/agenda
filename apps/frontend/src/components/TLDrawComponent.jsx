@@ -43,7 +43,6 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
             schema
           });
         } catch (error) {
-          console.error('Error loading tldraw_snapshot:', error);
         }
       }
 
@@ -93,7 +92,6 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
           }
         );
       } catch (error) {
-        console.error('Save error:', error);
       }
     }, 350);
   }, [plannerId, persistenceKey, storeWithStatus.store]); // Add store to dependencies

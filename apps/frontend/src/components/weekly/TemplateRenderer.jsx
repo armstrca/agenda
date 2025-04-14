@@ -53,7 +53,7 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
       });
     }
 
-    if (className === "w-l-day-section") {
+    if (className === "wl-day-section" || className === "wr-day-section") {
       const dayData = data[dayIndexRef.current] || {};
       dayIndexRef.current++;
       return (
@@ -69,13 +69,14 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
       );
     }
 
-    if (className === "wl-textarea") {
+    if (className.includes("tiptap")) {
       const tiptapId = tiptapCounter.current++;
       return (
         <Tiptap
           key={uniqueKey}
           tiptap_id={tiptapId}
           pageId={page_id}
+          className={className}
         />
       );
     }

@@ -25,7 +25,7 @@
       "children": [
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "90px"
           },
@@ -67,7 +67,7 @@
                   "class": "divider-container",
                   "attributes": {
                     "alt": "weekly left divider line",
-                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                    "src": "/images/weekly_left/wl-divider-line.svg"
                   },
                   "selfClosing": true
                 },
@@ -77,37 +77,37 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
@@ -123,7 +123,7 @@
         },
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "300px"
           },
@@ -165,7 +165,7 @@
                   "class": "divider-container",
                   "attributes": {
                     "alt": "weekly left divider line",
-                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                    "src": "/images/weekly_left/wl-divider-line.svg"
                   },
                   "selfClosing": true
                 },
@@ -175,37 +175,37 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
@@ -221,7 +221,7 @@
         },
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "510px"
           },
@@ -263,7 +263,7 @@
                   "class": "divider-container",
                   "attributes": {
                     "alt": "weekly left divider line",
-                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                    "src": "/images/weekly_left/wl-divider-line.svg"
                   },
                   "selfClosing": true
                 },
@@ -273,37 +273,37 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
@@ -319,7 +319,7 @@
         },
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "720px"
           },
@@ -361,7 +361,7 @@
                   "class": "divider-container",
                   "attributes": {
                     "alt": "weekly left divider line",
-                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                    "src": "/images/weekly_left/wl-divider-line.svg"
                   },
                   "selfClosing": true
                 },
@@ -371,37 +371,37 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
@@ -417,7 +417,7 @@
         },
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "930px"
           },
@@ -459,7 +459,7 @@
                   "class": "divider-container",
                   "attributes": {
                     "alt": "weekly left divider line",
-                    "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg"
+                    "src": "/images/weekly_left/wl-divider-line.svg"
                   },
                   "selfClosing": true
                 },
@@ -469,37 +469,37 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
@@ -515,7 +515,7 @@
         },
         {
           "component": "div",
-          "class": "w-l-day-section",
+          "class": "wl-day-section",
           "styles": {
             "top": "1140px"
           },
@@ -558,46 +558,46 @@
                   "children": [
                     {
                       "component": "img",
-                      "class": "w-l-input-line-5",
+                      "class": "wl-input-line-5",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-4",
+                      "class": "wl-input-line-4",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-3",
+                      "class": "wl-input-line-3",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-2",
+                      "class": "wl-input-line-2",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },
                     {
                       "component": "img",
-                      "class": "w-l-input-line-1",
+                      "class": "wl-input-line-1",
                       "attributes": {
                         "alt": "weekly left input line",
-                        "src": "https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg"
+                        "src": "/images/weekly_left/wl-input-line.svg"
                       },
                       "selfClosing": true
                     },

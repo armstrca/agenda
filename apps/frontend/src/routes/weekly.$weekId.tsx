@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import React from 'react';
 import WeeklyLeft from '../components/weekly/WeeklyLeft';
+import WeeklyRight from '../components/weekly/WeeklyRight';
 import { Page, PageTemplate } from '../types/types';
 import { useLoaderData } from '@tanstack/react-router';
 
@@ -32,7 +33,6 @@ export const Route = createFileRoute('/weekly/$weekId')({
         tldraw_snapshots: data.tldraw_snapshots,
       };
     } catch (error) {
-      // console.error('Loader error:', error);
       throw error;
     }
   },
@@ -54,16 +54,21 @@ export const Route = createFileRoute('/weekly/$weekId')({
 function WeeklyComponent() {
   const { template, weekData, page_id, planner_id, tldraw_snapshots } = useLoaderData({ from: Route.id });
 
-  return (
-    <WeeklyLeft
-      template={template}
-      {...weekData}
-      page_id={page_id}
-      plannerId="38e012ec-0ab2-4fbe-8e68-8a75e4716a35"
-      tldraw_snapshots={tldraw_snapshots}
-    />
+  const commonProps = {
+    template,
+    ...weekData,
+    page_id,
+    plannerId: planner_id,
+    tldraw_snapshots
+  };
+
+  return weekData.side === 'r' ? (
+    <WeeklyRight {...commonProps} />
+  ) : (
+    <WeeklyLeft {...commonProps} />
   );
 }
+
 
 // Helper to replace asset placeholders
 const processTemplateAssets = (template: PageTemplate) => {
