@@ -7,7 +7,15 @@ const VOID_ELEMENTS = new Set([
   'base', 'col', 'embed', 'param', 'source', 'track', 'wbr',
 ]);
 
-const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshots }) => {
+const TemplateRenderer = ({
+  template,
+  data,
+  components,
+  page_id,
+  tldraw_snapshots,
+  leftCalendarData,
+  rightCalendarData
+}) => {
   const structure = template?.content?.structure || [];
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
@@ -18,7 +26,7 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
     tiptapCounter.current = 1;
   }, [data]);
 
-  const renderComponent = (node, currentData) => {
+  const renderComponent = (node, currentData, context = {}) => {
     const {
       component,
       class: className,
@@ -52,6 +60,7 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
         ...attributes,
       });
     }
+    let newContext = { ...context };
 
     if (className === "wl-day-section" || className === "wr-day-section") {
       const dayData = data[dayIndexRef.current] || {};
@@ -64,9 +73,42 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
           {...attributes}
           {...component_props}
         >
-          {children?.map((child) => renderComponent(child, dayData))}
+          {children?.map((child) => renderComponent(child, dayData, newContext))}
         </Component>
       );
+    }
+
+    if (className === "wr-cal-left") newContext.calendarSide = "left";
+    if (className === "wr-cal-right") newContext.calendarSide = "right";
+
+    if (className === "wr-calendar-button") {
+      const buttonId = node.attributes?.id;
+      const calendarData = newContext.calendarSide === "left"
+        ? leftCalendarData
+        : rightCalendarData;
+      const buttonText = calendarData?.buttonData?.[buttonId] || '';
+
+      return React.createElement(Component, {
+        key: uniqueKey,
+        className,
+        style: styles,
+        ...attributes,
+        ...component_props,
+      }, buttonText);
+    }
+
+    if (className === "month-year") {
+      const calendarData = newContext.calendarSide === "left"
+        ? leftCalendarData
+        : rightCalendarData;
+      const monthText = calendarData?.month || '';
+
+      return React.createElement(Component, {
+        key: uniqueKey,
+        className,
+        style: styles,
+        ...attributes,
+      }, monthText);
     }
 
     if (className.includes("tiptap")) {
@@ -90,7 +132,7 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
         {...component_props}
       >
         {textContent !== null && textContent}
-        {children?.map((child) => renderComponent(child, currentData))}
+        {children?.map((child) => renderComponent(child, currentData, newContext))}
       </Component>
     );
   };
@@ -104,7 +146,7 @@ const TemplateRenderer = ({ template, data, components, page_id, tldraw_snapshot
       />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
-          {renderComponent(node)}
+          {renderComponent(node, undefined, {})}
         </React.Fragment>
       ))}
     </div>

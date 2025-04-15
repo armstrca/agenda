@@ -8,35 +8,61 @@ import { useEffect, useState } from 'react';
 const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
   addProseMirrorPlugins() {
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    context.font = "1.25rem 'Aref Ruqaa', Helvetica"
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    let editorView; // Store reference to ProseMirror view
 
     return [
       new Plugin({
-        filterTransaction: (tr, state) => {
-          if (!tr.docChanged) return true
+        // Capture editor view when initialized
+        view(view) {
+          editorView = view;
+          return {};
+        },
+        filterTransaction(tr, state) {
+          if (!tr.docChanged || !editorView) return true;
 
-          const newDoc = tr.doc || state.doc
+          // Get container dimensions from editor DOM
+          const container = editorView.dom;
+          const containerWidth = container.offsetWidth;
+          const containerStyles = getComputedStyle(container);
+
+          // Calculate font metrics
+          const fontSize = parseFloat(containerStyles.fontSize);
+          const lineHeight =
+            parseFloat(containerStyles.lineHeight) ||
+            fontSize * 1.2; // Fallback to 1.2 ratio
+
+          // Calculate max paragraphs based on container height
+          const containerHeight = container.offsetHeight;
+          const maxParagraphs = Math.floor(containerHeight / lineHeight);
+
+          // Update canvas font measurements
+          context.font = `${fontSize}px ${containerStyles.fontFamily}`;
+
+          const newDoc = tr.doc || state.doc;
           const paragraphs = newDoc.content.content.filter(
             node => node.type.name === 'paragraph'
-          ).length
+          ).length;
 
-          if (paragraphs > 5) return false
+          // Check paragraph count limit
+          if (paragraphs > maxParagraphs) return false;
 
-          let allowed = true
+          // Check text width for each paragraph
+          let allowed = true;
           newDoc.content.content.forEach(paragraph => {
-            const text = paragraph.textContent
-            const width = context.measureText(text).width
-            if (width > 870) allowed = false
-          })
+            if (paragraph.type.name !== 'paragraph') return;
+            const text = paragraph.textContent;
+            const textWidth = context.measureText(text).width;
+            if (textWidth > containerWidth) allowed = false;
+          });
 
-          return allowed
+          return allowed;
         },
       }),
-    ]
+    ];
   },
-})
+});
 
 const Tiptap = ({ tiptap_id, pageId, className }) => {
   // const storageKey = `tiptap-${tiptap_id}`;

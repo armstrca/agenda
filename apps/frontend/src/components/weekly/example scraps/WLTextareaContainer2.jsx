@@ -1,5 +1,5 @@
 import React from 'react';
-import Tiptap from '../Tiptap';
+import Tiptap from '../../Tiptap';
 
 const WLTextareaContainer2 = ({ id }) => {
     return (
