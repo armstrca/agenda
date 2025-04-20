@@ -3,6 +3,8 @@ import React from 'react';
 import TemplateRenderer from './TemplateRenderer';
 import Tiptap from '../Tiptap';
 import TlDrawComponent from '../TLDrawComponent';
+import SvgColorizer from '../shared/SvgColorizer';
+import PageNavigation from '../PageNavigation';
 
 const WeeklyRight = ({
     template,
@@ -36,19 +38,22 @@ const WeeklyRight = ({
     const nextMonth = nextMonthDate.getMonth();
     const nextMonthYear = nextMonthDate.getFullYear();
 
-    // Generate calendar data for both months
+    const weekStartDay = template?.content?.metadata?.default_styles?.["week-start-day"] || "Mon";
+
     const generateCalendarData = (month, year) => {
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const weeks = [];
         let week = [];
 
-        // Fill initial empty days
-        for (let i = 0; i < firstDay.getDay(); i++) {
+        const startDayIndex = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(weekStartDay);
+        const firstDayOfWeek = firstDay.getDay();
+        let offset = (firstDayOfWeek - startDayIndex + 7) % 7;
+
+        for (let i = 0; i < offset; i++) {
             week.push(null);
         }
 
-        // Fill calendar days
         for (let day = 1; day <= lastDay.getDate(); day++) {
             const date = new Date(year, month, day);
             week.push(date);
@@ -59,7 +64,6 @@ const WeeklyRight = ({
             }
         }
 
-        // Fill remaining empty days
         if (week.length > 0) {
             while (week.length < 7) {
                 week.push(null);
@@ -70,11 +74,9 @@ const WeeklyRight = ({
         return weeks;
     };
 
-    // Generate data for both calendars
     const leftCalendar = generateCalendarData(currentMonth, currentYear);
     const rightCalendar = generateCalendarData(nextMonth, nextMonthYear);
 
-    // Create button data mapping
     const createButtonData = (weeks, startId = 1) => {
         const buttonData = {};
         let buttonId = startId;
@@ -89,28 +91,32 @@ const WeeklyRight = ({
         return buttonData;
     };
 
-    // Update calendar data generation
-    const leftButtonData = createButtonData(leftCalendar, 36); // IDs 36-70
-    const rightButtonData = createButtonData(rightCalendar, 1); // IDs 1-35
+    const leftButtonData = createButtonData(leftCalendar, 1);
+    const rightButtonData = createButtonData(rightCalendar, 1);
 
     const parsedDates = mainDates.map(dateStr => new Date(dateStr));
 
-    const templateData = parsedDates.map((date) => {
-        const dateISOString = date.toISOString();
-        return {
-            page_id: page_id,
-            month_year: date.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
-            day_number: date.getDate(),
-            day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
-            holiday: holidays[dateISOString] || '',
-            moon_phase: moonPhases[dateISOString]?.emoji || '',
-            // Add calendar data
-            left_calendar_month: `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`,
-            right_calendar_month: `${new Date(nextMonthYear, nextMonth).toLocaleString('default', { month: 'long' })} ${nextMonthYear}`,
-            left_button_data: leftButtonData,
-            right_button_data: rightButtonData
-        };
-    });
+    // Get the last day of the week
+    const lastDayOfWeek = parsedDates[parsedDates.length - 1];
+    const monthColors = template?.content?.metadata?.default_styles?.["month-colors"] || {};
+    const currentMonthName = lastDayOfWeek.toLocaleString('en-US', { month: 'long' }).toLowerCase();
+    const primaryColor = monthColors[currentMonthName] || '#ffffff';
+    const svgPath = template?.content?.metadata?.svgBackground;
+
+    const templateData = [{
+        page_id: page_id,
+        month_year: lastDayOfWeek.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
+        day_number: lastDayOfWeek.getDate(),
+        day_name: lastDayOfWeek.toLocaleDateString('en-US', { weekday: 'long' }),
+        holiday: holidays[lastDayOfWeek.toISOString()] || '',
+        moon_phase: moonPhases[lastDayOfWeek.toISOString()]?.emoji || '',
+        left_calendar_month: `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`,
+        right_calendar_month: `${new Date(nextMonthYear, nextMonth).toLocaleString('default', { month: 'long' })} ${nextMonthYear}`,
+        left_button_data: leftButtonData,
+        right_button_data: rightButtonData
+    }];
+
+
 
     return (
         <TemplateRenderer
@@ -118,6 +124,7 @@ const WeeklyRight = ({
             data={templateData}
             components={components}
             page_id={page_id}
+            primaryColor={primaryColor}
             tldraw_snapshots={tldraw_snapshots}
             leftCalendarData={{
                 month: `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`,
@@ -127,7 +134,12 @@ const WeeklyRight = ({
                 month: `${new Date(nextMonthYear, nextMonth).toLocaleString('default', { month: 'long' })} ${nextMonthYear}`,
                 buttonData: rightButtonData
             }}
-        />
+        >
+            <SvgColorizer
+                svgUrl={`${svgPath}?v=${Date.now()}`}
+                primaryColor={primaryColor}
+            />
+        </TemplateRenderer>
     );
 };
 

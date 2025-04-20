@@ -16,16 +16,16 @@ function Index() {
             </div>
             <div className="wr-text-boxes">
               <div className="overlap-2">
-                <textarea className="wr-right-textbox" />
+                <textarea className="wr-right-tiptap" />
                 <div className="overlap-group-wrapper">
                   <div className="overlap-group-3">
-                    <textarea className="textarea" />
+                    <textarea className="tiptap" />
                   </div>
                 </div>
               </div>
-              <textarea className="wr-left-textbox" />
-              <textarea className="wr-left-textbox-2" />
-              <textarea className="wr-left-textbox-top" />
+              <textarea className="wr-left-tiptap" />
+              <textarea className="wr-left-tiptap-2" />
+              <textarea className="wr-left-tiptap-top" />
             </div>
             <div className="weekly-right">
               <div className="wr-cal-container">
@@ -309,7 +309,7 @@ function Index() {
             </div>
             <div className="w-day-lines">
               <div className="overlap-5">
-                <div className="wr-textarea" />
+                <div className="wr-tiptap" />
               </div>
             </div>
           </div>

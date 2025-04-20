@@ -35,6 +35,7 @@
     "@tldraw/tldraw": "^3.11.0",
     "@types/react": "^19.0.12",
     "@types/react-router": "^5.1.20",
+    "chroma-js": "^3.1.2",
     "esbuild": "^0.25.1",
     "esbuild-plugin-tsc": "^0.5.0",
     "glob": "^11.0.1",

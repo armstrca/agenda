@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import React from 'react';
 import WeeklyLeft from '../components/weekly/WeeklyLeft';
 import WeeklyRight from '../components/weekly/WeeklyRight';
-import { Page, PageTemplate } from '../types/types';
+import { PageTemplate } from '../types/types';
 import { useLoaderData } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/weekly/$weekId')({
@@ -73,10 +73,9 @@ function WeeklyComponent() {
 // Helper to replace asset placeholders
 const processTemplateAssets = (template: PageTemplate) => {
   if (!template?.content) return template;
-  const assetBase = template.content.metadata?.asset_base_url || '';
   const processed = JSON.parse(
     JSON.stringify(template.content)
-      .replace(/\$\{asset_base_url\}/g, assetBase)
+      .replace(/apps\/frontend\/public/g, '')
   );
   return { ...template, content: processed };
 };

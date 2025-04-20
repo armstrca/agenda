@@ -14,9 +14,9 @@ function CustomQuickActions({ onToggleTldraw }) {
   return (
     <DefaultQuickActions>
       <TldrawUiMenuItem
-        id='toggle-tldraw'
-        label='Disable TLDraw'
-        icon='toggle-on'
+        id="toggle-tldraw"
+        label="Disable TLDraw"
+        icon="toggle-on"
         onSelect={onToggleTldraw}
       />
       <DefaultQuickActionsContent />
@@ -43,6 +43,7 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
             schema
           });
         } catch (error) {
+          console.error('Failed to load snapshot:', error);
         }
       }
 
@@ -53,11 +54,7 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
   }, [tldraw_snapshots]);
 
   const toggleTldrawVisibility = () => {
-    setShowTldraw((prev) => !prev);
-    const appDiv = document.getElementById('app');
-    if (appDiv) {
-      appDiv.style.zIndex = showTldraw ? '0' : '2';
-    }
+    setShowTldraw(prev => !prev);
   };
 
   const handleMount = useCallback((editor) => {
@@ -86,16 +83,16 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
             body: JSON.stringify({
               tldraw_snapshot: {
                 document_data: documentData,
-                schema: storeWithStatus.store?.schema.serialize() // Add schema here
+                schema: storeWithStatus.store?.schema.serialize()
               }
             }),
           }
         );
       } catch (error) {
+        console.error('Failed to save snapshot:', error);
       }
     }, 350);
-  }, [plannerId, persistenceKey, storeWithStatus.store]); // Add store to dependencies
-
+  }, [persistenceKey, storeWithStatus.store]);
 
   const components = {
     QuickActions: () => (
@@ -104,45 +101,63 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
   };
 
   return (
-    <div className='tl-toggle' style={{ zIndex: showTldraw ? 2 : 0 }}>
-      {showTldraw && (
-        <Tldraw
-          autoFocus={false}
-          persistenceKey={persistenceKey}
-          components={components}
-          store={storeWithStatus.store}
-          onMount={handleMount}
-          // migrations={[/* Add custom migrations if needed */]}
-        />
-      )}
+    <>
+      {/* TLDraw Container: toggles size and stacking */}
+      <div
+        id="tl-toggle-container"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: showTldraw ? 1 : 0,
+          width: showTldraw ? '100%' : '0px',
+          height: showTldraw ? '100%' : '0px',
+          overflow: 'hidden',
+        }}
+      >
+        {showTldraw && storeWithStatus.status === 'ready' && (
+          <Tldraw
+            autoFocus={false}
+            persistenceKey={persistenceKey}
+            components={components}
+            store={storeWithStatus.store}
+            onMount={handleMount}
+          />
+        )}
+      </div>
+
+      {/* PowerOff Icon: always accessible with high z-index */}
       {!showTldraw && (
-        <div style={{ position: 'absolute', top: '5px', left: '5px' }}>
-          <div className='tlui-buttons__horizontal'>
-            <button
-              id='power-off-icon'
-              title='Enable TLDraw'
-              onClick={toggleTldrawVisibility}
-              className='tlui-icon tlui-icon__small tlui-button__icon'
-              style={{
-                position: 'absolute',
-                top: '10px',
-                left: '10px',
-                zIndex: 20,
-                backgroundColor: 'hsl(204, 16%, 94%)',
-                color: 'black',
-                borderRadius: '6px',
-                border: 'none',
-                height: '25px',
-                width: '25px',
-              }}
-            >
-              <PowerOffIcon
-                style={{ height: '20px', width: '20px', paddingLeft: '5px' }}
-              />
-            </button>
-          </div>
+        <div
+          className="tlui-buttons__horizontal"
+          style={{ position: 'absolute', top: '5px', left: '5px', zIndex: 3 }}
+        >
+          <button
+            id="power-off-icon"
+            title="Enable TLDraw"
+            onClick={toggleTldrawVisibility}
+            className="tlui-icon tlui-icon__small tlui-button__icon"
+            style={{
+              position: 'relative',
+              backgroundColor: 'transparent',
+              color: 'black',
+              borderRadius: '6px',
+              border: 'none',
+              height: '25px',
+              width: '25px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 3,
+            }}
+          >
+            <PowerOffIcon />
+          </button>
         </div>
       )}
-    </div>
+    </>
   );
 }

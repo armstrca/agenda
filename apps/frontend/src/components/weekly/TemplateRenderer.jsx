@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import Tiptap from '../Tiptap';
 import TlDrawComponent from '../TLDrawComponent';
+import chroma from 'chroma-js';
+import PageNavigation from '../PageNavigation';
 
 const VOID_ELEMENTS = new Set([
   'img', 'br', 'hr', 'input', 'meta', 'link', 'area',
@@ -14,22 +16,44 @@ const TemplateRenderer = ({
   page_id,
   tldraw_snapshots,
   leftCalendarData,
-  rightCalendarData
+  rightCalendarData,
+  primaryColor,
+  children
 }) => {
   const structure = template?.content?.structure || [];
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
   const tiptapCounter = useRef(1);
 
+  // Get week start from template metadata
+  const weekStartDay = template?.content?.metadata?.default_styles?.["week-start-day"] || "Mon";
+
+  // Generate day order based on week start
+  const daysOrder = React.useMemo(() => {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const startIndex = days.indexOf(weekStartDay);
+    return startIndex === -1 ? days : [
+      ...days.slice(startIndex),
+      ...days.slice(0, startIndex)
+    ].slice(0, 7);
+  }, [weekStartDay]);
+
   useEffect(() => {
     dayIndexRef.current = 0;
     tiptapCounter.current = 1;
   }, [data]);
 
+  const colors = React.useMemo(() => ({
+    primary: primaryColor,
+    secondary: chroma.mix('#fff', primaryColor, 0.15).hex(),
+    ternary: chroma.mix('#fff', primaryColor, 0.05).hex(),
+    quaternary: chroma(primaryColor).darken(0.3).hex()
+  }), [primaryColor]);
+
   const renderComponent = (node, currentData, context = {}) => {
     const {
       component,
-      class: className,
+      class: className = '',
       children,
       component_type,
       component_props,
@@ -45,6 +69,11 @@ const TemplateRenderer = ({
     let textContent = null;
     if (className === "month-name") {
       textContent = currentData?.month_year || data?.[0]?.month_year || '';
+    } else if (className === "week-days") {
+      const dayId = parseInt(node.attributes?.id, 10);
+      if (dayId >= 1 && dayId <= 7) {
+        textContent = daysOrder[dayId - 1]?.charAt(0) || '';
+      }
     } else if (currentData) {
       if (className === "day-number") textContent = currentData.day_number;
       if (className === "day-name") textContent = currentData.day_name;
@@ -82,11 +111,11 @@ const TemplateRenderer = ({
     if (className === "wr-cal-right") newContext.calendarSide = "right";
 
     if (className === "wr-calendar-button") {
-      const buttonId = node.attributes?.id;
+      const buttonId = parseInt(node.attributes?.id, 10); // Convert to number
       const calendarData = newContext.calendarSide === "left"
         ? leftCalendarData
         : rightCalendarData;
-      const buttonText = calendarData?.buttonData?.[buttonId] || '';
+      const buttonText = calendarData?.buttonData?.[buttonId] || ''; // Now using numeric key
 
       return React.createElement(Component, {
         key: uniqueKey,
@@ -111,6 +140,7 @@ const TemplateRenderer = ({
       }, monthText);
     }
 
+
     if (className.includes("tiptap")) {
       const tiptapId = tiptapCounter.current++;
       return (
@@ -120,6 +150,30 @@ const TemplateRenderer = ({
           pageId={page_id}
           className={className}
         />
+      );
+    }
+
+    const attrs = { ...node.attrs };
+    if (attrs && attrs['data-color']) {
+      const colorType = attrs['data-color'];
+      const color = colors[colorType] || '#000';
+
+      if (node.component === 'path') {
+        attrs.stroke = color;
+        attrs.fill = color; // Or conditionally set based on element type
+      }
+      if (node.component === 'rect') {
+        attrs.fill = color;
+      }
+      return React.createElement(
+        Component,
+        {
+          key: uniqueKey,
+          className,
+          style: styles,
+          ...attrs, // Use modified attributes
+          ...component_props
+        }
       );
     }
 
@@ -139,6 +193,10 @@ const TemplateRenderer = ({
 
   return (
     <div className="planner-container">
+      <>
+        <PageNavigation />
+      </>
+      {children}
       <TlDrawComponent
         persistenceKey={page_id}
         tldraw_snapshots={tldraw_snapshots}

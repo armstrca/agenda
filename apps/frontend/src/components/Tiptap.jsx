@@ -1,5 +1,5 @@
 import { Extension } from '@tiptap/core';
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -7,67 +7,70 @@ import { useEffect, useState } from 'react';
 
 const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
-  addProseMirrorPlugins() {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    let editorView; // Store reference to ProseMirror view
+  addOptions() {
+    return {
+      // CSS selector for the element whose height/font we measure
+      container: null,
+      // maximum line width in px (keep your existing logic)
+      maxWidth: 870,
+    }
+  },
 
+  addProseMirrorPlugins() {
     return [
       new Plugin({
-        // Capture editor view when initialized
-        view(view) {
-          editorView = view;
-          return {};
-        },
-        filterTransaction(tr, state) {
-          if (!tr.docChanged || !editorView) return true;
+        key: new PluginKey('noWrapValidator'),
+        filterTransaction: (tr, state) => {
+          if (!tr.docChanged) return true
 
-          // Get container dimensions from editor DOM
-          const container = editorView.dom;
-          const containerWidth = container.offsetWidth;
-          const containerStyles = getComputedStyle(container);
+          // 1. Find the container element
+          const selector = this.options.container
+          const el = selector
+            ? document.querySelector(selector)
+            : state.view.dom.parentElement
 
-          // Calculate font metrics
-          const fontSize = parseFloat(containerStyles.fontSize);
-          const lineHeight =
-            parseFloat(containerStyles.lineHeight) ||
-            fontSize * 1.2; // Fallback to 1.2 ratio
+          if (!el) {
+            return true
+          }
 
-          // Calculate max paragraphs based on container height
-          const containerHeight = container.offsetHeight;
-          const maxParagraphs = Math.floor(containerHeight / lineHeight);
+          // 2. Measure container height & font size
+          const style = window.getComputedStyle(el)
+          const lineHeight = parseFloat(style.lineHeight)           // e.g. 30px :contentReference[oaicite:4]{index=4}
+          const containerInner = el.clientHeight  
+          const fontSize = parseFloat(style.fontSize)                      // includes padding, excludes borders :contentReference[oaicite:5]{index=5}
+          const maxParagraphs = Math.floor(containerInner / lineHeight)
+          const preciseWidth = el.getBoundingClientRect().width;
 
-          // Update canvas font measurements
-          context.font = `${fontSize}px ${containerStyles.fontFamily}`;
 
-          const newDoc = tr.doc || state.doc;
+          // 4. Count paragraphs in the new doc
+          const newDoc = tr.doc
           const paragraphs = newDoc.content.content.filter(
             node => node.type.name === 'paragraph'
-          ).length;
+          ).length
 
-          // Check paragraph count limit
-          if (paragraphs > maxParagraphs) return false;
+          if (paragraphs > maxParagraphs) return false
 
-          // Check text width for each paragraph
-          let allowed = true;
+          // 5. (Optional) your existing text‑width check
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          ctx.font = `${fontSize}px ${style.fontFamily}`
+          let allowed = true
           newDoc.content.content.forEach(paragraph => {
-            if (paragraph.type.name !== 'paragraph') return;
-            const text = paragraph.textContent;
-            const textWidth = context.measureText(text).width;
-            if (textWidth > containerWidth) allowed = false;
-          });
+            const text = paragraph.textContent
+            const w = ctx.measureText(text).width
+            if (w > preciseWidth) allowed = false
+          })
 
-          return allowed;
+          return allowed
         },
       }),
-    ];
+    ]
   },
-});
+})
 
 const Tiptap = ({ tiptap_id, pageId, className }) => {
   // const storageKey = `tiptap-${tiptap_id}`;
   const [initialContent, setInitialContent] = useState('<p></p>');
-  const [dimensions, setDimensions] = useState({ width: '100%', height: 'auto' });
 
   // Fetch existing planner_entry data
   useEffect(() => {
@@ -95,19 +98,6 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
 
     fetchPlannerEntry();
   }, [pageId, tiptap_id]);
-
-  // Extract dimensions from the className
-  // useEffect(() => {
-  //   if (className && className.includes('tiptap')) {
-  //     const element = document.querySelector(`.${className}`);
-  //     console.log('Element:', element);
-  //     console.log('ClassName:', className);
-  //     if (element) {
-  //       const { width, height } = getComputedStyle(element);
-  //       setDimensions({ width, height });
-  //     }
-  //   }
-  // }, [className]);
 
   // Initialize the editor
   const editor = useEditor({
@@ -151,7 +141,10 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
           'modem', 'sms', 'smsto', 'mmsto', 'skype', 'callto', 'webcal'
         ],
       }),
-      NoWrapValidator,
+      NoWrapValidator.configure({
+        container: `.${className}`,   // e.g. '.tiptap-container'
+        maxWidth: 870,
+      }),
     ],
   })
 
