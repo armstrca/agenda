@@ -8,7 +8,7 @@
         <div class="month-name"><%= @display_month_year %></div>
         <div class="header-footer">
           <% @main_dates.each_with_index do |date, index| %>
-            <div class="w-l-day-section !top-[<%= 90 + (index * 210) %>px]">
+            <div class="wl-day-section !top-[<%= 90 + (index * 210) %>px]">
               <div class="day-inner-block">
                 <div class="day-number-circle">
                   <div class="day-number"><%= date.day %></div>
@@ -23,22 +23,22 @@
               </div>
               <div class="textarea-container">
                 <% if index != 5  %>
-                  <img class="divider-container" alt="weekly left divider line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-divider-line-5.svg">
+                  <img class="divider-container" alt="weekly left divider line" src="https://c.animaapp.com/eFfbxFd7/img/wl-divider-line-5.svg">
                   <div class="textarea-bg">
-                    <img class="w-l-input-line-4" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                    <img class="w-l-input-line-3" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                    <img class="w-l-input-line-2" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                    <img class="w-l-input-line-1" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
+                    <img class="wl-input-line-4" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                    <img class="wl-input-line-3" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                    <img class="wl-input-line-2" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                    <img class="wl-input-line-1" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
                       <%= content_tag(:div, "", id: "tiptap-#{index}", class: "wl-textarea", data: { 
                       controller: "react"
                     }) %>
                   <% else %>
                     <div class="textarea-bg">
-                      <img class="w-l-input-line-1" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                      <img class="w-l-input-line-2" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                      <img class="w-l-input-line-3" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                      <img class="w-l-input-line-4" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
-                      <img class="w-l-input-line-5" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/w-l-input-line-28.svg">
+                      <img class="wl-input-line-1" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                      <img class="wl-input-line-2" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                      <img class="wl-input-line-3" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                      <img class="wl-input-line-4" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
+                      <img class="wl-input-line-5" alt="weekly left input line" src="https://c.animaapp.com/eFfbxFd7/img/wl-input-line-28.svg">
                         <%= content_tag(:div, "", id: "tiptap-#{index}", class: "wl-textarea", data: { 
                       controller: "react"
                     }) %>

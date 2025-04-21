@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import React from 'react';
 import WeeklyLeft from '../components/weekly/WeeklyLeft';
-import { Page, PageTemplate } from '../types/types';
+import WeeklyRight from '../components/weekly/WeeklyRight';
+import { PageTemplate } from '../types/types';
 import { useLoaderData } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/weekly/$weekId')({
@@ -25,12 +26,14 @@ export const Route = createFileRoute('/weekly/$weekId')({
         template: processTemplateAssets(data.template),
         weekData: {
           ...data.weekData,
-          mainDates: data.weekData.mainDates.map((dateStr: string) => new Date(dateStr))
+          mainDates: data.weekData.mainDates,
+          endDate: data.weekData.end_date,
         },
-        page_id: data.page_id
+        page_id: data.page_id,
+        planner_id: data.planner_id,
+        tldraw_snapshots: data.tldraw_snapshots,
       };
     } catch (error) {
-      // console.error('Loader error:', error);
       throw error;
     }
   },
@@ -50,24 +53,35 @@ export const Route = createFileRoute('/weekly/$weekId')({
 });
 
 function WeeklyComponent() {
-  const { template, weekData, page_id } = useLoaderData({ from: Route.id });
+  const { template, 
+    weekData, 
+    page_id, 
+    planner_id, 
+    tldraw_snapshots 
+  } = useLoaderData({ from: Route.id });
 
-  return (
-    <WeeklyLeft
-      template={template}
-      {...weekData}
-      page_id={page_id}
-    />
+  const commonProps = {
+    template,
+    ...weekData,
+    page_id,
+    plannerId: planner_id,
+    tldraw_snapshots
+  };
+
+  return weekData.side === 'r' ? (
+    <WeeklyRight {...commonProps} />
+  ) : (
+    <WeeklyLeft {...commonProps} />
   );
 }
+
 
 // Helper to replace asset placeholders
 const processTemplateAssets = (template: PageTemplate) => {
   if (!template?.content) return template;
-  const assetBase = template.content.metadata?.asset_base_url || '';
   const processed = JSON.parse(
     JSON.stringify(template.content)
-      .replace(/\$\{asset_base_url\}/g, assetBase)
+      .replace(/apps\/frontend\/public/g, '')
   );
   return { ...template, content: processed };
 };

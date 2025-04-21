@@ -1,5 +1,5 @@
 import { Extension } from '@tiptap/core';
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -7,28 +7,58 @@ import { useEffect, useState } from 'react';
 
 const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
-  addProseMirrorPlugins() {
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    context.font = "1.25rem 'Aref Ruqaa', Helvetica"
+  addOptions() {
+    return {
+      // CSS selector for the element whose height/font we measure
+      container: null,
+      // maximum line width in px (keep your existing logic)
+      maxWidth: 870,
+    }
+  },
 
+  addProseMirrorPlugins() {
     return [
       new Plugin({
+        key: new PluginKey('noWrapValidator'),
         filterTransaction: (tr, state) => {
           if (!tr.docChanged) return true
 
-          const newDoc = tr.doc || state.doc
+          // 1. Find the container element
+          const selector = this.options.container
+          const el = selector
+            ? document.querySelector(selector)
+            : state.view.dom.parentElement
+
+          if (!el) {
+            return true
+          }
+
+          // 2. Measure container height & font size
+          const style = window.getComputedStyle(el)
+          const lineHeight = parseFloat(style.lineHeight)           // e.g. 30px :contentReference[oaicite:4]{index=4}
+          const containerInner = el.clientHeight  
+          const fontSize = parseFloat(style.fontSize)                      // includes padding, excludes borders :contentReference[oaicite:5]{index=5}
+          const maxParagraphs = Math.floor(containerInner / lineHeight)
+          const preciseWidth = el.getBoundingClientRect().width;
+
+
+          // 4. Count paragraphs in the new doc
+          const newDoc = tr.doc
           const paragraphs = newDoc.content.content.filter(
             node => node.type.name === 'paragraph'
           ).length
 
-          if (paragraphs > 5) return false
+          if (paragraphs > maxParagraphs) return false
 
+          // 5. (Optional) your existing text‑width check
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          ctx.font = `${fontSize}px ${style.fontFamily}`
           let allowed = true
           newDoc.content.content.forEach(paragraph => {
             const text = paragraph.textContent
-            const width = context.measureText(text).width
-            if (width > 870) allowed = false
+            const w = ctx.measureText(text).width
+            if (w > preciseWidth) allowed = false
           })
 
           return allowed
@@ -38,9 +68,9 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ tiptap_id, pageId }) => {
-  const storageKey = `tiptap-${tiptap_id}`;
-  const [initialContent, setInitialContent] = useState('<p></p>'); // Default empty content
+const Tiptap = ({ tiptap_id, pageId, className }) => {
+  // const storageKey = `tiptap-${tiptap_id}`;
+  const [initialContent, setInitialContent] = useState('<p></p>');
 
   // Fetch existing planner_entry data
   useEffect(() => {
@@ -59,10 +89,10 @@ const Tiptap = ({ tiptap_id, pageId }) => {
             setInitialContent(data.content);
           }
         } else {
-          console.warn('No matching planner_entry found for tiptap_id:', tiptap_id);
+
         }
       } catch (error) {
-        console.error('Error fetching planner_entry:', error);
+
       }
     };
 
@@ -111,7 +141,10 @@ const Tiptap = ({ tiptap_id, pageId }) => {
           'modem', 'sms', 'smsto', 'mmsto', 'skype', 'callto', 'webcal'
         ],
       }),
-      NoWrapValidator,
+      NoWrapValidator.configure({
+        container: `.${className}`,   // e.g. '.tiptap-container'
+        maxWidth: 870,
+      }),
     ],
   })
 
@@ -123,7 +156,6 @@ const Tiptap = ({ tiptap_id, pageId }) => {
 
   const savePlannerEntry = async (pageId, content, tiptap_id) => {
     try {
-      console.log("Saving planner entry for pageId:", pageId, "Tiptap_id:", tiptap_id);
       const response = await fetch(`/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries`, {
         method: 'POST',
         headers: {
@@ -133,10 +165,8 @@ const Tiptap = ({ tiptap_id, pageId }) => {
       });
 
       if (!response.ok) {
-        console.error('Failed to save planner entry:', response.statusText);
       }
     } catch (error) {
-      console.error('Error saving planner entry:', error);
     }
   };
 
@@ -176,7 +206,9 @@ const Tiptap = ({ tiptap_id, pageId }) => {
   }, [editor]);
 
   return (
-    <div className="wl-textarea">
+    <div
+      className={className}
+    >
       <EditorContent editor={editor} />
 
       {editor && (
@@ -217,7 +249,7 @@ const Tiptap = ({ tiptap_id, pageId }) => {
         </BubbleMenu>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Tiptap

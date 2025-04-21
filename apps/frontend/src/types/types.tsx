@@ -48,6 +48,8 @@ export interface PageTemplate {
   planner_id: string;
   created_at: string;
   updated_at: string;
+  tldraw_snapshots?: Record<string, any>;
+  schema?: Record<string, any>;
 }
 
 // PlannerEntry Table

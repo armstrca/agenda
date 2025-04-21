@@ -1,5 +1,6 @@
 // import TlDrawComponent from "../TLDrawComponent";
 import TemplateRenderer from "./TemplateRenderer";
+import SvgColorizer from "../shared/SvgColorizer";
 
 const WeeklyLeft = ({
   template,
@@ -8,34 +9,55 @@ const WeeklyLeft = ({
   year,
   mainDates,
   holidays,
-  moonPhases
+  moonPhases,
+  endDate,
+  plannerId,
+  tldraw_snapshots
 }) => {
   const components = {
-    Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}`} />,
-    TlDrawComponent: () => <TlDrawComponent persistenceKey={`weekly-${weekNumber}-${year}`} />
+    Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_l`} />,
+    TlDrawComponent: () => (
+      <TlDrawComponent
+        persistenceKey={`weekly-${weekNumber}-${year}-r`}
+        plannerId={plannerId}
+        tldraw_snapshots={tldraw_snapshots}
+      />
+    )
   };
 
-  const parsedDates = mainDates.map(dateStr => new Date(dateStr));
-  
-  const templateData = parsedDates.map((date) => {
-    const dateISOString = date.toISOString();
+  const weekStart = new Date(mainDates[0]);
+  const monthColors = template?.content?.metadata?.default_styles?.["month-colors"] || {};
+  const currentMonthName = weekStart.toLocaleString('en-US', { month: 'long' }).toLowerCase();
+  const primaryColor = monthColors[currentMonthName] || '#ffffff';
+  const svgPath = template?.content?.metadata?.svgBackground;
+
+  const templateData = mainDates.map(dateStr => {
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const date = new Date(y, m - 1, d);
     return {
       page_id: page_id,
       month_year: date.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
       day_number: date.getDate(),
       day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
-      holiday: holidays[dateISOString] || '',
-      moon_phase: moonPhases[dateISOString]?.emoji || '',
+      holiday: holidays[dateStr] || "",
+      moon_phase: moonPhases[dateStr]?.emoji || "",
     };
   });
 
   return (
-        <TemplateRenderer
-          template={template}
-          data={templateData}
-          components={components}
-          page_id={page_id}
-        />
+    <TemplateRenderer
+      template={template}
+      data={templateData}
+      components={components}
+      page_id={page_id}
+      primaryColor={primaryColor}
+      tldraw_snapshots={tldraw_snapshots}
+    >
+      <SvgColorizer
+        svgUrl={`${svgPath}?v=${Date.now()}`}
+        primaryColor={primaryColor}
+      />
+    </TemplateRenderer>
   );
 };
 
