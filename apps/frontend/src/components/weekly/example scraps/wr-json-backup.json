@@ -1,11 +1,11 @@
 {
   "metadata": {
     "type": "weekly-right",
-    "svgBackground": "/images/weekly_right/planner-container-2.svg",
     "base_dimensions": {
       "width": 960,
       "height": 1440
     },
+    "asset_base_url": "/images/",
     "default_styles": {
       "planner-container": {
         "position": "relative",
@@ -13,27 +13,13 @@
         "height": "1440px",
         "z-index": "0"
       },
-      "week-start-day": "Mon",
-      "month-colors": {
-        "august": "#c00d0d",
-        "september": "#f9b000",
-        "october": "#ec7103",
-        "november": "#7d4e24",
-        "december": "#8aad84",
-        "january": "#764978",
-        "february": "#9695d3",
-        "march": "#005baa",
-        "april": "#ffc0cb",
-        "may": "#799a05",
-        "june": "#00acc8",
-        "july": "#da3696"
-      }
+      "week-start-day": "Mon"
     }
   },
   "structure": [
     {
       "component": "div",
-      "class": "planner-container",
+      "class": "planner-container planner-container-wr",
       "children": [
         {
           "component": "div",
@@ -77,7 +63,7 @@
                           "children": [
                             {
                               "component": "div",
-                              "class": "wr-right-tiptap-main"
+                              "class": "wr-right-tiptap"
                             },
                             {
                               "component": "div",
@@ -89,7 +75,7 @@
                                   "children": [
                                     {
                                       "component": "div",
-                                      "class": "wr-dashed-tiptap-main"
+                                      "class": "wr-dashed-tiptap"
                                     }
                                   ]
                                 }
@@ -99,15 +85,15 @@
                         },
                         {
                           "component": "div",
-                          "class": "wr-left-tiptap-main"
+                          "class": "wr-left-tiptap"
                         },
                         {
                           "component": "div",
-                          "class": "wr-left-tiptap-main-2"
+                          "class": "wr-left-tiptap-2"
                         },
                         {
                           "component": "div",
-                          "class": "wr-left-tiptap-main-top"
+                          "class": "wr-left-tiptap-top"
                         }
                       ]
                     },
@@ -707,124 +693,6 @@
                                           "class": "wr-calendar-button",
                                           "attributes": {
                                             "id": "35"
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "component": "div",
-                                  "class": "week-six",
-                                  "children": [
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "-10px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "36"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "15.40px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "37"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "40.81px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "38"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "66.21px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "39"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "91.62px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "40"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "117.02px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "41"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "142.43px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "42"
                                           }
                                         }
                                       ]
@@ -1509,124 +1377,6 @@
                                 },
                                 {
                                   "component": "div",
-                                  "class": "week-six",
-                                  "children": [
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "-10px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "36"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "15.40px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "37"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "40.81px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "38"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "66.21px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "39"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "91.62px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "40"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "117.02px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "41"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "component": "div",
-                                      "class": "calendar-day",
-                                      "styles": {
-                                        "left": "142.43px"
-                                      },
-                                      "children": [
-                                        {
-                                          "component": "button",
-                                          "class": "wr-calendar-button",
-                                          "attributes": {
-                                            "id": "42"
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "component": "div",
                                   "class": "week-header",
                                   "children": [
                                     {
@@ -1751,7 +1501,7 @@
                       "children": [
                         {
                           "component": "div",
-                          "class": "wl-tiptap-main"
+                          "class": "wl-tiptap"
                         }
                       ]
                     }

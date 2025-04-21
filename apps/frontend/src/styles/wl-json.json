@@ -1,0 +1,333 @@
+{
+  "metadata": {
+    "type": "weekly-right",
+    "svgBackground": "/images/weekly_left/wl-svg-background.svg",
+    "base_dimensions": {
+      "width": 960,
+      "height": 1440
+    },
+    "default_styles": {
+      "planner-container": {
+        "position": "relative",
+        "width": "960px",
+        "height": "1440px",
+        "z-index": "0"
+      },
+      "week-start-day": "Mon",
+      "month-colors": {
+        "august": "#c00d0d",
+        "september": "#f9b000",
+        "october": "#ec7103",
+        "november": "#7d4e24",
+        "december": "#8aad84",
+        "january": "#764978",
+        "february": "#9695d3",
+        "march": "#005baa",
+        "april": "#ffc0cb",
+        "may": "#799a05",
+        "june": "#00acc8",
+        "july": "#da3696"
+      }
+    }
+  },
+  "structure": [
+    {
+      "component": "div",
+      "class": "planner-container",
+      "children": [
+        {
+          "component": "div",
+          "class": "month-name"
+        },
+        {
+          "component": "div",
+          "class": "header-footer",
+          "children": [
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "57.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "267.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "477.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "687.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "897.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "div",
+              "class": "wl-day-section",
+              "styles": {
+                "top": "1107.5px"
+              },
+              "children": [
+                {
+                  "component": "div",
+                  "class": "day-inner-block",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "day-number"
+                    },
+                    {
+                      "component": "div",
+                      "class": "day-name"
+                    },
+                    {
+                      "component": "div",
+                      "class": "holiday-box"
+                    },
+                    {
+                      "component": "div",
+                      "class": "moon-phase"
+                    }
+                  ]
+                },
+                {
+                  "component": "div",
+                  "class": "textarea-container",
+                  "children": [
+                    {
+                      "component": "div",
+                      "class": "textarea-bg",
+                      "children": [
+                        {
+                          "component": "div",
+                          "class": "wl-tiptap-main"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

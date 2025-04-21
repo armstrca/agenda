@@ -26,7 +26,8 @@ export const Route = createFileRoute('/weekly/$weekId')({
         template: processTemplateAssets(data.template),
         weekData: {
           ...data.weekData,
-          mainDates: data.weekData.mainDates.map((dateStr: string) => new Date(dateStr))
+          mainDates: data.weekData.mainDates,
+          endDate: data.weekData.end_date,
         },
         page_id: data.page_id,
         planner_id: data.planner_id,
@@ -52,7 +53,12 @@ export const Route = createFileRoute('/weekly/$weekId')({
 });
 
 function WeeklyComponent() {
-  const { template, weekData, page_id, planner_id, tldraw_snapshots } = useLoaderData({ from: Route.id });
+  const { template, 
+    weekData, 
+    page_id, 
+    planner_id, 
+    tldraw_snapshots 
+  } = useLoaderData({ from: Route.id });
 
   const commonProps = {
     template,

@@ -54,13 +54,6 @@ body {
   z-index: 1;
 }
 
-.day-number-circle {
-  width: 45px;
-  height: 45px;
-  background: #fbb5b5;
-  border-radius: 22.5px;
-}
-
 .input-line {
   width: 870px;
   height: 1px;
@@ -114,7 +107,7 @@ body {
   position: absolute;
   width: 900px;
   height: 200px;
-  left: 0;
+  left: 45px;
 }
 
 .day-number {
@@ -379,7 +372,7 @@ p {
 
 .button-prev {
   height: 1440px;
-  top: 30px;
+  /* top: 30px; */
   position: absolute;
   width: 30px;
   cursor: pointer;
@@ -392,12 +385,14 @@ p {
   width: 30px;
   background-image: linear-gradient(to left, #00000038, #ffffff00);
   cursor: pointer;
+  background-color: transparent;
 }
 
 .button-prev:hover {
   width: 30px;
   background-image: linear-gradient(to right, #00000038, #ffffff00);
   cursor: pointer;
+  background-color: transparent;
 }
 
 button {

@@ -43,12 +43,23 @@ const TemplateRenderer = ({
     tiptapCounter.current = 1;
   }, [data]);
 
-  const colors = React.useMemo(() => ({
-    primary: primaryColor,
-    secondary: chroma.mix('#fff', primaryColor, 0.15).hex(),
-    ternary: chroma.mix('#fff', primaryColor, 0.05).hex(),
-    quaternary: chroma(primaryColor).darken(0.3).hex()
-  }), [primaryColor]);
+  const colors = React.useMemo(() => {
+    if (!primaryColor) {
+      return {
+        primary: '#000',
+        secondary: '#222',
+        ternary: '#333',
+        quaternary: '#444',
+      };
+    }
+
+    return {
+      primary: primaryColor,
+      secondary: chroma.mix('#fff', primaryColor, 0.15).hex(),
+      ternary: chroma.mix('#fff', primaryColor, 0.05).hex(),
+      quaternary: chroma(primaryColor).darken(0.3).hex()
+    };
+  }, [primaryColor]);
 
   const renderComponent = (node, currentData, context = {}) => {
     const {
