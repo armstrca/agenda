@@ -88,7 +88,12 @@ const TemplateRenderer = ({
     } else if (currentData) {
       if (className === "day-number") textContent = currentData.day_number;
       if (className === "day-name") textContent = currentData.day_name;
-      if (className === "holiday-box") textContent = currentData.holiday;
+      if (className === "holiday-box") {
+        const holidays = Array.isArray(currentData.holiday) ?
+          currentData.holiday :
+          [currentData.holiday].filter(Boolean);
+        textContent = holidays.join(', ');
+      }      
       if (className === "moon-phase") textContent = currentData.moon_phase;
     }
 
