@@ -15,6 +15,7 @@ const TemplateRenderer = ({
   components,
   page_id,
   tldraw_snapshots,
+  plannerId,
   leftCalendarData,
   rightCalendarData,
   primaryColor,
@@ -216,7 +217,7 @@ const TemplateRenderer = ({
       <TlDrawComponent
         persistenceKey={page_id}
         tldraw_snapshots={tldraw_snapshots}
-        plannerId="38e012ec-0ab2-4fbe-8e68-8a75e4716a35"
+        plannerId={plannerId}
       />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
