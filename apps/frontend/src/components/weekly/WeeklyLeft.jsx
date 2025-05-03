@@ -15,10 +15,13 @@ const WeeklyLeft = ({
   plannerId
 }) => {
   const components = {
-    Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_l`} />,
+    Tiptap: (props) => 
+    <Tiptap {...props} 
+    weekId={`${weekNumber}_${year}_l`}
+    />,
     TlDrawComponent: () => (
       <TlDrawComponent
-        persistenceKey={`weekly-${weekNumber}-${year}-r`}
+        persistenceKey={`weekly-${weekNumber}-${year}-l`}
         plannerId={plannerId}
         tldraw_snapshots={tldraw_snapshots}
       />

@@ -1,32 +1,44 @@
-// apps/frontend/src/routes/planners.tsx
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useSuspenseQuery, QueryClient} from '@tanstack/react-query'
+import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { Planner } from '../types/types'
 
 export const Route = createFileRoute('/planners')({
-  component: PlannersList
+  component: PlannersIndex
 })
 
-const queryClient = new QueryClient()
+function PlannersIndex() {
+  const [planners, setPlanners] = useState<Planner[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-function PlannersList() {
-  // Fetch planners from API
-  const { data: planners } = useSuspenseQuery({
-    queryKey: ['planners'],
-    queryFn: () => fetch('/api/planners').then(res => res.json())
-  })
+  useEffect(() => {
+    async function loadPlanners() {
+      try {
+        const response = await fetch('/api/planners')
+        const data: Planner[] = await response.json()
+        setPlanners(data)
+      } catch (error) {
+        console.error('Failed to fetch planners:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadPlanners()
+  }, [])
+
+  if (isLoading) return <div>Loading...</div>
+
+  function getCurrentWeekId() {
+    const date = new Date();
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+    const weekNumber = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+
+    return `${String(weekNumber).padStart(2, '0')}_${date.getFullYear()}_l`;
+  }
 
   return (
-    <div>
-      <h1>Select a Planner</h1>
-      <ul>
-        {planners.map((planner: any) => (
-          <li key={planner.id}>
-            <Link to="/planners/$plannerId" params={{ plannerId: planner.id }}>
-              {planner.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className="planner-container">
+      <Outlet />
     </div>
   )
 }

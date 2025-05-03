@@ -36,7 +36,7 @@ const NoWrapValidator = Extension.create({
           // 2. Measure container height & font size
           const style = window.getComputedStyle(el)
           const lineHeight = parseFloat(style.lineHeight)           // e.g. 30px :contentReference[oaicite:4]{index=4}
-          const containerInner = el.clientHeight  
+          const containerInner = el.clientHeight
           const fontSize = parseFloat(style.fontSize)                      // includes padding, excludes borders :contentReference[oaicite:5]{index=5}
           const maxParagraphs = Math.floor(containerInner / lineHeight)
           const preciseWidth = el.getBoundingClientRect().width;
@@ -217,33 +217,37 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
           tippyOptions={{
             duration: 100,
             placement: 'top',
-            offset: [0, 10]
+            offset: [0, 10],
+            appendTo: () => document.body,
           }}
         >
           <div className="bubble-menu">
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
               className={editor.isActive('bold') ? 'is-active' : ''}
+              style={{ fontWeight: 'bold' }}
             >
-              Bold
+              B
             </button>
             <button
               onClick={() => editor.chain().focus().toggleItalic().run()}
               className={editor.isActive('italic') ? 'is-active' : ''}
+              style={{ fontStyle: 'italic' }}
             >
-              Italic
+              I
             </button>
             <button
               onClick={() => editor.chain().focus().toggleStrike().run()}
               className={editor.isActive('strike') ? 'is-active' : ''}
+              style={{ textDecoration: 'line-through' }}
             >
-              Strike
+              S
             </button>
             <button
               onClick={() => editor.chain().focus().toggleLink({ href: '' }).run()}
               className={editor.isActive('link') ? 'is-active' : ''}
             >
-              Link
+              🔗
             </button>
           </div>
         </BubbleMenu>

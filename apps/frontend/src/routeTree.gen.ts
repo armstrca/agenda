@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
@@ -17,15 +15,10 @@ import { Route as TldrawImport } from './routes/tldraw'
 import { Route as PlannersImport } from './routes/planners'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as WeeklyWeekIdImport } from './routes/weekly.$weekId'
-import { Route as MonthlyMonthIdImport } from './routes/monthly.$monthId'
+import { Route as PlannersPlannerIdImport } from './routes/planners.$plannerId'
 import { Route as DailyDateImport } from './routes/daily.$date'
-import { Route as PlannersPlannerIdIndexImport } from './routes/planners.$plannerId._index'
 import { Route as PlannersPlannerIdWeeklyWeekIdImport } from './routes/planners.$plannerId.weekly.$weekId'
-
-// Create Virtual Routes
-
-const PlannersPlannerIdImport = createFileRoute('/planners/$plannerId')()
+import { Route as PlannersPlannerIdMonthlyMonthIdImport } from './routes/planners.$plannerId.monthly.$monthId'
 
 // Create/Update Routes
 
@@ -59,33 +52,23 @@ const PlannersPlannerIdRoute = PlannersPlannerIdImport.update({
   getParentRoute: () => PlannersRoute,
 } as any)
 
-const WeeklyWeekIdRoute = WeeklyWeekIdImport.update({
-  id: '/weekly/$weekId',
-  path: '/weekly/$weekId',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MonthlyMonthIdRoute = MonthlyMonthIdImport.update({
-  id: '/monthly/$monthId',
-  path: '/monthly/$monthId',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const DailyDateRoute = DailyDateImport.update({
   id: '/daily/$date',
   path: '/daily/$date',
   getParentRoute: () => rootRoute,
 } as any)
 
-const PlannersPlannerIdIndexRoute = PlannersPlannerIdIndexImport.update({
-  id: '/_index',
-  getParentRoute: () => PlannersPlannerIdRoute,
-} as any)
-
 const PlannersPlannerIdWeeklyWeekIdRoute =
   PlannersPlannerIdWeeklyWeekIdImport.update({
     id: '/weekly/$weekId',
     path: '/weekly/$weekId',
+    getParentRoute: () => PlannersPlannerIdRoute,
+  } as any)
+
+const PlannersPlannerIdMonthlyMonthIdRoute =
+  PlannersPlannerIdMonthlyMonthIdImport.update({
+    id: '/monthly/$monthId',
+    path: '/monthly/$monthId',
     getParentRoute: () => PlannersPlannerIdRoute,
   } as any)
 
@@ -128,20 +111,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DailyDateImport
       parentRoute: typeof rootRoute
     }
-    '/monthly/$monthId': {
-      id: '/monthly/$monthId'
-      path: '/monthly/$monthId'
-      fullPath: '/monthly/$monthId'
-      preLoaderRoute: typeof MonthlyMonthIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/weekly/$weekId': {
-      id: '/weekly/$weekId'
-      path: '/weekly/$weekId'
-      fullPath: '/weekly/$weekId'
-      preLoaderRoute: typeof WeeklyWeekIdImport
-      parentRoute: typeof rootRoute
-    }
     '/planners/$plannerId': {
       id: '/planners/$plannerId'
       path: '/$plannerId'
@@ -149,12 +118,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlannersPlannerIdImport
       parentRoute: typeof PlannersImport
     }
-    '/planners/$plannerId/_index': {
-      id: '/planners/$plannerId/_index'
-      path: '/$plannerId'
-      fullPath: '/planners/$plannerId'
-      preLoaderRoute: typeof PlannersPlannerIdIndexImport
-      parentRoute: typeof PlannersPlannerIdRoute
+    '/planners/$plannerId/monthly/$monthId': {
+      id: '/planners/$plannerId/monthly/$monthId'
+      path: '/monthly/$monthId'
+      fullPath: '/planners/$plannerId/monthly/$monthId'
+      preLoaderRoute: typeof PlannersPlannerIdMonthlyMonthIdImport
+      parentRoute: typeof PlannersPlannerIdImport
     }
     '/planners/$plannerId/weekly/$weekId': {
       id: '/planners/$plannerId/weekly/$weekId'
@@ -169,12 +138,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface PlannersPlannerIdRouteChildren {
-  PlannersPlannerIdIndexRoute: typeof PlannersPlannerIdIndexRoute
+  PlannersPlannerIdMonthlyMonthIdRoute: typeof PlannersPlannerIdMonthlyMonthIdRoute
   PlannersPlannerIdWeeklyWeekIdRoute: typeof PlannersPlannerIdWeeklyWeekIdRoute
 }
 
 const PlannersPlannerIdRouteChildren: PlannersPlannerIdRouteChildren = {
-  PlannersPlannerIdIndexRoute: PlannersPlannerIdIndexRoute,
+  PlannersPlannerIdMonthlyMonthIdRoute: PlannersPlannerIdMonthlyMonthIdRoute,
   PlannersPlannerIdWeeklyWeekIdRoute: PlannersPlannerIdWeeklyWeekIdRoute,
 }
 
@@ -199,9 +168,8 @@ export interface FileRoutesByFullPath {
   '/planners': typeof PlannersRouteWithChildren
   '/tldraw': typeof TldrawRoute
   '/daily/$date': typeof DailyDateRoute
-  '/monthly/$monthId': typeof MonthlyMonthIdRoute
-  '/weekly/$weekId': typeof WeeklyWeekIdRoute
-  '/planners/$plannerId': typeof PlannersPlannerIdIndexRoute
+  '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
+  '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
 }
 
@@ -211,9 +179,8 @@ export interface FileRoutesByTo {
   '/planners': typeof PlannersRouteWithChildren
   '/tldraw': typeof TldrawRoute
   '/daily/$date': typeof DailyDateRoute
-  '/monthly/$monthId': typeof MonthlyMonthIdRoute
-  '/weekly/$weekId': typeof WeeklyWeekIdRoute
-  '/planners/$plannerId': typeof PlannersPlannerIdIndexRoute
+  '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
+  '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
 }
 
@@ -224,10 +191,8 @@ export interface FileRoutesById {
   '/planners': typeof PlannersRouteWithChildren
   '/tldraw': typeof TldrawRoute
   '/daily/$date': typeof DailyDateRoute
-  '/monthly/$monthId': typeof MonthlyMonthIdRoute
-  '/weekly/$weekId': typeof WeeklyWeekIdRoute
   '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
-  '/planners/$plannerId/_index': typeof PlannersPlannerIdIndexRoute
+  '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
 }
 
@@ -239,9 +204,8 @@ export interface FileRouteTypes {
     | '/planners'
     | '/tldraw'
     | '/daily/$date'
-    | '/monthly/$monthId'
-    | '/weekly/$weekId'
     | '/planners/$plannerId'
+    | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -250,9 +214,8 @@ export interface FileRouteTypes {
     | '/planners'
     | '/tldraw'
     | '/daily/$date'
-    | '/monthly/$monthId'
-    | '/weekly/$weekId'
     | '/planners/$plannerId'
+    | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
   id:
     | '__root__'
@@ -261,10 +224,8 @@ export interface FileRouteTypes {
     | '/planners'
     | '/tldraw'
     | '/daily/$date'
-    | '/monthly/$monthId'
-    | '/weekly/$weekId'
     | '/planners/$plannerId'
-    | '/planners/$plannerId/_index'
+    | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
   fileRoutesById: FileRoutesById
 }
@@ -275,8 +236,6 @@ export interface RootRouteChildren {
   PlannersRoute: typeof PlannersRouteWithChildren
   TldrawRoute: typeof TldrawRoute
   DailyDateRoute: typeof DailyDateRoute
-  MonthlyMonthIdRoute: typeof MonthlyMonthIdRoute
-  WeeklyWeekIdRoute: typeof WeeklyWeekIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -285,8 +244,6 @@ const rootRouteChildren: RootRouteChildren = {
   PlannersRoute: PlannersRouteWithChildren,
   TldrawRoute: TldrawRoute,
   DailyDateRoute: DailyDateRoute,
-  MonthlyMonthIdRoute: MonthlyMonthIdRoute,
-  WeeklyWeekIdRoute: WeeklyWeekIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -303,9 +260,7 @@ export const routeTree = rootRoute
         "/about",
         "/planners",
         "/tldraw",
-        "/daily/$date",
-        "/monthly/$monthId",
-        "/weekly/$weekId"
+        "/daily/$date"
       ]
     },
     "/": {
@@ -326,22 +281,16 @@ export const routeTree = rootRoute
     "/daily/$date": {
       "filePath": "daily.$date.tsx"
     },
-    "/monthly/$monthId": {
-      "filePath": "monthly.$monthId.tsx"
-    },
-    "/weekly/$weekId": {
-      "filePath": "weekly.$weekId.tsx"
-    },
     "/planners/$plannerId": {
-      "filePath": "/",
+      "filePath": "planners.$plannerId.tsx",
       "parent": "/planners",
       "children": [
-        "/planners/$plannerId/_index",
+        "/planners/$plannerId/monthly/$monthId",
         "/planners/$plannerId/weekly/$weekId"
       ]
     },
-    "/planners/$plannerId/_index": {
-      "filePath": "planners.$plannerId._index.tsx",
+    "/planners/$plannerId/monthly/$monthId": {
+      "filePath": "planners.$plannerId.monthly.$monthId.tsx",
       "parent": "/planners/$plannerId"
     },
     "/planners/$plannerId/weekly/$weekId": {

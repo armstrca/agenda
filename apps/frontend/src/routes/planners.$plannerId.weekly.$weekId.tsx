@@ -10,7 +10,10 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
     try {
       const response = await fetch(
         `http://localhost:3001/api/planners/${params.plannerId}/pages?week_id=${params.weekId}&page_type=weekly`,
-      );
+        {
+          credentials: 'include'
+        });
+
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -18,20 +21,21 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
 
       const data = await response.json();
 
-      if (!data.template || !data.weekData || !data.page_id) {
-        throw new Error('Invalid response structure');
-      }
+      const [weekNumber, year, side] = params.weekId.split('_');
 
       return {
         template: processTemplateAssets(data.template),
         weekData: {
           ...data.weekData,
+          weekNumber: parseInt(weekNumber),
+          year: parseInt(year),
+          side: side,
           mainDates: data.weekData.mainDates,
           endDate: data.weekData.end_date,
         },
         page_id: data.page_id,
         planner_id: data.planner_id,
-        tldraw_snapshots: data.tldraw_snapshots,
+        tldraw_snapshots: data.tldraw_snapshots
       };
     } catch (error) {
       throw error;
@@ -65,7 +69,9 @@ function WeeklyComponent() {
     ...weekData,
     page_id,
     plannerId: planner_id,
-    tldraw_snapshots
+    tldraw_snapshots,
+    weekNumber: weekData.weekNumber,
+    year: weekData.year
   };
 
   return weekData.side === 'r' ? (
