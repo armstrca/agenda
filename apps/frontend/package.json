@@ -5,9 +5,6 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "cap:sync": "npx cap sync",
-    "cap:ios": "npx cap open ios",
-    "cap:android": "npx cap open android",
     "start": "vite",
     "dev": "vite",
     "preview": "vite preview"
@@ -52,6 +49,7 @@
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^4.0.4",
+    "@tauri-apps/cli": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "prettier": "^3.2.5",
     "vite": "^6.2.3"

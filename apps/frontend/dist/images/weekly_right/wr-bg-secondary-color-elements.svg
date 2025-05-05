@@ -1,0 +1,9 @@
+<svg width="960" height="1440" viewBox="0 0 960 1440" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="planner-container">
+<g id="wr-bg-secondary-color">
+<rect id="wr-cal-bg" x="495" y="100" width="420" height="190" fill="#FF7070" fill-opacity="0.3"/>
+<path id="w-date-circle" d="M90 1207.5C90 1219.93 79.9264 1230 67.5 1230C55.0736 1230 45 1219.93 45 1207.5C45 1195.07 55.0736 1185 67.5 1185C79.9264 1185 90 1195.07 90 1207.5Z" fill="#FCB6B6"/>
+<path id="Vector" d="M495 720.5H930M30 420.5L465 420.5" stroke="#FF7070"/>
+</g>
+</g>
+</svg>

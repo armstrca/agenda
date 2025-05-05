@@ -30,6 +30,9 @@
     "@hotwired/turbo-rails": "^8.0.4",
     "@tanstack/react-router": "^1.114.29",
     "@tanstack/router-core": "^1.114.29",
+    "@tauri-apps/api": "^2.5.0",
+    "@tauri-apps/plugin-log": "^2.4.0",
+    "@tauri-apps/plugin-shell": "^2.2.1",
     "@tiptap/core": "^2.11.5",
     "@tiptap/extension-bubble-menu": "^2.11.7",
     "@tiptap/extension-hard-break": "^2.11.7",
@@ -67,6 +70,7 @@
     "@prettier/plugin-ruby": "^4.0.4",
     "@tanstack/react-router-devtools": "^1.114.29",
     "@tanstack/router-plugin": "^1.114.30",
+    "@tauri-apps/cli": "^2.5.0",
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.2",
     "prettier": "^3.2.5"
