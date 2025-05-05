@@ -31,8 +31,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-          ssh-key: ${{ secrets.SUBMODULE_SSH_KEY }}
-          persist-credentials: false
+          ssh-key: ${{ secrets.SUBMODULE_PAT }}
 
       - name: setup node
         uses: actions/setup-node@v4
