@@ -1,3 +1,3 @@
 [submodule "apps/backend"]
 	path = apps/backend
-	url = https://github.com/armstrca/agenda_backend
+	url = git@github.com:armstrca/agenda_backend.git
