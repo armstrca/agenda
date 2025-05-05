@@ -1,0 +1,1 @@
+import{j as n}from"./index-DHhNN1TW.js";const e=({loaderData:t})=>{const{params:o,data:r}=t;return n.jsxs("div",{children:[n.jsxs("h1",{children:["Monthly Page for ",o.monthId]}),n.jsx("pre",{children:JSON.stringify(r,null,2)})]})};export{e as component};

@@ -1,0 +1,40 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "agenda",
+  "version": "0.1.0",
+  "identifier": "com.agenda.dev",
+  "build": {
+    "frontendDist": "../apps/frontend/dist",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": "cd ../apps/frontend && yarn dev",
+    "beforeBuildCommand": "cd apps/frontend && yarn build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "agenda",
+        "width": 960,
+        "height": 1440,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "externalBin": [
+      "binaries/artichoke"
+    ],
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

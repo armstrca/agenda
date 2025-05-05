@@ -1,0 +1,1 @@
+import{j as n}from"./index-DHhNN1TW.js";const o=({loaderData:r})=>{const{params:s,data:t}=r;return n.jsxs("div",{children:[n.jsxs("h1",{children:["Daily Page for ",s.date]}),n.jsx("pre",{children:JSON.stringify(t,null,2)})]})};export{o as component};
