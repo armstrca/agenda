@@ -15,6 +15,7 @@
         "title": "agenda",
         "width": 960,
         "height": 1440,
+        "maximized": true,
         "resizable": true,
         "fullscreen": false
       }
@@ -25,7 +26,8 @@
   },
   "bundle": {
     "externalBin": [
-      "binaries/artichoke"
+      "binaries/artichoke",
+      "../apps/backend/bin/tauri_server"
     ],
     "active": true,
     "targets": "all",

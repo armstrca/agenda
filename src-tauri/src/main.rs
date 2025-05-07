@@ -3,8 +3,9 @@
     windows_subsystem = "windows"
 )]
 
-use tauri::{command, Builder};
-use tauri_plugin_shell::ShellExt;
+use std::io::Write;
+use tauri::{command, Builder, AppHandle};
+use tauri_plugin_shell::(init as shell_init, ShellExt);
 use tauri_plugin_shell::process::CommandEvent;
 
 fn main() {
