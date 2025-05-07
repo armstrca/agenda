@@ -26,8 +26,7 @@
   },
   "bundle": {
     "externalBin": [
-      "binaries/artichoke",
-      "../apps/backend/bin/tauri_server"
+      "../apps/go_backend/agenda_go_backend"
     ],
     "active": true,
     "targets": "all",

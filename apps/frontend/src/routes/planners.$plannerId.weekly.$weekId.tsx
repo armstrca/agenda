@@ -4,34 +4,31 @@ import WeeklyLeft from '../components/weekly/WeeklyLeft';
 import WeeklyRight from '../components/weekly/WeeklyRight';
 import { PageTemplate } from '../types/types';
 import { useLoaderData } from '@tanstack/react-router';
+import { loadPages, IndexArgs, IndexReply } from './../utils/ipc';
 
 export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
   loader: async ({ params }) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/api/planners/${params.plannerId}/pages?week_id=${params.weekId}&page_type=weekly`,
-        {
-          credentials: 'include'
-        });
+      const args: IndexArgs = {
+        planner_id: params.plannerId,
+        week_id: params.weekId,
+        pageType: 'weekly',
+      };
 
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
+      // 2. Invoke the Go sidecar via Tauri IPC:
+      const data: IndexReply = await loadPages(args);
 
       const [weekNumber, year, side] = params.weekId.split('_');
 
       return {
-        template: processTemplateAssets(data.template),
+        template: processTemplateAssets(data.template as PageTemplate),
         weekData: {
           ...data.weekData,
           weekNumber: parseInt(weekNumber),
           year: parseInt(year),
           side: side,
-          mainDates: data.weekData.mainDates,
-          endDate: data.weekData.end_date,
+          mainDates: data.weekData?.mainDates ?? [],
+          endDate: data.weekData?.endDate ?? null,
         },
         page_id: data.page_id,
         planner_id: data.planner_id,
@@ -71,7 +68,9 @@ function WeeklyComponent() {
     plannerId: planner_id,
     tldraw_snapshots,
     weekNumber: weekData.weekNumber,
-    year: weekData.year
+    year: weekData.year,
+    holidays: weekData.holidays ?? {},
+    moonPhases: weekData.moonPhases ?? {}
   };
 
   return weekData.side === 'r' ? (
