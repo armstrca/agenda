@@ -3,5 +3,5 @@
   url = https://github.com/armstrca/agenda_backend.git
 
 [submodule "apps/go_backend"]
-  path = apps/go_backend
-  url = https://github.com/armstrca/agenda_go_backend.git
+	path = apps/go_backend
+	url = https://github.com/armstrca/agenda_go_backend.git
