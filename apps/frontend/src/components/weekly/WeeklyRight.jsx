@@ -14,8 +14,8 @@ const WeeklyRight = ({
     mainDates,
     holidays,
     moonPhases,
-    plannerId,
-    tldraw_snapshots
+    tldraw_snapshots,
+    plannerId
 }) => {
     const components = {
         Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_r`} />,
@@ -147,6 +147,7 @@ const WeeklyRight = ({
             page_id={page_id}
             primaryColor={primaryColor}
             tldraw_snapshots={tldraw_snapshots}
+            plannerId={plannerId}
             leftCalendarData={{
                 month: `${new Date(Date.UTC(currentYear, currentMonth)).toLocaleString('default', {
                     month: 'long',

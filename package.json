@@ -12,7 +12,12 @@
   "scripts": {
     "start:backend": "cd apps/backend && bin/rails s -p 3001",
     "start:frontend": "cd apps/frontend && yarn dev",
-    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\""
+    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\"",
+    "package:win": "cd apps/frontend && electron-forge make --platform=win32",
+    "start:electron": "electron ."
+  },
+  "config": {
+    "forge": "./apps/frontend/forge.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.26.10",
@@ -21,11 +26,15 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@capacitor-community/electron": "^5.0.1",
     "@capacitor/android": "^7.1.0",
     "@capacitor/cli": "^7.1.0",
     "@capacitor/core": "^7.1.0",
     "@capacitor/filesystem": "^7.0.0",
     "@capacitor/ios": "^7.1.0",
+    "@electron-forge/cli": "^7.8.0",
+    "@electron-forge/maker-squirrel": "^7.8.0",
+    "@electron-forge/maker-zip": "^7.8.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
     "@tanstack/react-router": "^1.114.29",
@@ -74,5 +83,9 @@
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.2",
     "prettier": "^3.2.5"
+  },
+  "resolutions": {
+    "@capacitor/core": "7.2.0",
+    "@vitejs/plugin-react": "4.4.1"
   }
 }
