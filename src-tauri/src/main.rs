@@ -1,24 +1,41 @@
-use tauri::{CustomMenuItem, Manager, Window};
-use tauri::api::process::{Command, CommandEvent};
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
+
+use tauri::generate_context;
+use tauri_plugin_shell::process::CommandEvent;
+use tauri_plugin_shell::ShellExt;
 
 fn main() {
-  tauri::Builder::default()
-    .setup(|app| {
-      // Spawn the Go sidecar
-      let mut child = Command::new_sidecar("agenda-backend-go")?
-        .spawn()
-        .expect("Failed to launch sidecar");
-      // Optionally, listen for its stdout
-      app.listen_global("sidecar-stdout", move |_| {
-        if let Ok(event) = child.try_recv() {
-          if let CommandEvent::Stdout(line) = event {
-            println!("Sidecar: {}", line);
-          }
-        }
-      });
-      Ok(())
-    })
-    .invoke_handler(tauri::generate_handler![/* your commands */])
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    tauri::Builder::default()
+        // initialize the shell plugin
+        .plugin(tauri_plugin_shell::init())
+        .setup(|app| {
+            let handle = app.handle();
+
+            // Note: this name MUST match one of the entries in `externalBin`
+            let sidecar_command = handle
+                .shell()
+                .sidecar("agenda_go_backend")
+                .expect("failed to get sidecar command");
+            let (mut rx, mut _child) = sidecar_command
+                .spawn()
+                .expect("Failed to spawn sidecar");
+
+            // read stdout/stderr asynchronously
+            tauri::async_runtime::spawn(async move {
+                while let Some(event) = rx.recv().await {
+                    if let CommandEvent::Stdout(line_bytes) = event {
+                        // convert bytes to string lossily
+                        let line = String::from_utf8_lossy(&line_bytes);
+                        println!("⚙️ Sidecar stdout: {}", line.trim_end());
+                    }
+                }
+            });
+
+            Ok(())
+        })
+        .run(generate_context!())
+        .expect("error while running tauri application");
 }
