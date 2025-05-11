@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Serif+Kannada:wght@100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('prosemirror-view/style/prosemirror.css');
 
 body {
   font-family: 'Aref Ruqaa', Helvetica;
@@ -19,6 +20,134 @@ body {
   z-index: 0;
   background-color: transparent;
 }
+
+/* ////////////////////////// monthly //////////////////// */
+
+.monthly-layout {
+  width: 95%;
+  height: 87.5%;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7.5%;
+  margin-bottom: 7.5%;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.monthly-week-header {
+  display: grid;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.5%;
+  margin-bottom: -7.5%;
+  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.monthly-week-header>div {
+  background-color: white; /* user-customizable */
+  display: flex;
+  justify-content: center; /* user-customizable */
+  font-size: 18px; /* user-customizable */
+  position: relative;
+  color: black; /* user-customizable */
+}
+
+.monthly-layout>div {
+  background-color: white; /* user-customizable */
+  display: block;
+  font-size: 20px; /* user-customizable */
+  position: relative;
+  overflow: hidden;
+}
+
+/* new cell wrapper: a 2-row flex column */
+.monthly-day-cell {
+  display: flex;
+  flex-direction: column;
+  background-color: white; /* user-customizable */
+  position: relative;
+  overflow: visible;
+}
+
+.monthly-day-cell-date-box {
+  position: relative;
+  float: right; /* user-customizable */
+  width: 30px; /* user-customizable */
+  height: 30px; /* user-customizable */
+  top: 5px; /* user-customizable */
+  line-height: 25px; /* user-customizable */
+  background: rgb(221, 221, 221); /* user-customizable */
+  text-align: center; /* user-customizable */
+  shape-outside: polygon(0 0,
+      100% 0,
+      100% 30px,
+      2em 30px,
+      2em 100%,
+      0 100%); /* user-customizable */
+}
+
+.monthly-day-cell-date {
+  justify-content: center;
+  display: block; /* non-customizable */
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  color: black; /* user-customizable */
+}
+
+.monthly-day-cell-content-wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
+.monthly-day-cell-tiptap-main {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  outline: none;
+  font-size: 14px !important; /* user-customizable */
+  z-index: 2;
+  color: black; /* user-customizable */
+}
+
+/* fully user-customizable */
+.monthly-layout>div:not(:nth-last-child(-n+7)) {
+  border-bottom: 1px solid #000000;
+}
+
+/* fully user-customizable */
+.monthly-layout>div:nth-last-child(-n+7) {
+  border-bottom: 1px solid #000000;
+}
+
+/* fully user-customizable */
+.monthly-week-header>div {
+  border-bottom: 1px solid #000000;
+}
+
+/* fully user-customizable */
+.monthly-layout>div::before {
+  content: '';
+  position: absolute;
+  top: 2.5%;
+  height: 95%;
+  right: 0;
+  border-right: 1px solid #000000;
+}
+
+.content-wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
+/* fully user-customizable */
+.monthly-layout>div:nth-child(7n)::before {
+  border-right: none;
+}
+
+/* ////////////////////////// monthly //////////////////// */
 
 .planner-container>*:not(img, .tl-toggle) {
   position: relative;
@@ -144,7 +273,7 @@ body {
   position: absolute;
   width: 330px;
   height: 47px;
-  top: 25px;
+  /* top: 5px; */
   left: 31px;
   font-weight: normal;
   color: black;
@@ -476,9 +605,18 @@ button:hover {
 }
 
 .ProseMirror {
-  width: 100%;
-  height: inherit;
-  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  font-size: inherit;
+  outline: none;
+}
+
+.ProseMirror p {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: inherit;
 }
 
 .wr-left-tiptap-main {

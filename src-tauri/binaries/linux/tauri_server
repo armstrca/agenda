@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# apps/backend/bin/tauri_server
+require 'json'
+require_relative '../config/environment'
+require_relative '../lib/tasks/ipc_handler'
+
+STDOUT.sync = true
+puts JSON.dump({ status: 'ready' })
+
+while (line = STDIN.gets)
+  begin
+    req = JSON.parse(line, symbolize_names: true)
+    event   = req.fetch(:event)
+    payload = req.fetch(:payload)
+    result  = IpcHandler.handle(event, payload)
+    STDOUT.puts JSON.dump({ event: event, success: true, data: result })
+  rescue => e
+    STDOUT.puts JSON.dump({ event: event || nil, success: false, error: e.message })
+  end
+end

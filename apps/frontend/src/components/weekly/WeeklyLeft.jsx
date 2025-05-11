@@ -11,14 +11,17 @@ const WeeklyLeft = ({
   holidays,
   moonPhases,
   endDate,
-  plannerId,
-  tldraw_snapshots
+  tldraw_snapshots,
+  plannerId
 }) => {
   const components = {
-    Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_l`} />,
+    Tiptap: (props) => 
+    <Tiptap {...props} 
+    weekId={`${weekNumber}_${year}_l`}
+    />,
     TlDrawComponent: () => (
       <TlDrawComponent
-        persistenceKey={`weekly-${weekNumber}-${year}-r`}
+        persistenceKey={`weekly-${weekNumber}-${year}-l`}
         plannerId={plannerId}
         tldraw_snapshots={tldraw_snapshots}
       />
@@ -52,6 +55,7 @@ const WeeklyLeft = ({
       page_id={page_id}
       primaryColor={primaryColor}
       tldraw_snapshots={tldraw_snapshots}
+      plannerId={plannerId}
     >
       <SvgColorizer
         svgUrl={`${svgPath}?v=${Date.now()}`}

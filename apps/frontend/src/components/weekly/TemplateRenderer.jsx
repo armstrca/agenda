@@ -15,6 +15,7 @@ const TemplateRenderer = ({
   components,
   page_id,
   tldraw_snapshots,
+  plannerId,
   leftCalendarData,
   rightCalendarData,
   primaryColor,
@@ -80,12 +81,17 @@ const TemplateRenderer = ({
     let textContent = null;
     if (className === "month-name") {
       textContent = currentData?.month_year || data?.[0]?.month_year || '';
-    } else if (className === "week-days") {
+    } 
+    else if (className === "week-days") {
       const dayId = parseInt(node.attributes?.id, 10);
       if (dayId >= 1 && dayId <= 7) {
         textContent = daysOrder[dayId - 1]?.charAt(0) || '';
       }
+
     } else if (currentData) {
+      if (className === "monthly-day-cell-date") {
+        textContent = currentData.day_number;
+      }
       if (className === "day-number") textContent = currentData.day_number;
       if (className === "day-name") textContent = currentData.day_name;
       if (className === "holiday-box") {
@@ -93,7 +99,7 @@ const TemplateRenderer = ({
           currentData.holiday :
           [currentData.holiday].filter(Boolean);
         textContent = holidays.join(', ');
-      }      
+      }
       if (className === "moon-phase") textContent = currentData.moon_phase;
     }
 
@@ -106,6 +112,33 @@ const TemplateRenderer = ({
       });
     }
     let newContext = { ...context };
+
+    if (className === "monthly-day-cell") {
+      const dayNumber = currentData?.day_number;
+      const isEmptyCell = !dayNumber;
+
+      return (
+        <Component
+          key={uniqueKey}
+          className={className}
+          style={styles}
+          {...attributes}
+        >
+          {!isEmptyCell && (
+            <>
+              <div className="day-number">{dayNumber}</div>
+              {currentData?.holiday && (
+                <div className="holiday-box">{currentData.holiday}</div>
+              )}
+              {currentData?.moon_phase && (
+                <div className="moon-phase">{currentData.moon_phase}</div>
+              )}
+              {children?.map((child) => renderComponent(child, currentData))}
+            </>
+          )}
+        </Component>
+      );
+    }
 
     if (className === "wl-day-section" || className === "wr-day-section") {
       const dayData = data[dayIndexRef.current] || {};
@@ -169,6 +202,17 @@ const TemplateRenderer = ({
       );
     }
 
+    if (node.component === 'Tiptap') {
+      return (
+        <Component
+          key={uniqueKey}
+          tiptap_id={node.attributes?.tiptap_id}
+          pageId={page_id}
+          className={className}
+        />
+      );
+    }
+
     const attrs = { ...node.attrs };
     if (attrs && attrs['data-color']) {
       const colorType = attrs['data-color'];
@@ -176,7 +220,7 @@ const TemplateRenderer = ({
 
       if (node.component === 'path') {
         attrs.stroke = color;
-        attrs.fill = color; // Or conditionally set based on element type
+        attrs.fill = color;
       }
       if (node.component === 'rect') {
         attrs.fill = color;
@@ -187,7 +231,7 @@ const TemplateRenderer = ({
           key: uniqueKey,
           className,
           style: styles,
-          ...attrs, // Use modified attributes
+          ...attrs,
           ...component_props
         }
       );
@@ -208,7 +252,7 @@ const TemplateRenderer = ({
   };
 
   return (
-    <div className="planner-container">
+    <>
       <>
         <PageNavigation />
       </>
@@ -216,14 +260,14 @@ const TemplateRenderer = ({
       <TlDrawComponent
         persistenceKey={page_id}
         tldraw_snapshots={tldraw_snapshots}
-        plannerId="38e012ec-0ab2-4fbe-8e68-8a75e4716a35"
+        plannerId={plannerId}
       />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
           {renderComponent(node, undefined, {})}
         </React.Fragment>
       ))}
-    </div>
+    </>
   );
 };
 

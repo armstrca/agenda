@@ -6,7 +6,7 @@
   "build": {
     "frontendDist": "../apps/frontend/dist",
     "devUrl": "http://localhost:3000",
-    "beforeDevCommand": "cd ../apps/frontend && yarn dev",
+    "beforeDevCommand": "yarn start cd apps/go_backend && go run main.go",
     "beforeBuildCommand": "cd apps/frontend && yarn build"
   },
   "app": {
@@ -31,7 +31,7 @@
   },
   "bundle": {
     "externalBin": [
-      "binaries/artichoke"
+      "../apps/go_backend/agenda_go_backend"
     ],
     "active": true,
     "targets": "all",
