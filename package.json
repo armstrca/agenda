@@ -10,10 +10,9 @@
     "apps/*"
   ],
   "scripts": {
-    "start:backend": "cd apps/go_backend && go run ./",
+    "build:go": "cd apps/go_backend && go build -o agenda_go_backend.exe main.go",
     "start:frontend": "cd apps/frontend && yarn dev",
-    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\"",
-    "build:go": "cd apps/go_backend && go build -o agenda_go_backend.exe main.go"
+    "dev": "concurrently \"yarn build:go\" \"yarn tauri dev\""
   },
   "dependencies": {
     "@babel/core": "^7.26.10",

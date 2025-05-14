@@ -1,6 +1,5 @@
 // src/utils/ipc.ts
 import { invoke } from '@tauri-apps/api/core';
-import { isTauri } from './isTauri';
 
 export type IndexArgs = {
     planner_id: string;
@@ -31,20 +30,19 @@ export interface IndexReply {
 }
 
 export async function loadPages(args: IndexArgs): Promise<IndexReply> {
-    if (isTauri) {
-        const reply = await invoke<IndexReply>('pages_index', {
-            method: 'Pages.Index',
-            params: [args],
-        });
-        if (reply.error) throw new Error(reply.error);
-        return reply;
-    } else {
-        const response = await fetch(`http://localhost:3005/api/pages`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(args),
-        });
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-    }
-  }
+    const reply = await invoke<IndexReply>('pages_index', {
+        method: 'Pages.Index',
+        params: [args],
+    });
+    if (reply.error) throw new Error(reply.error);
+    return reply;
+}
+
+export interface IPCMessage<T = any> {
+    command: string;
+    payload?: T;
+}
+
+export async function ipcInvoke<T>(command: string, payload?: any): Promise<T> {
+    return invoke<T>('ipc_command', { command, payload });
+}

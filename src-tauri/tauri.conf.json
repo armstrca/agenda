@@ -4,9 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.agenda.dev",
   "build": {
-    "frontendDist": "../apps/frontend/dist",
-    "devUrl": "http://localhost:3000",
-    "beforeDevCommand": "yarn start",
+    "beforeDevCommand": "yarn build:go && yarn start:frontend",
     "beforeBuildCommand": "cd apps/frontend && yarn build"
   },
   "app": {
@@ -25,9 +23,9 @@
         "skipTaskbar": false
       }
     ],
-    "withGlobalTauri": true,
+    "withGlobalTauri": false,
     "security": {
-      "csp": null
+      "csp": "default-src 'self'"
     }
   },
   "bundle": {

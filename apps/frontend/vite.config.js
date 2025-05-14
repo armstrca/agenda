@@ -16,16 +16,6 @@ export default defineConfig({
     include: /src\/.*\.(js|jsx|ts|tsx)$/,
   },
   server: {
-    port: 3000,
-    proxy: {
-      '/pages': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-    },
+    port: 3000
   },
 });
