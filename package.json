@@ -12,7 +12,8 @@
   "scripts": {
     "start:backend": "cd apps/go_backend && go run ./",
     "start:frontend": "cd apps/frontend && yarn dev",
-    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\""
+    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\"",
+    "build:go": "cd apps/go_backend && go build -o agenda_go_backend.exe main.go"
   },
   "dependencies": {
     "@babel/core": "^7.26.10",
