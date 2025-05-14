@@ -16,7 +16,7 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
       };
 
       // 2. Invoke the Go sidecar via Tauri IPC:
-      const data: IndexReply = await loadPages(args);
+      const data = await loadPages(args);
 
       const [weekNumber, year, side] = params.weekId.split('_');
 

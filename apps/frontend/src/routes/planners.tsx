@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { Planner } from '../types/types'
+import { apiClient } from '../api/api'
 
 export const Route = createFileRoute('/planners')({
   component: PlannersIndex
@@ -13,17 +14,16 @@ function PlannersIndex() {
   useEffect(() => {
     async function loadPlanners() {
       try {
-        const response = await fetch('/api/planners')
-        const data: Planner[] = await response.json()
-        setPlanners(data)
+        const data = await apiClient.get('/api/planners') as Planner[];
+        setPlanners(data);
       } catch (error) {
-        console.error('Failed to fetch planners:', error)
+        console.error('Failed to fetch planners:', error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
-    loadPlanners()
-  }, [])
+    loadPlanners();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>
 

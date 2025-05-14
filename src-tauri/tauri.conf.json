@@ -6,7 +6,7 @@
   "build": {
     "frontendDist": "../apps/frontend/dist",
     "devUrl": "http://localhost:3000",
-    "beforeDevCommand": "yarn start cd apps/go_backend && go run main.go",
+    "beforeDevCommand": "yarn start",
     "beforeBuildCommand": "cd apps/frontend && yarn build"
   },
   "app": {
@@ -25,13 +25,14 @@
         "skipTaskbar": false
       }
     ],
+    "withGlobalTauri": true,
     "security": {
       "csp": null
     }
   },
   "bundle": {
     "externalBin": [
-      "../apps/go_backend/agenda_go_backend"
+      "../apps/go_backend/agenda_go_backend-x86_64-unknown-linux-gnu"
     ],
     "active": true,
     "targets": "all",

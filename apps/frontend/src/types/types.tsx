@@ -75,3 +75,37 @@ export interface TldrawSnapshot {
   created_at: string;
   updated_at: string;
 }
+
+export interface ApiResponse<T> {
+  data: T;
+  error?: string;
+}
+
+export interface PageResponse {
+  template: PageTemplate;
+  page_id: string;
+  planner_id: string;
+  tldraw_snapshots: any[];
+}
+
+export interface WeeklyResponse extends PageResponse {
+  weekData: {
+    weekNumber: number;
+    year: number;
+    side: string;
+    mainDates: string[];
+    endDate: string | null;
+    holidays: Record<string, string>;
+    moonPhases: Record<string, string>;
+  };
+}
+
+export interface MonthlyResponse extends PageResponse {
+  monthData: {
+    month: number;
+    year: number;
+    holidays: Record<string, string>;
+    moonPhases: Record<string, string>;
+    days: any[]; // Specify proper day type
+  };
+}

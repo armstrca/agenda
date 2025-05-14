@@ -2,27 +2,27 @@ import { createFileRoute } from '@tanstack/react-router';
 import Monthly from '../components/monthly/Monthly';
 import { PageTemplate } from '../types/types';
 import { useLoaderData } from '@tanstack/react-router';
+import { loadPages } from './../utils/ipc';
 
 export const Route = createFileRoute('/planners/$plannerId/monthly/$monthId')({
   loader: async ({ params }) => {
-    const response = await fetch(
-      `http://localhost:3001/api/planners/${params.plannerId}/pages?month_id=${params.monthId}&page_type=monthly`,
-      { credentials: 'include' }
-    );
+    const data: { holidays?: object; moonPhases?: object; days?: object;[key: string]: any } = await loadPages({
+      planner_id: params.plannerId,
+      month_id: params.monthId,
+      pageType: 'monthly'
+    });
 
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const data = await response.json();
-    console.log('API Response:', data); // Add this to debug
 
     const [month, year] = params.monthId.split('_');
 
     return {
-      template: processTemplateAssets(data.template),
+      template: processTemplateAssets(data.template as PageTemplate),
       monthData: {
-        ...data.monthData,
         month: parseInt(month),
-        year: parseInt(year)
+        year: parseInt(year),
+        holidays: data?.holidays || {},
+        moonPhases: data?.moonPhases || {},
+        days: data?.days || []
       },
       page_id: data.page_id,
       planner_id: data.planner_id,
