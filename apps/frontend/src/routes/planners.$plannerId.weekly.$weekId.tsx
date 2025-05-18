@@ -8,17 +8,23 @@ import { loadPages, IndexArgs, IndexReply } from './../utils/ipc';
 
 export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
   loader: async ({ params }) => {
+    console.debug("Loading weekly page with params:", params);
+    const [, , side] = params.weekId.split('_');
+    const pageType = side === 'r' ? 'weekly_right' : 'weekly_left';
+
     try {
       const args: IndexArgs = {
         planner_id: params.plannerId,
         week_id: params.weekId,
-        pageType: 'weekly',
+        pageType,
       };
 
-      // 2. Invoke the Go sidecar via Tauri IPC:
       const data = await loadPages(args);
 
-      const [weekNumber, year, side] = params.weekId.split('_');
+      const [weekNumber, year] = params.weekId.split('_');
+
+      if (!data.template) throw new Error("Missing template data");
+      if (!data.weekData) throw new Error("Missing week data");
 
       return {
         template: processTemplateAssets(data.template as PageTemplate),
@@ -26,7 +32,7 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
           ...data.weekData,
           weekNumber: parseInt(weekNumber),
           year: parseInt(year),
-          side: side,
+          side,
           mainDates: data.weekData?.mainDates ?? [],
           endDate: data.weekData?.endDate ?? null,
         },

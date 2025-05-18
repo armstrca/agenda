@@ -42,7 +42,7 @@ export interface PageTemplate {
   id: string;
   name?: string;
   content?: Record<string, any>;
-  template_type: 'daily' | 'weekly' | 'monthly' | 'custom' | 'weekly_left';
+  template_type: 'daily' | 'monthly' | 'custom' | 'weekly_left' | 'weekly_right';
   is_default: boolean;
   user_id: string;
   planner_id: string;

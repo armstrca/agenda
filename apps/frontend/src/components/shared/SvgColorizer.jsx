@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 
 const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
     const [svgContent, setSvgContent] = useState(null);
-    // const [error, setError] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const processSvg = async () => {

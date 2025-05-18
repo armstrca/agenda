@@ -16,6 +16,8 @@ export default defineConfig({
     include: /src\/.*\.(js|jsx|ts|tsx)$/,
   },
   server: {
-    port: 3000
+    host: '0.0.0.0',
+    port: 3000,
+    strictPort: true
   },
 });

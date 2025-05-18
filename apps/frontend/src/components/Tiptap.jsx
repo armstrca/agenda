@@ -4,6 +4,7 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import { useEffect, useState } from 'react';
+import { ipcInvoke } from '../utils/ipc';
 
 const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
@@ -68,8 +69,8 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ tiptap_id, pageId, className }) => {
-  // const storageKey = `tiptap-${tiptap_id}`;
+const Tiptap = ({ tiptap_id, pageId, className, plannerId, entry_date }) => {
+  console.log("Tiptap rendered", { tiptap_id, pageId, plannerId, entry_date });
   const [initialContent, setInitialContent] = useState('<p></p>');
 
   // Fetch existing planner_entry data
@@ -106,7 +107,7 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       // localStorage.setItem(storageKey, html);
-      savePlannerEntry(pageId, html, tiptap_id);
+      savePlannerEntry(pageId, html, tiptap_id, plannerId);
     },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
@@ -142,7 +143,7 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
         ],
       }),
       NoWrapValidator.configure({
-        container: `.${className}`,   // e.g. '.tiptap-container'
+        container: `.${className}`,
         maxWidth: 870,
       }),
     ],
@@ -154,19 +155,19 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
     }
   }, [editor, initialContent]);
 
-  const savePlannerEntry = async (pageId, content, tiptap_id) => {
+  // Save planner entry via IPC
+  const savePlannerEntry = async (pageId, content, tiptap_id, plannerId) => {
     try {
-      const response = await fetch(`/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content, tiptap_id }),
-      });
-
-      if (!response.ok) {
-      }
+      const args = {
+        planner_id: plannerId,
+        page_id: pageId,
+        tiptap_id,
+        content,
+        // entry_date: ... // Only needed for monthly/daily
+      };
+      await ipcInvoke('planner_entries_create', args);
     } catch (error) {
+      // Optionally handle error
     }
   };
 

@@ -14,8 +14,25 @@ function PlannersIndex() {
   useEffect(() => {
     async function loadPlanners() {
       try {
-        const data = await apiClient.get('/api/planners') as Planner[];
-        setPlanners(data);
+        const data = await apiClient.getPlanners(); // Changed from apiClient.get()
+        // Ensure each planner object matches the Planner type
+        const plannersArray = Array.isArray(data) ? data : [data];
+        setPlanners(
+          plannersArray.map((item: any) => ({
+            id: item.id,
+            user_id: item.user_id,
+            name: item.name,
+            created_at: item.created_at,
+            updated_at: item.updated_at,
+            // Add other Planner fields if needed
+            template: item.template,
+            plannerEntries: item.plannerEntries,
+            tldraw_snapshots: item.tldraw_snapshots,
+            weekData: item.weekData,
+            page_id: item.page_id,
+            planner_id: item.planner_id,
+          }))
+        );
       } catch (error) {
         console.error('Failed to fetch planners:', error);
       } finally {

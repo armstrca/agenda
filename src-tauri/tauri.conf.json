@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "identifier": "com.agenda.dev",
   "build": {
-    "beforeDevCommand": "yarn build:go && yarn start:frontend",
+    "frontendDist": "../apps/frontend/dist",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": "yarn start:frontend",
     "beforeBuildCommand": "cd apps/frontend && yarn build"
   },
   "app": {
@@ -13,7 +15,7 @@
         "title": "agenda",
         "width": 960,
         "height": 1440,
-        "maximized": true,
+        "maximized": false,
         "resizable": true,
         "fullscreen": false,
         "decorations": true,
@@ -30,7 +32,7 @@
   },
   "bundle": {
     "externalBin": [
-      "../apps/go_backend/agenda_go_backend-x86_64-unknown-linux-gnu"
+      "../apps/go_backend/agenda_go_backend"
     ],
     "active": true,
     "targets": "all",
