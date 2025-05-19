@@ -18,7 +18,7 @@ fn main() {
         .setup(|app| {
             let cmd = app.shell().sidecar("agenda_go_backend")
                 .expect("failed to create sidecar command")
-                .args(["-ipc"]);
+                .args(["-ipc", "--log-level=debug"]);
             let (rx, child) = cmd.spawn().expect("failed to spawn sidecar");
             app.manage(BackendProcess {
                 tx: Mutex::new(child),

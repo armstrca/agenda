@@ -10,18 +10,16 @@ const NoWrapValidator = Extension.create({
   name: 'noWrapValidator',
   addOptions() {
     return {
-      // CSS selector for the element whose height/font we measure
       container: null,
-      // maximum line width in px (keep your existing logic)
       maxWidth: 870,
     }
   },
-
   addProseMirrorPlugins() {
     return [
       new Plugin({
         key: new PluginKey('noWrapValidator'),
         filterTransaction: (tr, state) => {
+          if (tr.getMeta('init-content')) return true
           if (!tr.docChanged) return true
 
           // 1. Find the container element
@@ -36,9 +34,9 @@ const NoWrapValidator = Extension.create({
 
           // 2. Measure container height & font size
           const style = window.getComputedStyle(el)
-          const lineHeight = parseFloat(style.lineHeight)           // e.g. 30px :contentReference[oaicite:4]{index=4}
+          const lineHeight = parseFloat(style.lineHeight)
           const containerInner = el.clientHeight
-          const fontSize = parseFloat(style.fontSize)                      // includes padding, excludes borders :contentReference[oaicite:5]{index=5}
+          const fontSize = parseFloat(style.fontSize)
           const maxParagraphs = Math.floor(containerInner / lineHeight)
           const preciseWidth = el.getBoundingClientRect().width;
 
@@ -69,45 +67,40 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ tiptap_id, pageId, className, plannerId, entry_date }) => {
-  console.log("Tiptap rendered", { tiptap_id, pageId, plannerId, entry_date });
+const Tiptap = ({ tiptap_id, pageId, className }) => {
   const [initialContent, setInitialContent] = useState('<p></p>');
+  const plannerId = "38e012ec-0ab2-4fbe-8e68-8a75e4716a35";
 
-  // Fetch existing planner_entry data
+
   useEffect(() => {
     const fetchPlannerEntry = async () => {
       try {
-        const response = await fetch(
-          `/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${pageId}/planner_entries?tiptap_id=${tiptap_id}`
-        );
+        const data = await ipcInvoke('planner_entries_index', {
+          page_id: pageId,
+          planner_id: plannerId,
+          tiptap_id: tiptap_id
+        });
 
-        if (response.ok) {
-          const data = await response.json();
-          // Handle array response and extract the first entry's content
-          if (Array.isArray(data) && data.length > 0) {
-            setInitialContent(data[0].content);
-          } else if (data.content) { // Fallback for single object response
-            setInitialContent(data.content);
-          }
-        } else {
-
+        // Handle IPC response format
+        if (data.planner_entries?.length > 0) {
+          const rawContent = data.planner_entries[0].content;
+          const decodedContent = new DOMParser().parseFromString(rawContent, 'text/html').body.innerHTML;
+          setInitialContent(decodedContent);
         }
       } catch (error) {
-
+        console.error('Failed to fetch planner entry:', error);
       }
     };
 
     fetchPlannerEntry();
-  }, [pageId, tiptap_id]);
+  }, [pageId, tiptap_id, plannerId]);
 
-  // Initialize the editor
   const editor = useEditor({
     editable: true,
     content: initialContent,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      // localStorage.setItem(storageKey, html);
-      savePlannerEntry(pageId, html, tiptap_id, plannerId);
+      savePlannerEntry(html);
     },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
@@ -151,23 +144,23 @@ const Tiptap = ({ tiptap_id, pageId, className, plannerId, entry_date }) => {
 
   useEffect(() => {
     if (editor && initialContent) {
-      editor.commands.setContent(initialContent);
+      editor.commands.setContent(initialContent, false, {
+        preserveWhitespace: true,
+        meta: { 'init-content': true }
+      });
     }
   }, [editor, initialContent]);
 
-  // Save planner entry via IPC
-  const savePlannerEntry = async (pageId, content, tiptap_id, plannerId) => {
+  const savePlannerEntry = async (content) => {
     try {
-      const args = {
-        planner_id: plannerId,
+      await ipcInvoke('planner_entries_create', {
         page_id: pageId,
-        tiptap_id,
-        content,
-        // entry_date: ... // Only needed for monthly/daily
-      };
-      await ipcInvoke('planner_entries_create', args);
+        planner_id: plannerId,
+        tiptap_id: String(tiptap_id),
+        content: content
+      });
     } catch (error) {
-      // Optionally handle error
+      console.error('Failed to save planner entry:', error);
     }
   };
 

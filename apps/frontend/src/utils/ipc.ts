@@ -49,6 +49,7 @@ export const ipcInvoke = async (command: string, payload: any = {}) => {
     command: JSON.stringify({ command, payload })
   });
 
+  
   let response: string;
   try {
     response = await Promise.race([invokePromise, timeoutPromise]);

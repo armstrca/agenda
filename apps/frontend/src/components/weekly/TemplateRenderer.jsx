@@ -195,9 +195,11 @@ const TemplateRenderer = ({
       return (
         <Tiptap
           key={uniqueKey}
-          tiptap_id={tiptapId}
+          tiptap_id={tiptapId.toString()}
           pageId={page_id}
           className={className}
+          plannerId={plannerId}
+          entryDate={currentData?.entryDate}
         />
       );
     }

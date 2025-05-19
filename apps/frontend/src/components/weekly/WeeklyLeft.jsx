@@ -44,6 +44,7 @@ const WeeklyLeft = ({
       day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
       holiday: holidays[dateStr] || "",
       moon_phase: moonPhases[dateStr]?.emoji || "",
+      entryDate: dateStr
     };
   });
 
