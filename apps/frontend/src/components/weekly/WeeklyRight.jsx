@@ -14,7 +14,8 @@ const WeeklyRight = ({
     plannerId,
     leftCalendar,
     rightCalendar,
-    lastDayData
+    lastDayData,
+    daysOrder
 }) => {
     const components = {
         Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_r`} />,
@@ -35,7 +36,7 @@ const WeeklyRight = ({
     return (
         <TemplateRenderer
             template={template}
-            data={[lastDayData]} // For wr-day-section, pass as array
+            data={[lastDayData]}
             components={components}
             page_id={page_id}
             primaryColor={primaryColor}
@@ -43,6 +44,7 @@ const WeeklyRight = ({
             plannerId={plannerId}
             leftCalendarData={leftCalendar}
             rightCalendarData={rightCalendar}
+            daysOrder={daysOrder} // <-- add this line
         >
             <SvgColorizer
                 svgUrl={`${svgPath}?v=${Date.now()}`}
