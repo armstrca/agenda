@@ -487,7 +487,9 @@ p {
 }
 
 .button-next {
-  height: 1440px;
+  height: 1350px;
+  margin-top: 45px;
+  margin-bottom: 45px;
   position: absolute;
   width: 30px;
   left: 930px;
@@ -500,8 +502,9 @@ p {
 
 
 .button-prev {
-  height: 1440px;
-  /* top: 30px; */
+  height: 1350px;
+  margin-top: 45px;
+  margin-bottom: 45px;
   position: absolute;
   width: 30px;
   cursor: pointer;
