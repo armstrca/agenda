@@ -9,6 +9,7 @@ import {
 import EyeSlashIcon from './EyeSlashIcon';
 import PowerOffIcon from './PowerOffIcon';
 import 'tldraw/tldraw.css';
+import { ipcInvoke } from '../utils/ipc';
 
 function CustomQuickActions({ onToggleTldraw }) {
   return (
@@ -33,17 +34,34 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
     const initializeStore = async () => {
       const store = createTLStore();
 
+      let latestSnapshot = null;
+      let documentData = {};
+
       if (tldraw_snapshots?.length > 0) {
         try {
-          const latestSnapshot = tldraw_snapshots[0];
-          const documentData = latestSnapshot.document_data || {};
-          const schema = latestSnapshot.schema || { schemaVersion: 1 };
-          loadSnapshot(store, {
-            document: documentData,
-            schema
-          });
+          latestSnapshot = tldraw_snapshots[0];
+          documentData = latestSnapshot.document_data || {};
+
+          // Parse if it's a string (from backend)
+          if (typeof documentData === 'string') {
+            try {
+              documentData = JSON.parse(documentData);
+            } catch (e) {
+              console.error('[TLDrawComponent] Failed to parse document_data:', documentData, e);
+              documentData = {};
+            }
+          }
+
+          // Pass the parsed object directly!
+          loadSnapshot(store, documentData);
         } catch (error) {
-          console.error('Failed to load snapshot:', error);
+          console.error(
+            '[TLDrawComponent] Failed to load snapshot:',
+            error,
+            '\nSnapshots:', tldraw_snapshots,
+            '\nLatest Snapshot:', latestSnapshot,
+            '\nDocument Data:', documentData,
+          );
         }
       }
 
@@ -57,42 +75,41 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
     setShowTldraw(prev => !prev);
   };
 
+  const debouncedSave = useCallback((documentData) => {
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(async () => {
+      try {
+        await ipcInvoke('create_tldraw_snapshot', {
+          page_id: persistenceKey,
+          planner_id: plannerId,
+          tldraw_snapshot: {
+            document_data: documentData,
+          }
+        });
+      } catch (error) {
+        console.error(
+          '[TLDrawComponent] Failed to save snapshot:',
+          error,
+          '\nPersistence Key:', persistenceKey,
+          '\nPlanner ID:', plannerId,
+          '\nDocument Data:', documentData,
+        );
+      }
+    }, 350);
+  }, [persistenceKey, plannerId, storeWithStatus.store]);
+
   const handleMount = useCallback((editor) => {
     const cleanup = editor.store.listen(
       (update) => {
         if (update.source === 'user') {
           const tldraw_snapshot = getSnapshot(editor.store);
-          debouncedSave(tldraw_snapshot.document);
+          debouncedSave(tldraw_snapshot);
         }
       },
       { scope: 'document', source: 'user' }
     );
-
     return () => cleanup();
   }, []);
-
-  const debouncedSave = useCallback((documentData) => {
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(async () => {
-      try {
-        await fetch(
-          `http://localhost:3001/api/planners/38e012ec-0ab2-4fbe-8e68-8a75e4716a35/pages/${persistenceKey}/tldraw_snapshots`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              tldraw_snapshot: {
-                document_data: documentData,
-                schema: storeWithStatus.store?.schema.serialize()
-              }
-            }),
-          }
-        );
-      } catch (error) {
-        console.error('Failed to save snapshot:', error);
-      }
-    }, 350);
-  }, [persistenceKey, storeWithStatus.store]);
 
   const components = {
     QuickActions: () => (
