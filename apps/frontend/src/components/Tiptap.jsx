@@ -3,7 +3,7 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ipcInvoke } from '../utils/ipc';
 
 const NoWrapValidator = Extension.create({
@@ -70,7 +70,7 @@ const NoWrapValidator = Extension.create({
 const Tiptap = ({ tiptap_id, pageId, className }) => {
   const [initialContent, setInitialContent] = useState('<p></p>');
   const plannerId = "38e012ec-0ab2-4fbe-8e68-8a75e4716a35";
-
+  const debounceTimeout = useRef();
 
   useEffect(() => {
     const fetchPlannerEntry = async () => {
@@ -95,12 +95,33 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
     fetchPlannerEntry();
   }, [pageId, tiptap_id, plannerId]);
 
+  const savePlannerEntry = async (content) => {
+    try {
+      await ipcInvoke('planner_entries_create', {
+        page_id: pageId,
+        planner_id: plannerId,
+        tiptap_id: String(tiptap_id),
+        content: content
+      });
+    } catch (error) {
+      console.error('Failed to save planner entry:', error);
+    }
+  };
+
+  // Debounced save
+  const debouncedSave = (content) => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(() => {
+      savePlannerEntry(content);
+    }, 2000); // 2s debounce
+  };
+
   const editor = useEditor({
     editable: true,
     content: initialContent,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      savePlannerEntry(html);
+      debouncedSave(html);
     },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
@@ -150,19 +171,6 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
       });
     }
   }, [editor, initialContent]);
-
-  const savePlannerEntry = async (content) => {
-    try {
-      await ipcInvoke('planner_entries_create', {
-        page_id: pageId,
-        planner_id: plannerId,
-        tiptap_id: String(tiptap_id),
-        content: content
-      });
-    } catch (error) {
-      console.error('Failed to save planner entry:', error);
-    }
-  };
 
   useEffect(() => {
     if (!editor) return;
