@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Tiptap from '../Tiptap';
 import TlDrawComponent from '../TLDrawComponent';
 import chroma from 'chroma-js';
@@ -19,6 +19,7 @@ const TemplateRenderer = ({
   leftCalendarData,
   rightCalendarData,
   primaryColor,
+  daysOrder,
   children
 }) => {
   const structure = template?.content?.structure || [];
@@ -26,21 +27,7 @@ const TemplateRenderer = ({
   const dayIndexRef = useRef(0);
   const tiptapCounter = useRef(1);
 
-  // Get week start from template metadata
-  const weekStartDay = template?.content?.metadata?.default_styles?.["week-start-day"] || "Mon";
-
-  // Generate day order based on week start
-  const daysOrder = React.useMemo(() => {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const startIndex = days.indexOf(weekStartDay);
-    return startIndex === -1 ? days : [
-      ...days.slice(startIndex),
-      ...days.slice(0, startIndex)
-    ].slice(0, 7);
-  }, [weekStartDay]);
-
   useEffect(() => {
-    dayIndexRef.current = 0;
     tiptapCounter.current = 1;
   }, [data]);
 
@@ -62,7 +49,9 @@ const TemplateRenderer = ({
     };
   }, [primaryColor]);
 
-  const renderComponent = (node, currentData, context = {}) => {
+  dayIndexRef.current = 0;
+
+  const renderComponent = (node, currentData, context = { dayIndex: 0 }) => {
     const {
       component,
       class: className = '',
@@ -85,22 +74,19 @@ const TemplateRenderer = ({
     else if (className === "week-days") {
       const dayId = parseInt(node.attributes?.id, 10);
       if (dayId >= 1 && dayId <= 7) {
-        textContent = daysOrder[dayId - 1]?.charAt(0) || '';
+        textContent = daysOrder?.[dayId - 1] || '';
       }
 
     } else if (currentData) {
       if (className === "monthly-day-cell-date") {
         textContent = currentData.day_number;
       }
-      if (className === "day-number") textContent = currentData.day_number;
-      if (className === "day-name") textContent = currentData.day_name;
+      if (className === "day-number") textContent = currentData?.day_number;
+      if (className === "day-name") textContent = currentData?.day_name;
       if (className === "holiday-box") {
-        const holidays = Array.isArray(currentData.holiday) ?
-          currentData.holiday :
-          [currentData.holiday].filter(Boolean);
-        textContent = holidays.join(', ');
+        textContent = (currentData?.holidays || []).join(', ');
       }
-      if (className === "moon-phase") textContent = currentData.moon_phase;
+      if (className === "moon-phase") textContent = currentData?.moon_phase;
     }
 
     if (selfClosing || isVoidElement) {
@@ -141,17 +127,17 @@ const TemplateRenderer = ({
     }
 
     if (className === "wl-day-section" || className === "wr-day-section") {
-      const dayData = data[dayIndexRef.current] || {};
-      dayIndexRef.current++;
+      const dayIndex = dayIndexRef.current++;
+      const dayData = data[dayIndex] || {};
       return (
         <Component
-          key={uniqueKey}
+          key={`${className}-${dayIndex}`}
           className={className}
           style={styles}
           {...attributes}
           {...component_props}
         >
-          {children?.map((child) => renderComponent(child, dayData, newContext))}
+          {children?.map((child) => renderComponent(child, dayData))}
         </Component>
       );
     }
@@ -164,7 +150,7 @@ const TemplateRenderer = ({
       const calendarData = newContext.calendarSide === "left"
         ? leftCalendarData
         : rightCalendarData;
-      const buttonText = calendarData?.buttonData?.[buttonId] || ''; // Now using numeric key
+      const buttonText = calendarData?.buttonData?.[Number(buttonId)] || ''; // Now using numeric key
 
       return React.createElement(Component, {
         key: uniqueKey,
@@ -266,7 +252,7 @@ const TemplateRenderer = ({
       />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
-          {renderComponent(node, undefined, {})}
+          {renderComponent(node, undefined)}
         </React.Fragment>
       ))}
     </>

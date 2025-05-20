@@ -28,14 +28,7 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
 
       return {
         template: processTemplateAssets(data.template as PageTemplate),
-        weekData: {
-          ...data.weekData,
-          weekNumber: parseInt(weekNumber),
-          year: parseInt(year),
-          side,
-          mainDates: data.weekData?.mainDates ?? [],
-          endDate: data.weekData?.endDate ?? null,
-        },
+        weekData: data.weekData,
         page_id: data.page_id,
         planner_id: data.planner_id,
         tldraw_snapshots: data.tldraw_snapshots
@@ -76,7 +69,13 @@ function WeeklyComponent() {
     weekNumber: weekData.weekNumber,
     year: weekData.year,
     holidays: weekData.holidays ?? {},
-    moonPhases: weekData.moonPhases ?? {}
+    moonPhases: weekData.moonPhases ?? {},
+    templateData: weekData.templateData,
+    weekStart: weekData.weekStart,
+    currentMonthName: weekData.currentMonthName,
+    leftCalendar: weekData.leftCalendar ?? {},
+    rightCalendar: weekData.rightCalendar ?? {},
+    lastDayData: weekData.lastDayData ?? {},
   };
 
   return weekData.side === 'r' ? (

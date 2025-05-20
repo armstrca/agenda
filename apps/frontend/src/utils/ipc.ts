@@ -9,24 +9,46 @@ export type IndexArgs = {
     pageType: string;
 };
 
+export interface CalendarMonthData {
+    month: string; // e.g. "June 2025"
+    buttonData: Record<number, number>; // buttonId -> day_number (0 or empty for blanks)
+}
+
+export interface WeeklyDayData {
+    page_id: string;
+    month_year: string;
+    day_number: number;
+    day_name: string;
+    moon_phase: string;
+    entryDate: string;
+    week_day_abbr: string;
+    holidays: string[];
+}
+
+export interface WeekData {
+    weekNumber: number;
+    year: number;
+    mainDates: string[];
+    templateData: WeeklyDayData[];
+    holidays: Record<string, string[]>;
+    moonPhases: Record<string, { emoji: string; alt: string; ariaLabel: string }>;
+    side: string;
+    weekStart: string;
+    currentMonthName: string;
+    daysOrder: string[];
+    leftCalendar: CalendarMonthData;
+    rightCalendar: CalendarMonthData;
+    lastDayData: WeeklyDayData;
+}
+
 export interface IndexReply {
     template: Record<string, any>;
     plannerEntries: Record<string, { id: string; content: string; entryDate: string; updatedAt: string }[]>;
-    weekData?: {
-        weekNumber: number;
-        year: number;
-        endDate: string;
-        displayMonthYear: string;
-        mainDates: string[];
-        holidays: Record<string, string[]>;
-        moonPhases: Record<string, { emoji: string; alt: string; ariaLabel: string }>;
-        side: string;
-    };
+    weekData?: WeekData;
     error?: string;
     page_id: string;
     planner_id: string;
     tldraw_snapshots: Record<string, any>;
-    // plus other fields: pageID, plannerID, tldrawSnapshots, monthData...
 }
 
 export async function loadPages(args: IndexArgs): Promise<IndexReply> {
@@ -49,7 +71,6 @@ export const ipcInvoke = async (command: string, payload: any = {}) => {
     command: JSON.stringify({ command, payload })
   });
 
-  
   let response: string;
   try {
     response = await Promise.race([invokePromise, timeoutPromise]);

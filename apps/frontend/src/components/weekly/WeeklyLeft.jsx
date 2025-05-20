@@ -7,10 +7,7 @@ const WeeklyLeft = ({
   page_id,
   weekNumber,
   year,
-  mainDates,
-  holidays,
-  moonPhases,
-  endDate,
+  templateData,
   tldraw_snapshots,
   plannerId
 }) => {
@@ -28,25 +25,11 @@ const WeeklyLeft = ({
     )
   };
 
-  const weekStart = new Date(mainDates[0]);
+  const weekStart = new Date(templateData?.[0]?.entryDate || "");
   const monthColors = template?.content?.metadata?.default_styles?.["month-colors"] || {};
   const currentMonthName = weekStart.toLocaleString('en-US', { month: 'long' }).toLowerCase();
   const primaryColor = monthColors[currentMonthName] || '#ffffff';
   const svgPath = template?.content?.metadata?.svgBackground;
-
-  const templateData = mainDates.map(dateStr => {
-    const [y, m, d] = dateStr.split("-").map(Number);
-    const date = new Date(y, m - 1, d);
-    return {
-      page_id: page_id,
-      month_year: date.toLocaleDateString('en-US', { month: 'long' }) + ' ' + year,
-      day_number: date.getDate(),
-      day_name: date.toLocaleDateString('en-US', { weekday: 'long' }),
-      holiday: holidays[dateStr] || "",
-      moon_phase: moonPhases[dateStr]?.emoji || "",
-      entryDate: dateStr
-    };
-  });
 
   return (
     <TemplateRenderer
