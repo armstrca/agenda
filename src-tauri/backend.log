@@ -1,0 +1,334 @@
+2025/05/26 22:56:29 main.go:36: Go backend started in production mode
+2025/05/26 22:56:29 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/26 22:56:29 db.go:94: Migrations ran successfully!
+2025/05/26 22:56:29 main.go:80: Registered routes:
+2025/05/26 22:56:29 main.go:81: - pagesIndex
+2025/05/26 22:56:29 main.go:82: - getPlanners
+2025/05/26 22:56:29 main.go:83: - getPlanner
+2025/05/26 22:56:29 main.go:84: Registered planner_entries routes:
+2025/05/26 22:56:29 router.go:99:  - planner_entries_index
+2025/05/26 22:56:29 router.go:99:  - planner_entries_create
+2025/05/26 22:56:29 router.go:99:  - get_tldraw_snapshots
+2025/05/26 22:56:29 router.go:99:  - pages_index
+2025/05/26 22:56:29 router.go:99:  - create_tldraw_snapshot
+2025/05/26 22:56:29 router.go:99:  - ping
+2025/05/26 22:56:29 router.go:99:  - get_pages
+2025/05/26 22:56:29 router.go:99:  - get_planners
+2025/05/26 22:56:29 router.go:99:  - get_planner
+2025/05/26 22:56:29 router.go:39: ServeRouter started
+2025/05/26 22:56:32 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:34 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:34 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:34 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:36 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:37 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:37 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:37 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:44 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:44 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:44 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:45 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 22:56:45 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:45 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 22:56:48 router.go:77: ServeRouter exiting
+2025/05/26 23:06:49 main.go:36: Go backend started in production mode
+2025/05/26 23:06:49 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/26 23:06:49 db.go:94: Migrations ran successfully!
+2025/05/26 23:06:49 main.go:80: Registered routes:
+2025/05/26 23:06:49 main.go:81: - pagesIndex
+2025/05/26 23:06:49 main.go:82: - getPlanners
+2025/05/26 23:06:49 main.go:83: - getPlanner
+2025/05/26 23:06:49 main.go:84: Registered planner_entries routes:
+2025/05/26 23:06:49 router.go:99:  - get_pages
+2025/05/26 23:06:49 router.go:99:  - get_planners
+2025/05/26 23:06:49 router.go:99:  - get_planner
+2025/05/26 23:06:49 router.go:99:  - planner_entries_create
+2025/05/26 23:06:49 router.go:99:  - get_tldraw_snapshots
+2025/05/26 23:06:49 router.go:99:  - create_tldraw_snapshot
+2025/05/26 23:06:49 router.go:99:  - pages_index
+2025/05/26 23:06:49 router.go:99:  - planner_entries_index
+2025/05/26 23:06:49 router.go:99:  - ping
+2025/05/26 23:06:49 router.go:39: ServeRouter started
+2025/05/26 23:19:10 main.go:36: Go backend started in production mode
+2025/05/26 23:19:10 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/26 23:19:10 db.go:94: Migrations ran successfully!
+2025/05/26 23:19:10 main.go:80: Registered routes:
+2025/05/26 23:19:10 main.go:81: - pagesIndex
+2025/05/26 23:19:10 main.go:82: - getPlanners
+2025/05/26 23:19:10 main.go:83: - getPlanner
+2025/05/26 23:19:10 main.go:84: Registered planner_entries routes:
+2025/05/26 23:19:10 router.go:99:  - pages_index
+2025/05/26 23:19:10 router.go:99:  - get_pages
+2025/05/26 23:19:10 router.go:99:  - get_planner
+2025/05/26 23:19:10 router.go:99:  - planner_entries_create
+2025/05/26 23:19:10 router.go:99:  - get_planners
+2025/05/26 23:19:10 router.go:99:  - planner_entries_index
+2025/05/26 23:19:10 router.go:99:  - get_tldraw_snapshots
+2025/05/26 23:19:10 router.go:99:  - create_tldraw_snapshot
+2025/05/26 23:19:10 router.go:99:  - ping
+2025/05/26 23:19:10 router.go:39: ServeRouter started
+2025/05/26 23:19:12 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 23:19:12 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:12 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:14 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 23:19:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:20 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/26 23:19:20 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:20 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/26 23:19:38 router.go:77: ServeRouter exiting
+2025/05/30 00:17:43 main.go:36: Go backend started in production mode
+2025/05/30 00:17:43 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:17:43 db.go:94: Migrations ran successfully!
+2025/05/30 00:17:43 main.go:80: Registered routes:
+2025/05/30 00:17:43 main.go:81: - pagesIndex
+2025/05/30 00:17:43 main.go:82: - getPlanners
+2025/05/30 00:17:43 main.go:83: - getPlanner
+2025/05/30 00:17:43 main.go:84: Registered planner_entries routes:
+2025/05/30 00:17:43 router.go:99:  - pages_index
+2025/05/30 00:17:43 router.go:99:  - get_planners
+2025/05/30 00:17:43 router.go:99:  - get_planner
+2025/05/30 00:17:43 router.go:99:  - planner_entries_index
+2025/05/30 00:17:43 router.go:99:  - get_tldraw_snapshots
+2025/05/30 00:17:43 router.go:99:  - ping
+2025/05/30 00:17:43 router.go:99:  - get_pages
+2025/05/30 00:17:43 router.go:99:  - planner_entries_create
+2025/05/30 00:17:43 router.go:99:  - create_tldraw_snapshot
+2025/05/30 00:17:43 router.go:39: ServeRouter started
+2025/05/30 00:17:55 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:17:55 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:17:55 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:41 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:18:41 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:41 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:43 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:18:43 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:43 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:51 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:18:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:18:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:19:30 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:19:30 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:19:30 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:19:32 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:19:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:19:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:19:34 router.go:77: ServeRouter exiting
+2025/05/30 00:29:15 main.go:36: Go backend started in production mode
+2025/05/30 00:29:15 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:29:15 db.go:94: Migrations ran successfully!
+2025/05/30 00:29:15 main.go:80: Registered routes:
+2025/05/30 00:29:15 main.go:81: - pagesIndex
+2025/05/30 00:29:15 main.go:82: - getPlanners
+2025/05/30 00:29:15 main.go:83: - getPlanner
+2025/05/30 00:29:15 main.go:84: Registered planner_entries routes:
+2025/05/30 00:29:15 router.go:99:  - get_planners
+2025/05/30 00:29:15 router.go:99:  - get_planner
+2025/05/30 00:29:15 router.go:99:  - get_tldraw_snapshots
+2025/05/30 00:29:15 router.go:99:  - ping
+2025/05/30 00:29:15 router.go:99:  - pages_index
+2025/05/30 00:29:15 router.go:99:  - get_pages
+2025/05/30 00:29:15 router.go:99:  - planner_entries_index
+2025/05/30 00:29:15 router.go:99:  - planner_entries_create
+2025/05/30 00:29:15 router.go:99:  - create_tldraw_snapshot
+2025/05/30 00:29:15 router.go:39: ServeRouter started
+2025/05/30 00:31:47 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:31:47 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:31:47 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:31:49 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:31:49 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:31:49 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:13 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:32:13 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:13 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:14 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:32:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:35 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:32:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:36 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:32:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:36 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:37 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:32:37 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:32:37 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:34:18 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:34:18 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:34:18 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:37:29 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:37:31 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:37:50 router.go:77: ServeRouter exiting
+2025/05/30 00:38:46 main.go:36: Go backend started in production mode
+2025/05/30 00:38:46 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:38:46 db.go:94: Migrations ran successfully!
+2025/05/30 00:38:46 main.go:80: Registered routes:
+2025/05/30 00:38:46 main.go:81: - pagesIndex
+2025/05/30 00:38:46 main.go:82: - getPlanners
+2025/05/30 00:38:46 main.go:83: - getPlanner
+2025/05/30 00:38:46 main.go:84: Registered planner_entries routes:
+2025/05/30 00:38:46 router.go:99:  - get_pages
+2025/05/30 00:38:46 router.go:99:  - get_planners
+2025/05/30 00:38:46 router.go:99:  - get_tldraw_snapshots
+2025/05/30 00:38:46 router.go:99:  - create_tldraw_snapshot
+2025/05/30 00:38:46 router.go:99:  - ping
+2025/05/30 00:38:46 router.go:99:  - pages_index
+2025/05/30 00:38:46 router.go:99:  - get_planner
+2025/05/30 00:38:46 router.go:99:  - planner_entries_index
+2025/05/30 00:38:46 router.go:99:  - planner_entries_create
+2025/05/30 00:38:46 router.go:39: ServeRouter started
+2025/05/30 00:38:51 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:38:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:38:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:42:03 router.go:77: ServeRouter exiting
+2025/05/30 00:42:45 main.go:36: Go backend started in production mode
+2025/05/30 00:42:45 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:42:45 db.go:94: Migrations ran successfully!
+2025/05/30 00:42:45 main.go:80: Registered routes:
+2025/05/30 00:42:45 main.go:81: - pagesIndex
+2025/05/30 00:42:45 main.go:82: - getPlanners
+2025/05/30 00:42:45 main.go:83: - getPlanner
+2025/05/30 00:42:45 main.go:84: Registered planner_entries routes:
+2025/05/30 00:42:45 router.go:99:  - get_planner
+2025/05/30 00:42:45 router.go:99:  - planner_entries_index
+2025/05/30 00:42:45 router.go:99:  - create_tldraw_snapshot
+2025/05/30 00:42:45 router.go:99:  - pages_index
+2025/05/30 00:42:45 router.go:99:  - planner_entries_create
+2025/05/30 00:42:45 router.go:99:  - get_tldraw_snapshots
+2025/05/30 00:42:45 router.go:99:  - ping
+2025/05/30 00:42:45 router.go:99:  - get_pages
+2025/05/30 00:42:45 router.go:99:  - get_planners
+2025/05/30 00:42:45 router.go:39: ServeRouter started
+2025/05/30 00:42:47 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:42:47 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:42:47 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:49:34 router.go:77: ServeRouter exiting
+2025/05/30 00:50:42 main.go:36: Go backend started in production mode
+2025/05/30 00:50:42 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:50:42 main.go:25: Database test failed: record not found
+2025/05/30 00:55:58 main.go:36: Go backend started in production mode
+2025/05/30 00:55:58 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 00:55:58 main.go:25: Database test failed: record not found
+2025/05/30 00:55:58 main.go:27: Found planner: {ID: UserID: Name: Description: PlannerSettings: CreatedAt: UpdatedAt:}
+2025/05/30 00:55:58 db.go:94: Migrations ran successfully!
+2025/05/30 00:55:58 main.go:80: Registered routes:
+2025/05/30 00:55:58 main.go:81: - pagesIndex
+2025/05/30 00:55:58 main.go:82: - getPlanners
+2025/05/30 00:55:58 main.go:83: - getPlanner
+2025/05/30 00:55:58 main.go:84: Registered planner_entries routes:
+2025/05/30 00:55:58 router.go:99:  - get_pages
+2025/05/30 00:55:58 router.go:99:  - get_planners
+2025/05/30 00:55:58 router.go:99:  - create_tldraw_snapshot
+2025/05/30 00:55:58 router.go:99:  - get_planner
+2025/05/30 00:55:58 router.go:99:  - planner_entries_index
+2025/05/30 00:55:58 router.go:99:  - planner_entries_create
+2025/05/30 00:55:58 router.go:99:  - get_tldraw_snapshots
+2025/05/30 00:55:58 router.go:99:  - ping
+2025/05/30 00:55:58 router.go:99:  - pages_index
+2025/05/30 00:55:58 router.go:39: ServeRouter started
+2025/05/30 00:56:08 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 00:56:08 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 00:56:08 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:03:07 router.go:77: ServeRouter exiting
+2025/05/30 01:04:04 main.go:36: Go backend started in production mode
+2025/05/30 01:04:04 main.go:47: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 01:04:04 main.go:25: Database test failed: record not found
+2025/05/30 01:04:04 main.go:27: Found planner: {ID: UserID: Name: Description: PlannerSettings: CreatedAt: UpdatedAt:}
+2025/05/30 01:04:04 db.go:94: Migrations ran successfully!
+2025/05/30 01:04:04 main.go:80: Registered routes:
+2025/05/30 01:04:04 main.go:81: - pagesIndex
+2025/05/30 01:04:04 main.go:82: - getPlanners
+2025/05/30 01:04:04 main.go:83: - getPlanner
+2025/05/30 01:04:04 main.go:84: Registered planner_entries routes:
+2025/05/30 01:04:04 router.go:99:  - pages_index
+2025/05/30 01:04:04 router.go:99:  - get_planner
+2025/05/30 01:04:04 router.go:99:  - planner_entries_index
+2025/05/30 01:04:04 router.go:99:  - planner_entries_create
+2025/05/30 01:04:04 router.go:99:  - get_tldraw_snapshots
+2025/05/30 01:04:04 router.go:99:  - create_tldraw_snapshot
+2025/05/30 01:04:04 router.go:99:  - get_pages
+2025/05/30 01:04:04 router.go:99:  - get_planners
+2025/05/30 01:04:04 router.go:99:  - ping
+2025/05/30 01:04:04 router.go:39: ServeRouter started
+2025/05/30 01:06:32 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 01:06:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:06:32 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:09:14 router.go:77: ServeRouter exiting
+2025/05/30 01:11:12 main.go:59: Go backend started in production mode
+2025/05/30 01:11:12 main.go:86: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 01:11:12 main.go:27: Found 0 total planners in database
+2025/05/30 01:11:12 main.go:34: ❌ Database test failed: record not found
+2025/05/30 01:11:12 main.go:46: No planners found in database
+2025/05/30 01:11:12 db.go:94: Migrations ran successfully!
+2025/05/30 01:11:12 main.go:119: Registered routes:
+2025/05/30 01:11:12 main.go:120: - pagesIndex
+2025/05/30 01:11:12 main.go:121: - getPlanners
+2025/05/30 01:11:12 main.go:122: - getPlanner
+2025/05/30 01:11:12 main.go:123: Registered planner_entries routes:
+2025/05/30 01:11:12 router.go:99:  - ping
+2025/05/30 01:11:12 router.go:99:  - pages_index
+2025/05/30 01:11:12 router.go:99:  - get_pages
+2025/05/30 01:11:12 router.go:99:  - get_planners
+2025/05/30 01:11:12 router.go:99:  - get_tldraw_snapshots
+2025/05/30 01:11:12 router.go:99:  - get_planner
+2025/05/30 01:11:12 router.go:99:  - planner_entries_index
+2025/05/30 01:11:12 router.go:99:  - planner_entries_create
+2025/05/30 01:11:12 router.go:99:  - create_tldraw_snapshot
+2025/05/30 01:11:12 router.go:39: ServeRouter started
+2025/05/30 01:11:14 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 01:11:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:11:14 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:11:43 router.go:77: ServeRouter exiting
+2025/05/30 01:12:57 main.go:59: Go backend started in production mode
+2025/05/30 01:12:57 main.go:86: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 01:12:57 main.go:27: Found 0 total planners in database
+2025/05/30 01:12:57 main.go:34: ❌ Database test failed: record not found
+2025/05/30 01:12:57 main.go:46: No planners found in database
+2025/05/30 01:12:57 db.go:94: Migrations ran successfully!
+2025/05/30 01:12:57 main.go:119: Registered routes:
+2025/05/30 01:12:57 main.go:120: - pagesIndex
+2025/05/30 01:12:57 main.go:121: - getPlanners
+2025/05/30 01:12:57 main.go:122: - getPlanner
+2025/05/30 01:12:57 main.go:123: Registered planner_entries routes:
+2025/05/30 01:12:57 router.go:99:  - ping
+2025/05/30 01:12:57 router.go:99:  - pages_index
+2025/05/30 01:12:57 router.go:99:  - get_pages
+2025/05/30 01:12:57 router.go:99:  - get_planner
+2025/05/30 01:12:57 router.go:99:  - planner_entries_index
+2025/05/30 01:12:57 router.go:99:  - get_tldraw_snapshots
+2025/05/30 01:12:57 router.go:99:  - create_tldraw_snapshot
+2025/05/30 01:12:57 router.go:99:  - get_planners
+2025/05/30 01:12:57 router.go:99:  - planner_entries_create
+2025/05/30 01:12:57 router.go:39: ServeRouter started
+2025/05/30 01:12:59 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 01:12:59 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:12:59 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:14:47 main.go:59: Go backend started in production mode
+2025/05/30 01:14:47 main.go:86: Production DB path: C:\Users\calvi\Documents\GitHub\agenda\src-tauri\target\debug\agenda_development.sqlite3
+2025/05/30 01:14:47 main.go:27: Found 0 total planners in database
+2025/05/30 01:14:47 main.go:34: ❌ Database test failed: record not found
+2025/05/30 01:14:47 main.go:46: No planners found in database
+2025/05/30 01:14:47 db.go:94: Migrations ran successfully!
+2025/05/30 01:14:47 main.go:119: Registered routes:
+2025/05/30 01:14:47 main.go:120: - pagesIndex
+2025/05/30 01:14:47 main.go:121: - getPlanners
+2025/05/30 01:14:47 main.go:122: - getPlanner
+2025/05/30 01:14:47 main.go:123: Registered planner_entries routes:
+2025/05/30 01:14:47 router.go:99:  - planner_entries_index
+2025/05/30 01:14:47 router.go:99:  - planner_entries_create
+2025/05/30 01:14:47 router.go:99:  - get_tldraw_snapshots
+2025/05/30 01:14:47 router.go:99:  - create_tldraw_snapshot
+2025/05/30 01:14:47 router.go:99:  - ping
+2025/05/30 01:14:47 router.go:99:  - get_pages
+2025/05/30 01:14:47 router.go:99:  - get_planners
+2025/05/30 01:14:47 router.go:99:  - get_planner
+2025/05/30 01:14:47 router.go:99:  - pages_index
+2025/05/30 01:14:47 router.go:39: ServeRouter started
+2025/05/30 01:14:51 router.go:84: sendResponse: {"data":{"planner_entries":null,"error":"Planner not found"},"success":true}
+2025/05/30 01:14:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:14:51 router.go:84: sendResponse: {"data":[],"success":true}
+2025/05/30 01:15:09 router.go:77: ServeRouter exiting
