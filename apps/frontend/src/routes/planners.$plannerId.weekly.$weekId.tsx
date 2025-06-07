@@ -20,6 +20,7 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
       };
 
       const data = await loadPages(args);
+      console.log("Pages index response:", JSON.stringify(data));
 
       const [weekNumber, year] = params.weekId.split('_');
 

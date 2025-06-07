@@ -83,6 +83,11 @@ export const ipcInvoke = async (command: string, payload: any = {}) => {
   if (!parsed.success) throw new Error(parsed.error);
   const data = parsed.data || {};
 
+  // Check for application-level errors even if "success" is true
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
   // Only shape the response for pages_index, otherwise return raw data
   if (command === 'pages_index') {
     return {

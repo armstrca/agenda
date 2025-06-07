@@ -21,8 +21,22 @@ tauri-build = { version = "2.2.0", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
-tauri = { version = "2.5.0", features = [] }
+tauri = { version = "2.5.0", features = ["devtools", "webview-data-url"] }
 tauri-plugin-log = "2.0.0-rc"
 tauri-plugin-shell = "2"
 tauri-plugin-process = "2"
 tokio = "1.45.0"
+
+# Add this section to hide console window on Windows
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.48", features = ["Win32_UI_WindowsAndMessaging"] }
+
+# This is the critical part - specify Windows GUI subsystem
+[package.metadata.tauri.bundle.windows]
+webviewInstallMode = "downloadBootstrapper"
+nsis = { installerIcon = "icons/icon.ico", displayLanguageSelector = false }
+wix = { language = "en-US" }
+# Hide the console window in release builds
+[package.metadata.tauri.bundle.windows.windowsAttributes]
+type = "WindowsAttributes"
+gui = true

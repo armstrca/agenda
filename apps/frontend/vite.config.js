@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [
-    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
+    TanStackRouterVite({ target: 'react', autoCodeSplitting: false }),
     react(),
   ],
   resolve: {
@@ -19,5 +19,21 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     strictPort: true
+  },
+  css: {
+    postcss: {},
+  },
+  build: {
+    cssCodeSplit: true,
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          tldraw: ['tldraw', '@tldraw/tldraw']
+        }
+      }
+    }
   },
 });

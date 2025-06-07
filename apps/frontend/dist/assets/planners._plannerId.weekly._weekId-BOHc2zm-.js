@@ -1,1 +1,0 @@
-import{j as e}from"./index-DgBv5UP-.js";const t=({error:o})=>e.jsxs("div",{className:"p-4 text-red-500",children:["Error loading weekly page: ",o.message,e.jsx("button",{onClick:()=>window.location.reload(),className:"ml-4 px-4 py-2 bg-blue-500 text-white rounded",children:"Retry"})]});export{t as errorComponent};

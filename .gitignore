@@ -1,2 +1,5 @@
 node_modules
-backend.log
+# backend.log
+apps/frontend/dist
+apps/dist
+.trunk

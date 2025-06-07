@@ -27,7 +27,23 @@
     ],
     "withGlobalTauri": false,
     "security": {
-      "csp": "default-src 'self'"
+      "csp": {
+        "default-src": "'self' customprotocol: asset:",
+        "connect-src": "ipc: http://ipc.localhost http://tauri.localhost https://cdn.tldraw.com https://storage.googleapis.com",
+        "style-src": "'unsafe-inline' 'self' https://fonts.googleapis.com",
+        "font-src-elem": [
+          "https://fonts.gstatic.com",
+          "https://cdn.tldraw.com",
+          "'self'"
+        ],
+        "font-src": [
+          "https://fonts.gstatic.com",
+          "https://cdn.tldraw.com",
+          "'self'"
+        ],
+        "img-src": "'self' asset: http://asset.localhost http://tauri.localhost blob: data: https://cdn.tldraw.com",
+        "script-src": "'self' 'unsafe-eval'"
+      }
     }
   },
   "bundle": {
