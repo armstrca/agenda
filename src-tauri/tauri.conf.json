@@ -50,6 +50,9 @@
     "externalBin": [
       "../apps/go_backend/agenda_go_backend"
     ],
+    "resources": [
+      "../agenda.sqlite3"
+    ],
     "active": true,
     "targets": "all",
     "icon": [

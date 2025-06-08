@@ -21,10 +21,15 @@ fn main() {
         .plugin(tauri_plugin_log::Builder::default().build())
         .invoke_handler(tauri::generate_handler![ipc_command])
         .setup(|app| {
-            let cmd = app.shell().sidecar("agenda_go_backend")
+            let mut cmd = app.shell().sidecar("agenda_go_backend")
                 .expect("failed to create sidecar command")
                 .args(["-ipc", "--unbuffered"]);
-                
+
+            #[cfg(debug_assertions)]
+            {
+                cmd = cmd.env("AGENDA_ENV", "development");
+            }
+               
             let (rx, child) = cmd.spawn().expect("failed to spawn sidecar");
             app.manage(BackendProcess {
                 tx: Mutex::new(child),
