@@ -10,10 +10,9 @@
     "apps/*"
   ],
   "scripts": {
-    "build:go": "cd apps/go_backend && go build -ldflags \"-s -w -H=windowsgui\" -o agenda_go_backend-x86_64-pc-windows-msvc.exe main.go",
     "start:frontend": "cd apps/frontend && yarn dev",
-    "dev": "concurrently \"yarn build:go\" \"yarn tauri dev\"",
-    "build": "concurrently \"yarn build:go\" \"yarn tauri build\""
+    "dev": "cd ../agenda_rust/src-tauri && tauri dev",
+    "build": "cd ../agenda_rust/src-tauri && tauri build"
   },
   "dependencies": {
     "@babel/core": "^7.26.10",

@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import React from 'react';
-import WeeklyLeft from '../components/weekly/WeeklyLeft';
-import WeeklyRight from '../components/weekly/WeeklyRight';
-import { PageTemplate } from '../types/types';
+import WeeklyLeft from '../components/weekly/WeeklyLeft.jsx';
+import WeeklyRight from '../components/weekly/WeeklyRight.jsx';
+import { PageTemplate } from '../types/types.tsx';
 import { useLoaderData } from '@tanstack/react-router';
-import { loadPages, IndexArgs, IndexReply } from './../utils/ipc';
+import { loadPages, IndexArgs, IndexReply } from './../utils/ipc.ts';
 
 export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
   loader: async ({ params }) => {
@@ -85,7 +85,6 @@ function WeeklyComponent() {
     <WeeklyLeft {...commonProps} />
   );
 }
-
 
 // Helper to replace asset placeholders
 const processTemplateAssets = (template: PageTemplate) => {
