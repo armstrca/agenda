@@ -14,9 +14,21 @@ function Index() {
           plannerId: '38e012ec-0ab2-4fbe-8e68-8a75e4716a35',
           weekId: '40_2025_l'
         }}
-        className="text-blue-600 hover:underline"
+        className="homepage"
       >
-        View Weekly Planner
+        View Weekly Pages
+      </Link>
+      <Link 
+        to="/planners/create"
+        className="homepage"
+      >
+        Create Planner
+      </Link>
+      <Link 
+        to="/users/create"
+        className="homepage"
+      >
+        Create User
       </Link>
     </div>
   )

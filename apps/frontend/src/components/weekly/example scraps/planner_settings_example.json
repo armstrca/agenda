@@ -1,0 +1,33 @@
+{
+    "metadata": {
+        "base_dimensions": {
+            "width": 960,
+            "height": 1440
+        },
+        "default_styles": {
+            "planner-container": {
+                "position": "relative",
+                "width": "960px",
+                "height": "1440px",
+                "z-index": "0"
+            },
+            "week-start-day": "Mon",
+            "month-colors": {
+                "august": "#c00d0d",
+                "september": "#f9b000",
+                "october": "#ec7103",
+                "november": "#7d4e24",
+                "december": "#8aad84",
+                "january": "#764978",
+                "february": "#9695d3",
+                "march": "#005baa",
+                "april": "#ffc0cb",
+                "may": "#799a05",
+                "june": "#00acc8",
+                "july": "#da3696"
+            },
+            "country-holiday-codes": ["us", "ru", "uk"],
+            "planner-font": "aref-ruqaa"
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { Planner } from '../types/types'
-import { apiClient } from '../api/api'
+import { Planner } from '../types/types.tsx'
+import { apiClient } from '../api/api.js'
 
 export const Route = createFileRoute('/planners')({
   component: PlannersIndex

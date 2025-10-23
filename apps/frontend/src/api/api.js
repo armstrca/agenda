@@ -13,7 +13,9 @@ async function getRequest(endpoint) {
 
 export const apiClient = {
     getPlanners: () => ipcInvoke('get_planners'),
-    getPlanner: (id) => ipcInvoke('get_planner', { id })
+    getPlanner: (id) => ipcInvoke('get_planner', { id }),
+    createPlanner: (payload) => ipcInvoke('create_planner', payload),
+    createUser: (payload) => ipcInvoke('create_user', payload),
 };
 
 export const loadPages = async (args) => {

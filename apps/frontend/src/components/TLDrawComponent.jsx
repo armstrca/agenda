@@ -5,11 +5,17 @@ import {
   DefaultQuickActions,
   DefaultQuickActionsContent,
   TldrawUiMenuItem,
+  STROKE_SIZES
 } from 'tldraw';
 import EyeSlashIcon from './EyeSlashIcon';
 import PowerOffIcon from './PowerOffIcon';
 import 'tldraw/tldraw.css';
 import { ipcInvoke } from '../utils/ipc';
+
+STROKE_SIZES.s = .5
+STROKE_SIZES.m = 2.5
+STROKE_SIZES.l = 4
+STROKE_SIZES.xl = 8
 
 function CustomQuickActions({ onToggleTldraw }) {
   return (

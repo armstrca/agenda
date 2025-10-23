@@ -21,6 +21,13 @@ body {
   background-color: transparent;
 }
 
+.homepage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+}
+
 /* ////////////////////////// monthly //////////////////// */
 
 .monthly-layout {
@@ -47,18 +54,24 @@ body {
 }
 
 .monthly-week-header>div {
-  background-color: white; /* user-customizable */
+  background-color: white;
+  /* user-customizable */
   display: flex;
-  justify-content: center; /* user-customizable */
-  font-size: 18px; /* user-customizable */
+  justify-content: center;
+  /* user-customizable */
+  font-size: 18px;
+  /* user-customizable */
   position: relative;
-  color: black; /* user-customizable */
+  color: black;
+  /* user-customizable */
 }
 
 .monthly-layout>div {
-  background-color: white; /* user-customizable */
+  background-color: white;
+  /* user-customizable */
   display: block;
-  font-size: 20px; /* user-customizable */
+  font-size: 20px;
+  /* user-customizable */
   position: relative;
   overflow: hidden;
 }
@@ -67,35 +80,46 @@ body {
 .monthly-day-cell {
   display: flex;
   flex-direction: column;
-  background-color: white; /* user-customizable */
+  background-color: white;
+  /* user-customizable */
   position: relative;
   overflow: visible;
 }
 
 .monthly-day-cell-date-box {
   position: relative;
-  float: right; /* user-customizable */
-  width: 30px; /* user-customizable */
-  height: 30px; /* user-customizable */
-  top: 5px; /* user-customizable */
-  line-height: 25px; /* user-customizable */
-  background: rgb(221, 221, 221); /* user-customizable */
-  text-align: center; /* user-customizable */
+  float: right;
+  /* user-customizable */
+  width: 30px;
+  /* user-customizable */
+  height: 30px;
+  /* user-customizable */
+  top: 5px;
+  /* user-customizable */
+  line-height: 25px;
+  /* user-customizable */
+  background: rgb(221, 221, 221);
+  /* user-customizable */
+  text-align: center;
+  /* user-customizable */
   shape-outside: polygon(0 0,
       100% 0,
       100% 30px,
       2em 30px,
       2em 100%,
-      0 100%); /* user-customizable */
+      0 100%);
+  /* user-customizable */
 }
 
 .monthly-day-cell-date {
   justify-content: center;
-  display: block; /* non-customizable */
+  display: block;
+  /* non-customizable */
   width: 30px;
   height: 30px;
   font-size: 20px;
-  color: black; /* user-customizable */
+  color: black;
+  /* user-customizable */
 }
 
 .monthly-day-cell-content-wrapper {
@@ -107,9 +131,11 @@ body {
   overflow-wrap: break-word;
   word-break: break-all;
   outline: none;
-  font-size: 14px !important; /* user-customizable */
+  font-size: 14px !important;
+  /* user-customizable */
   z-index: 2;
-  color: black; /* user-customizable */
+  color: black;
+  /* user-customizable */
 }
 
 /* fully user-customizable */

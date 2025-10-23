@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "type": "weekly-left",
+    "type": "weekly_left",
     "svgBackground": "/images/weekly_left/wl-svg-background.svg",
     "default_styles": {
       "month-colors": {
