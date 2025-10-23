@@ -1,0 +1,427 @@
+{
+    "metadata": {
+        "type": "monthly",
+        "svgBackground": "/images/monthly/monthly-bg.svg",
+        "base_dimensions": {
+            "width": 960,
+            "height": 1440
+        },
+        "default_styles": {
+            "planner-container": {
+                "position": "relative",
+                "width": "960px",
+                "height": "1440px",
+                "z-index": "0"
+            },
+            "week-start-day": "Mon",
+            "month-colors": {
+                "august": "#c00d0d",
+                "september": "#f9b000",
+                "october": "#ec7103",
+                "november": "#7d4e24",
+                "december": "#8aad84",
+                "january": "#764978",
+                "february": "#9695d3",
+                "march": "#005baa",
+                "april": "#ffc0cb",
+                "may": "#799a05",
+                "june": "#00acc8",
+                "july": "#da3696"
+            }
+        }
+    },
+    "structure": [
+        {
+            "component": "div",
+            "class": "month-name",
+            "styles": {
+                "textAlign": "center",
+                "fontSize": "32px",
+                "padding": "20px"
+            }
+        },
+        {
+            "component": "div",
+            "class": "monthly-week-header",
+            "children": [
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                },
+                {
+                    "component": "div",
+                    "class": "week-day",
+                    "children": [
+                        {
+                            "component": "div",
+                            "class": "day-name",
+                            "data-color": "primary"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "component": "div",
+            "class": "monthly-layout",
+            "children": [
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "1"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "2"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "3"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "4"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "5"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "6"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "7"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "8"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "9"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "10"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "11"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "12"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "13"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "14"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "15"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "16"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "17"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "18"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "19"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "20"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "21"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "22"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "23"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "24"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "25"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "26"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "27"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "28"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "29"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "30"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "31"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "32"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "33"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "34"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "35"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "36"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "37"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "38"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "39"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "40"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "41"
+                    }
+                },
+                {
+                    "component": "TiptapMonthly",
+                    "className": "monthly-day-cell-tiptap-main",
+                    "attributes": {
+                        "tiptap_id": "42"
+                    }
+                }
+            ]
+        }
+    ]
+}

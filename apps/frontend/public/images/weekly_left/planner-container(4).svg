@@ -1,0 +1,116 @@
+<svg width="1824" height="2736" viewBox="0 0 1824 2736" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <g id="planner-container">
+        <g id="Group 1">
+            <line id="w-l-header-footer-line" x1="57" y1="173.7" x2="1767" y2="173.7"
+                stroke="#FF0000" stroke-width="6" />
+            <path id="w-l-header-footer-line_2" d="M57 2627.7L1767 2627.7" stroke="#FF0000"
+                stroke-width="6" />
+            <line id="w-l-input-line" x1="85.5" y1="2566.4" x2="1738.5" y2="2566.4" stroke="black"
+                stroke-opacity="0.54" />
+        </g>
+<g id="Group 2">
+            <g id="w-day-header">
+                <circle id="w-date-circle" cx="124.45" cy="2237.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines">
+                <line id="w-l-input-line_2" x1="85.5" y1="2509.4" x2="1738.5" y2="2509.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_3" x1="85.5" y1="2452.4" x2="1738.5" y2="2452.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_4" x1="85.5" y1="2395.4" x2="1738.5" y2="2395.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_5" x1="85.5" y1="2338.4" x2="1738.5" y2="2338.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>
+<g id="w-day">
+            <g id="w-day-header_2">
+                <circle id="w-date-circle_2" cx="128.25" cy="1040.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines_2">
+                <line id="w-l-divider-line" x1="57" y1="1370.8" x2="1767" y2="1370.8" stroke="black"
+                    stroke-width="2" />
+                <line id="w-l-input-line_6" x1="85.5" y1="1312.4" x2="1738.5" y2="1312.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_7" x1="85.5" y1="1255.4" x2="1738.5" y2="1255.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_8" x1="85.5" y1="1198.4" x2="1738.5" y2="1198.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_9" x1="85.5" y1="1141.4" x2="1738.5" y2="1141.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>f <g
+            id="w-day_2">
+            <g id="w-day-header_3">
+                <circle id="w-date-circle_3" cx="128.25" cy="1439.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines_3">
+                <line id="w-l-divider-line_2" x1="57" y1="1769.8" x2="1767" y2="1769.8"
+                    stroke="black" stroke-width="2" />
+                <line id="w-l-input-line_10" x1="85.5" y1="1711.4" x2="1738.5" y2="1711.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_11" x1="85.5" y1="1654.4" x2="1738.5" y2="1654.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_12" x1="85.5" y1="1597.4" x2="1738.5" y2="1597.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_13" x1="85.5" y1="1540.4" x2="1738.5" y2="1540.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>
+<g
+            id="w-day_3">
+            <g id="w-day-header_4">
+                <circle id="w-date-circle_4" cx="128.25" cy="1838.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines_4">
+                <line id="w-l-divider-line_3" x1="57" y1="2168.8" x2="1767" y2="2168.8"
+                    stroke="black" stroke-width="2" />
+                <line id="w-l-input-line_14" x1="85.5" y1="2110.4" x2="1738.5" y2="2110.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_15" x1="85.5" y1="2053.4" x2="1738.5" y2="2053.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_16" x1="85.5" y1="1996.4" x2="1738.5" y2="1996.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_17" x1="85.5" y1="1939.4" x2="1738.5" y2="1939.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>
+<g
+            id="w-day_4">
+            <g id="w-day-header_5">
+                <circle id="w-date-circle_5" cx="128.25" cy="641.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines_5">
+                <line id="w-l-divider-line_4" x1="57" y1="971.8" x2="1767" y2="971.8" stroke="black"
+                    stroke-width="2" />
+                <line id="w-l-input-line_18" x1="85.5" y1="913.4" x2="1738.5" y2="913.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_19" x1="85.5" y1="856.4" x2="1738.5" y2="856.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_20" x1="85.5" y1="799.4" x2="1738.5" y2="799.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_21" x1="85.5" y1="742.4" x2="1738.5" y2="742.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>
+<g
+            id="w-day_5">
+            <g id="w-day-header_6">
+                <circle id="w-date-circle_6" cx="128.25" cy="242.25" r="42.75" fill="#FCB6B6" />
+            </g>
+            <g id="w-day-lines_6">
+                <line id="w-l-divider-line_5" x1="57" y1="572.8" x2="1767" y2="572.8" stroke="black"
+                    stroke-width="2" />
+                <line id="w-l-input-line_22" x1="85.5" y1="514.4" x2="1738.5" y2="514.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_23" x1="85.5" y1="457.4" x2="1738.5" y2="457.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_24" x1="85.5" y1="400.4" x2="1738.5" y2="400.4"
+                    stroke="black" stroke-opacity="0.54" />
+                <line id="w-l-input-line_25" x1="85.5" y1="343.4" x2="1738.5" y2="343.4"
+                    stroke="black" stroke-opacity="0.54" />
+            </g>
+        </g>
+    </g>
+</svg>

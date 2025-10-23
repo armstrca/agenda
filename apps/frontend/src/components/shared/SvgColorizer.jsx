@@ -3,12 +3,16 @@ import chroma from 'chroma-js';
 
 const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
     const [svgContent, setSvgContent] = useState(null);
-    // const [error, setError] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const processSvg = async () => {
             try {
-                const response = await fetch(svgUrl);
+                // Fix for production - handle both dev and prod paths
+                const normalizedUrl = svgUrl.startsWith('/') ? svgUrl : `/${svgUrl}`;
+                console.log("Fetching SVG from:", normalizedUrl);
+                const response = await fetch(normalizedUrl);
+                
                 if (!response.ok) throw new Error(`Failed to fetch SVG: ${response.status}`);
                 const svgText = await response.text();
 
