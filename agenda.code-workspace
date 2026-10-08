@@ -1,8 +1,12 @@
 {
     "folders": [
         {
-            "path": "apps/backend"
+            "path": "."
         }
     ],
-    "settings": {}
+    "settings": {
+        "rust-analyzer.linkedProjects": [
+            "apps/agenda_rust/Cargo.toml"
+        ]
+    }
 }
