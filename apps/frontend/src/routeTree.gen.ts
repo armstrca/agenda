@@ -16,6 +16,7 @@ import { Route as PlannersImport } from './routes/planners'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersCreateImport } from './routes/users.create'
+import { Route as TemplatesEditorImport } from './routes/templates.editor'
 import { Route as PlannersCreateImport } from './routes/planners.create'
 import { Route as PlannersPlannerIdImport } from './routes/planners.$plannerId'
 import { Route as DailyDateImport } from './routes/daily.$date'
@@ -51,6 +52,12 @@ const IndexRoute = IndexImport.update({
 const UsersCreateRoute = UsersCreateImport.update({
   id: '/users/create',
   path: '/users/create',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TemplatesEditorRoute = TemplatesEditorImport.update({
+  id: '/templates/editor',
+  path: '/templates/editor',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -139,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlannersCreateImport
       parentRoute: typeof PlannersImport
     }
+    '/templates/editor': {
+      id: '/templates/editor'
+      path: '/templates/editor'
+      fullPath: '/templates/editor'
+      preLoaderRoute: typeof TemplatesEditorImport
+      parentRoute: typeof rootRoute
+    }
     '/users/create': {
       id: '/users/create'
       path: '/users/create'
@@ -200,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/daily/$date': typeof DailyDateRoute
   '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
   '/planners/create': typeof PlannersCreateRoute
+  '/templates/editor': typeof TemplatesEditorRoute
   '/users/create': typeof UsersCreateRoute
   '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
@@ -213,6 +228,7 @@ export interface FileRoutesByTo {
   '/daily/$date': typeof DailyDateRoute
   '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
   '/planners/create': typeof PlannersCreateRoute
+  '/templates/editor': typeof TemplatesEditorRoute
   '/users/create': typeof UsersCreateRoute
   '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
@@ -227,6 +243,7 @@ export interface FileRoutesById {
   '/daily/$date': typeof DailyDateRoute
   '/planners/$plannerId': typeof PlannersPlannerIdRouteWithChildren
   '/planners/create': typeof PlannersCreateRoute
+  '/templates/editor': typeof TemplatesEditorRoute
   '/users/create': typeof UsersCreateRoute
   '/planners/$plannerId/monthly/$monthId': typeof PlannersPlannerIdMonthlyMonthIdRoute
   '/planners/$plannerId/weekly/$weekId': typeof PlannersPlannerIdWeeklyWeekIdRoute
@@ -242,6 +259,7 @@ export interface FileRouteTypes {
     | '/daily/$date'
     | '/planners/$plannerId'
     | '/planners/create'
+    | '/templates/editor'
     | '/users/create'
     | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
@@ -254,6 +272,7 @@ export interface FileRouteTypes {
     | '/daily/$date'
     | '/planners/$plannerId'
     | '/planners/create'
+    | '/templates/editor'
     | '/users/create'
     | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
@@ -266,6 +285,7 @@ export interface FileRouteTypes {
     | '/daily/$date'
     | '/planners/$plannerId'
     | '/planners/create'
+    | '/templates/editor'
     | '/users/create'
     | '/planners/$plannerId/monthly/$monthId'
     | '/planners/$plannerId/weekly/$weekId'
@@ -278,6 +298,7 @@ export interface RootRouteChildren {
   PlannersRoute: typeof PlannersRouteWithChildren
   TldrawRoute: typeof TldrawRoute
   DailyDateRoute: typeof DailyDateRoute
+  TemplatesEditorRoute: typeof TemplatesEditorRoute
   UsersCreateRoute: typeof UsersCreateRoute
 }
 
@@ -287,6 +308,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlannersRoute: PlannersRouteWithChildren,
   TldrawRoute: TldrawRoute,
   DailyDateRoute: DailyDateRoute,
+  TemplatesEditorRoute: TemplatesEditorRoute,
   UsersCreateRoute: UsersCreateRoute,
 }
 
@@ -305,6 +327,7 @@ export const routeTree = rootRoute
         "/planners",
         "/tldraw",
         "/daily/$date",
+        "/templates/editor",
         "/users/create"
       ]
     },
@@ -338,6 +361,9 @@ export const routeTree = rootRoute
     "/planners/create": {
       "filePath": "planners.create.tsx",
       "parent": "/planners"
+    },
+    "/templates/editor": {
+      "filePath": "templates.editor.tsx"
     },
     "/users/create": {
       "filePath": "users.create.tsx"

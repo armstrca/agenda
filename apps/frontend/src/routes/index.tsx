@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+// @ts-ignore: Force-import global CSS with no typings
 import '../styles/styles.css'
 
 export const Route = createFileRoute('/')({
@@ -29,6 +30,12 @@ function Index() {
         className="homepage"
       >
         Create User
+      </Link>
+      <Link 
+        to="/templates/editor"
+        className="homepage"
+      >
+        Page Template Editor
       </Link>
     </div>
   )

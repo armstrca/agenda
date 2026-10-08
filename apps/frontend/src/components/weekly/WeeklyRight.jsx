@@ -15,7 +15,9 @@ const WeeklyRight = ({
     leftCalendar,
     rightCalendar,
     lastDayData,
-    daysOrder
+    daysOrder,
+    nextWeekId,
+    prevWeekId
 }) => {
     const components = {
         Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_r`} />,
@@ -45,6 +47,8 @@ const WeeklyRight = ({
             leftCalendarData={leftCalendar}
             rightCalendarData={rightCalendar}
             daysOrder={daysOrder} // <-- add this line
+            nextWeekId={nextWeekId}
+            prevWeekId={prevWeekId}
         >
             <SvgColorizer
                 svgUrl={`${svgPath}?v=${Date.now()}`}

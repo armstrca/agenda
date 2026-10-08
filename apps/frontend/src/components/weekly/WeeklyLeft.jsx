@@ -1,4 +1,6 @@
-// import TlDrawComponent from "../TLDrawComponent";
+import React from 'react';
+import Tiptap from "../Tiptap";
+import TlDrawComponent from "../TLDrawComponent";
 import TemplateRenderer from "./TemplateRenderer";
 import SvgColorizer from "../shared/SvgColorizer";
 
@@ -9,7 +11,9 @@ const WeeklyLeft = ({
   year,
   templateData,
   tldraw_snapshots,
-  plannerId
+  plannerId,
+  nextWeekId,
+  prevWeekId
 }) => {
   const components = {
     Tiptap: (props) => 
@@ -40,6 +44,8 @@ const WeeklyLeft = ({
       primaryColor={primaryColor}
       tldraw_snapshots={tldraw_snapshots}
       plannerId={plannerId}
+      nextWeekId={nextWeekId}
+      prevWeekId={prevWeekId}
     >
       <SvgColorizer
         svgUrl={`${svgPath}?v=${Date.now()}`}

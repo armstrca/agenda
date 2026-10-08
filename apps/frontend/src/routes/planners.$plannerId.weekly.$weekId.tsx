@@ -77,6 +77,8 @@ function WeeklyComponent() {
     leftCalendar: weekData.leftCalendar ?? {},
     rightCalendar: weekData.rightCalendar ?? {},
     lastDayData: weekData.lastDayData ?? {},
+    nextWeekId: weekData.nextWeekId,
+    prevWeekId: weekData.prevWeekId,
   };
 
   return weekData.side === 'r' ? (

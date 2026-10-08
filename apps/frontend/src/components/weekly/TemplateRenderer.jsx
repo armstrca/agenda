@@ -20,6 +20,8 @@ const TemplateRenderer = ({
   rightCalendarData,
   primaryColor,
   daysOrder,
+  nextWeekId,
+  prevWeekId,
   children
 }) => {
   const structure = template?.content?.structure || [];
@@ -242,7 +244,7 @@ const TemplateRenderer = ({
   return (
     <>
       <>
-        <PageNavigation />
+        <PageNavigation plannerId={plannerId} nextWeekId={nextWeekId} prevWeekId={prevWeekId} />
       </>
       {children}
       <TlDrawComponent
