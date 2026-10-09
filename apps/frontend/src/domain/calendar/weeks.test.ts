@@ -11,6 +11,7 @@ import {
   resolveWeek,
   weekIdForDate,
   weekNavigation,
+  weekPageIdForDate,
   weekRange,
   weeksInYear,
   type WeekSide,
@@ -290,5 +291,24 @@ describe('resolveWeek', () => {
 
   it('propagates the parse error', () => {
     expect(() => resolveWeek('bogus', 0)).toThrow('invalid week_id format');
+  });
+});
+
+describe('weekPageIdForDate', () => {
+  it('names the side that actually shows the date, for every week start', () => {
+    for (const weekStart of ALL_WEEK_STARTS) {
+      for (const date of daysInclusive('2024-12-01', '2026-01-31')) {
+        const id = weekPageIdForDate(date, weekStart);
+        const week = resolveWeek(id, weekStart);
+        const shown = week.side === 'l' ? week.mainDates.slice(0, 6) : week.mainDates.slice(6);
+        expect(shown, `${date} (start ${weekStart}) -> ${id}`).toContain(date);
+      }
+    }
+  });
+
+  it('puts the last day of a Monday-start week on the right page', () => {
+    expect(weekPageIdForDate('2025-10-06', 0)).toBe('41_2025_l');
+    expect(weekPageIdForDate('2025-10-11', 0)).toBe('41_2025_l');
+    expect(weekPageIdForDate('2025-10-12', 0)).toBe('41_2025_r');
   });
 });

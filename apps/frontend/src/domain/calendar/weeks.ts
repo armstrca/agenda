@@ -166,6 +166,15 @@ export function weekIdForDate(iso: ISODate, side: WeekSide = 'l', weekStartIndex
   return formatWeekId(week, year, side);
 }
 
+/**
+ * The id of the weekly page that shows `iso` itself: the left page holds the first six days of
+ * the week and the right page the seventh (WeekData.templateData / lastDayData).
+ */
+export function weekPageIdForDate(iso: ISODate, weekStartIndex: WeekdayIndex = 0): string {
+  const position = (weekdayIndex(iso) - weekStartIndex + 7) % 7;
+  return weekIdForDate(iso, position === 6 ? 'r' : 'l', weekStartIndex);
+}
+
 /** parse -> normalise -> range -> navigation, everything the weekly page builder needs. */
 export function resolveWeek(weekId: string, weekStartIndex: WeekdayIndex): ResolvedWeek {
   const parsed = parseWeekId(weekId);

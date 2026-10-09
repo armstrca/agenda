@@ -200,6 +200,13 @@ body {
   z-index: 9999 !important;
 }
 
+/* tldraw's menu-zone styling assumes the top-left corner (border and rounding on the right only).
+   Centred at the top, the quick actions need them on both sides. */
+.tlui-menu-zone.quick-actions-zone {
+  border-left: 2px solid var(--tl-color-background);
+  border-bottom-left-radius: var(--tl-radius-4);
+}
+
 /* behind all other content */
 
 .tl-background {
