@@ -562,7 +562,7 @@ button {
   height: inherit;
 }
 
-button:hover {
+button:not(.tlui-button):hover {
   background-color: rgba(0, 0, 0, 0.062);
   transition: .2s;
 }
