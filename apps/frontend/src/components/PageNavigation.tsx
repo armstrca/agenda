@@ -2,23 +2,29 @@ import React from 'react'
 import { useNavigate, useMatch } from '@tanstack/react-router'
 import { parseWeekId, weekNavigation, weeksInYear } from '../domain/calendar/weeks.ts'
 import { parseMonthId, monthNavigation } from '../domain/calendar/months.ts'
+import { parseDayId, dayNavigation } from '../domain/calendar/days.ts'
 
 interface PageNavigationProps {
     plannerId?: string
     /** Provided by the weekly loader; preferred because it already handles year rollover. */
     nextWeekId?: string
     prevWeekId?: string
+    /** Provided by the daily loader. */
+    nextDayId?: string
+    prevDayId?: string
 }
 
 type Targets =
     | { kind: 'weekly'; plannerId: string; prev: string; next: string }
     | { kind: 'monthly'; plannerId: string; prev: string; next: string }
+    | { kind: 'daily'; plannerId: string; prev: string; next: string }
 
 // Work out where "previous" and "next" go from the current route: weekly pages step left/right
-// page by page, monthly pages step a month. Returns null when the route is neither.
+// page by page, monthly pages step a month, daily pages step a day. Returns null when the route
+// is none of these.
 function resolveTargets(
-    params: { plannerId?: string; weekId?: string; monthId?: string },
-    { plannerId: plannerIdProp, nextWeekId, prevWeekId }: PageNavigationProps,
+    params: { plannerId?: string; weekId?: string; monthId?: string; dayId?: string },
+    { plannerId: plannerIdProp, nextWeekId, prevWeekId, nextDayId, prevDayId }: PageNavigationProps,
 ): Targets | null {
     const plannerId = plannerIdProp || params.plannerId
     if (!plannerId) return null
@@ -46,13 +52,25 @@ function resolveTargets(
         }
     }
 
+    if (params.dayId) {
+        if (nextDayId && prevDayId) {
+            return { kind: 'daily', plannerId, prev: prevDayId, next: nextDayId }
+        }
+        try {
+            const nav = dayNavigation(parseDayId(params.dayId))
+            return { kind: 'daily', plannerId, prev: nav.prevDayId, next: nav.nextDayId }
+        } catch {
+            return null
+        }
+    }
+
     return null
 }
 
 export default function PageNavigation(props: PageNavigationProps) {
     const navigate = useNavigate()
     const match = useMatch({ strict: false })
-    const params = (match?.params ?? {}) as { plannerId?: string; weekId?: string; monthId?: string }
+    const params = (match?.params ?? {}) as { plannerId?: string; weekId?: string; monthId?: string; dayId?: string }
     const targets = resolveTargets(params, props)
 
     const go = React.useCallback(
@@ -64,10 +82,15 @@ export default function PageNavigation(props: PageNavigationProps) {
                     to: '/planners/$plannerId/weekly/$weekId',
                     params: { plannerId: targets.plannerId, weekId: id },
                 })
-            } else {
+            } else if (targets.kind === 'monthly') {
                 void navigate({
                     to: '/planners/$plannerId/monthly/$monthId',
                     params: { plannerId: targets.plannerId, monthId: id },
+                })
+            } else {
+                void navigate({
+                    to: '/planners/$plannerId/daily/$dayId',
+                    params: { plannerId: targets.plannerId, dayId: id },
                 })
             }
         },
@@ -136,19 +159,19 @@ export default function PageNavigation(props: PageNavigationProps) {
     }, [go, targets === null])
 
     if (!targets) return null
-    const isMonthly = targets.kind === 'monthly'
+    const unit = targets.kind === 'monthly' ? 'month' : targets.kind === 'daily' ? 'day' : 'week'
 
     return (
         <div className="page-navigation">
             <button
                 className="button-prev"
                 onClick={() => go('prev')}
-                aria-label={isMonthly ? "Previous month" : "Previous week"}
+                aria-label={`Previous ${unit}`}
             />
             <button
                 className="button-next"
                 onClick={() => go('next')}
-                aria-label={isMonthly ? "Next month" : "Next week"}
+                aria-label={`Next ${unit}`}
             />
         </div>
     )

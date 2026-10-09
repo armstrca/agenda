@@ -14,13 +14,17 @@
  * Semantics preserved from the Rust side:
  *   - A day is sampled at 12:00 UTC of that calendar day, independent of the machine's zone, so
  *     the label reflects the phase for most of the day everywhere.
- *   - The emoji is emitted only on the first day of a run of equal phase names *within the
- *     requested list*. The first requested day therefore always carries one, and the same date can
- *     be "" in one request and "🌔" in another. The weekly templates rely on that to label a
- *     change once per visible week rather than once per lunar month.
+ *
+ * Deliberate departure from the Rust side (which labelled the first day of every requested list,
+ * so the same date could be "" on one page and "🌔" on another): whether a date shows its emoji
+ * depends on the calendar alone, so the daily, weekly and monthly pages always agree.
+ *   - A date can only show the emoji if its phase name differs from the previous calendar day's.
+ *   - No two consecutive days both show one. The narrow buckets (new, quarters, full) can last a
+ *     single day, so two changes can land back to back; the first of such a run shows, the next is
+ *     blank, the one after that may show again, and so on (1st, 3rd, … day of the run).
  */
 
-import { dayOf, monthOf, yearOf, type ISODate } from '../dates.ts';
+import { addDays, dayOf, monthOf, yearOf, type ISODate } from '../dates.ts';
 import type { MoonPhaseMap } from '../types.ts';
 
 export type MoonPhaseName =
@@ -163,22 +167,51 @@ export function moonPhaseForDate(iso: ISODate): MoonPhase {
 }
 
 /**
+ * Whether `iso` shows its moon emoji: its phase name differs from the previous calendar day's,
+ * and it is an odd-numbered day of a run of such consecutive changes (so the day before it does
+ * not show one). See the module header.
+ */
+export function showsMoonPhase(
+  iso: ISODate,
+  nameOf: (iso: ISODate) => MoonPhaseName = (d) => moonPhaseForDate(d).name,
+): boolean {
+  let run = 0;
+  let day = iso;
+  let name = nameOf(day);
+  for (;;) {
+    const previousDay = addDays(day, -1);
+    const previousName = nameOf(previousDay);
+    if (previousName === name) break;
+    run++;
+    day = previousDay;
+    name = previousName;
+  }
+  return run % 2 === 1;
+}
+
+/**
  * Per-date moon info for a list of dates, in the given order. A date carries its emoji only when
- * its phase name differs from the previous date *in the list* (so the first date always does);
- * otherwise all three fields are "". See the module header for why.
+ * `showsMoonPhase` says so, whatever else is in the list; otherwise all three fields are "".
  */
 export function moonPhases(dates: readonly ISODate[]): MoonPhaseMap {
+  const names = new Map<ISODate, MoonPhaseName>();
+  const nameOf = (iso: ISODate): MoonPhaseName => {
+    let name = names.get(iso);
+    if (name === undefined) {
+      name = moonPhaseForDate(iso).name;
+      names.set(iso, name);
+    }
+    return name;
+  };
   const out: MoonPhaseMap = {};
-  let previous: MoonPhaseName | undefined;
   for (const date of dates) {
-    const { name, emoji } = moonPhaseForDate(date);
-    if (name !== previous) {
+    if (showsMoonPhase(date, nameOf)) {
+      const emoji = MOON_EMOJI[nameOf(date)];
       const label = `Moon phase: ${emoji}`;
       out[date] = { emoji, alt: label, aria_label: label };
     } else {
       out[date] = { emoji: '', alt: '', aria_label: '' };
     }
-    previous = name;
   }
   return out;
 }

@@ -1,6 +1,7 @@
 /**
- * Page builders: the find-or-build behind the weekly and monthly routes, ported from the Rust
- * `find_or_build_weekly` / `find_or_build_monthly` (apps/agenda_rust/src/models/pages.rs).
+ * Page builders: the find-or-build behind the weekly, monthly and daily routes. Weekly and monthly
+ * are ported from the Rust `find_or_build_weekly` / `find_or_build_monthly`
+ * (apps/agenda_rust/src/models/pages.rs); daily is new in the TypeScript port.
  *
  * Why it is shaped this way:
  *   - A page row is created lazily the first time a period is opened and stored under its
@@ -19,11 +20,15 @@
  *   - The Rust monthly builder computed month_data and then never emitted it. This port returns it
  *     as `monthData`, the fix called for in TS_MIGRATION_PLAN.md, so the monthly route gets
  *     holidays and moon phases like the weekly one.
+ *   - Daily pages came after planners already existed with only the weekly and monthly defaults,
+ *     so the daily builder seeds the bundled daily default (and only that type) the first time a
+ *     planner without one opens a day. After that it behaves exactly like the other builders.
  *   - Calendar arithmetic lives in ./calendar and ./dates; this module only composes it, and every
  *     value it emits is one the golden fixtures under __fixtures__ pin down.
  */
 
 import type { Database } from '../db/Database.ts';
+import { dayNavigation, parseDayId } from './calendar/days.ts';
 import { calendarsForWeek, daysOrder } from './calendar/grids.ts';
 import { holidaysBetween } from './calendar/holidays.ts';
 import { formatMonthId, monthRange, parseMonthId } from './calendar/months.ts';
@@ -44,8 +49,10 @@ import { entriesBetween } from './entries.ts';
 import { newId } from './ids.ts';
 import { plannerWeekStartIndex, requirePlanner } from './planners.ts';
 import { listSnapshots } from './snapshots.ts';
-import { findDefaultTemplate, getTemplate, toTemplateRecord } from './templates.ts';
+import { findDefaultTemplate, getTemplate, seedDefaultTemplates, toTemplateRecord } from './templates.ts';
 import type {
+  DailyPage,
+  DayData,
   HolidayMap,
   MonthData,
   MonthlyPage,
@@ -292,6 +299,45 @@ export async function loadMonthlyPage(db: Database, plannerId: string, monthId: 
 }
 
 /**
+ * Everything the daily route renders for `dayId` ("YYYY-MM-DD"), creating the page on first visit.
+ * Errors, in order: 'invalid planner_id (expected UUID)', 'planner not found',
+ * 'invalid day_id format', 'Default daily template not found'.
+ */
+export async function loadDailyPage(db: Database, plannerId: string, dayId: string): Promise<DailyPage> {
+  const planner = await requirePlanner(db, plannerId);
+  const date = parseDayId(dayId);
+  await seedDefaultTemplates(db, planner.id, planner.profile_id, ['daily']);
+
+  const { page, template } = await findOrCreatePage(db, {
+    planner,
+    page_type: 'daily',
+    period_identifier: date,
+    page_date: date,
+    template_type: 'daily',
+    missingTemplateMessage: 'Default daily template not found',
+  });
+
+  const [plannerEntries, tldraw_snapshots] = await Promise.all([
+    entriesBetween(db, page.id, date, date),
+    listSnapshots(db, page.id),
+  ]);
+
+  const dayData: DayData = {
+    ...weekDayData(date, holidaysBetween(date, date, planner.planner_settings), moonPhases([date])),
+    ...dayNavigation(date),
+  };
+
+  return {
+    template: toTemplateRecord(template),
+    plannerEntries,
+    tldraw_snapshots,
+    dayData,
+    page_id: page.id,
+    planner_id: planner.id,
+  };
+}
+
+/**
  * The weekly page id that shows `today` for this planner ("go to this week"). The planner's
  * week-start day moves the window, so the same date can be on different pages for different
  * planners; see weekIdForDate.
@@ -303,4 +349,9 @@ export function currentWeekId(planner: Planner, today: ISODate = todayISO(), sid
 /** The monthly page id that shows `today` ("go to this month"). */
 export function currentMonthId(today: ISODate = todayISO()): string {
   return formatMonthId(monthOf(today), yearOf(today));
+}
+
+/** The daily page id that shows `today` ("go to today"). */
+export function currentDayId(today: ISODate = todayISO()): string {
+  return parseDayId(today);
 }

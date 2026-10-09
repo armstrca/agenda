@@ -1,0 +1,557 @@
+{
+  "name": "Default Daily",
+  "template_type": "daily",
+  "content": {
+    "metadata": {
+      "type": "daily",
+      "svgBackground": "/images/daily/daily-bg.svg",
+      "default_styles": {
+        "month-colors": {
+          "may": "#799a05",
+          "july": "#da3696",
+          "june": "#00acc8",
+          "april": "#ffc0cb",
+          "march": "#005baa",
+          "august": "#c00d0d",
+          "january": "#764978",
+          "october": "#ec7103",
+          "december": "#8aad84",
+          "february": "#9695d3",
+          "november": "#7d4e24",
+          "september": "#f9b000"
+        },
+        "week-start-day": "Mon",
+        "planner-container": {
+          "width": "960px",
+          "height": "1440px",
+          "z-index": "0",
+          "position": "relative"
+        }
+      },
+      "base_dimensions": {
+        "width": 960,
+        "height": 1440
+      }
+    },
+    "structure": [
+      {
+        "class": "planner-container",
+        "children": [
+          {
+            "class": "d-month-name",
+            "component": "div"
+          },
+          {
+            "class": "d-day-header",
+            "children": [
+              {
+                "class": "day-number",
+                "component": "div"
+              },
+              {
+                "class": "day-name",
+                "component": "div"
+              },
+              {
+                "class": "moon-phase",
+                "component": "div"
+              },
+              {
+                "class": "holiday-box",
+                "component": "div"
+              }
+            ],
+            "component": "div"
+          },
+          {
+            "class": "header-footer",
+            "children": [
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "86.5px"
+                },
+                "attributes": {
+                  "data-hour": 0
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "140.5px"
+                },
+                "attributes": {
+                  "data-hour": 1
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "194.5px"
+                },
+                "attributes": {
+                  "data-hour": 2
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "248.5px"
+                },
+                "attributes": {
+                  "data-hour": 3
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "302.5px"
+                },
+                "attributes": {
+                  "data-hour": 4
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "356.5px"
+                },
+                "attributes": {
+                  "data-hour": 5
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "410.5px"
+                },
+                "attributes": {
+                  "data-hour": 6
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "464.5px"
+                },
+                "attributes": {
+                  "data-hour": 7
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "518.5px"
+                },
+                "attributes": {
+                  "data-hour": 8
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "572.5px"
+                },
+                "attributes": {
+                  "data-hour": 9
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "626.5px"
+                },
+                "attributes": {
+                  "data-hour": 10
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "680.5px"
+                },
+                "attributes": {
+                  "data-hour": 11
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "734.5px"
+                },
+                "attributes": {
+                  "data-hour": 12
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "788.5px"
+                },
+                "attributes": {
+                  "data-hour": 13
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "842.5px"
+                },
+                "attributes": {
+                  "data-hour": 14
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "896.5px"
+                },
+                "attributes": {
+                  "data-hour": 15
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "950.5px"
+                },
+                "attributes": {
+                  "data-hour": 16
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1004.5px"
+                },
+                "attributes": {
+                  "data-hour": 17
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1058.5px"
+                },
+                "attributes": {
+                  "data-hour": 18
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1112.5px"
+                },
+                "attributes": {
+                  "data-hour": 19
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1166.5px"
+                },
+                "attributes": {
+                  "data-hour": 20
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1220.5px"
+                },
+                "attributes": {
+                  "data-hour": 21
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1274.5px"
+                },
+                "attributes": {
+                  "data-hour": 22
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              },
+              {
+                "class": "d-hour-section",
+                "styles": {
+                  "top": "1328.5px"
+                },
+                "attributes": {
+                  "data-hour": 23
+                },
+                "children": [
+                  {
+                    "class": "d-hour-label",
+                    "component": "div"
+                  },
+                  {
+                    "class": "d-hour-tiptap-main",
+                    "component": "div"
+                  }
+                ],
+                "component": "div"
+              }
+            ],
+            "component": "div"
+          }
+        ],
+        "component": "div"
+      }
+    ]
+  }
+}

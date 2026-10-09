@@ -115,7 +115,7 @@ describe('planners', () => {
   it('seeds exactly one default template per bundled type', async () => {
     const planner = await createPlanner(db, { name: 'Seeded' });
     const templates = await listTemplates(db, planner.id);
-    expect(templates.map(t => t.template_type).sort()).toEqual(['monthly', 'weekly_left', 'weekly_right']);
+    expect(templates.map(t => t.template_type).sort()).toEqual(['daily', 'monthly', 'weekly_left', 'weekly_right']);
 
     for (const template of templates) {
       expect(template.is_default).toBe(true);
@@ -135,12 +135,12 @@ describe('planners', () => {
     expect(await db.select('SELECT count(*) AS n FROM page_templates')).toEqual([{ n: 0 }]);
   });
 
-  it('seeds each planner its own three templates', async () => {
+  it('seeds each planner its own four templates', async () => {
     const a = await createPlanner(db, { name: 'A' });
     const b = await createPlanner(db, { name: 'B' });
-    expect(await listTemplates(db, a.id)).toHaveLength(3);
-    expect(await listTemplates(db, b.id)).toHaveLength(3);
-    expect(await db.select('SELECT count(*) AS n FROM page_templates WHERE is_default = 1')).toEqual([{ n: 6 }]);
+    expect(await listTemplates(db, a.id)).toHaveLength(4);
+    expect(await listTemplates(db, b.id)).toHaveLength(4);
+    expect(await db.select('SELECT count(*) AS n FROM page_templates WHERE is_default = 1')).toEqual([{ n: 8 }]);
 
     const aLeft = await findDefaultTemplate(db, a.id, 'weekly_left');
     const bLeft = await findDefaultTemplate(db, b.id, 'weekly_left');

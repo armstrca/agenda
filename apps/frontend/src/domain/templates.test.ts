@@ -69,14 +69,15 @@ describe('templates', () => {
     expect(isTemplateType(undefined)).toBe(false);
   });
 
-  it('ships three valid bundled defaults, one per page-building type', () => {
-    expect(BUNDLED_DEFAULT_TEMPLATES.map(b => b.template_type)).toEqual(['weekly_left', 'weekly_right', 'monthly']);
+  it('ships four valid bundled defaults, one per page-building type', () => {
+    expect(BUNDLED_DEFAULT_TEMPLATES.map(b => b.template_type)).toEqual(['weekly_left', 'weekly_right', 'monthly', 'daily']);
     for (const bundled of BUNDLED_DEFAULT_TEMPLATES) {
       expect(bundled.name.length).toBeGreaterThan(0);
       expect(() => validateTemplateContent(bundled.content)).not.toThrow();
     }
     expect(bundledDefaultTemplate('monthly')?.name).toBe('Default Monthly');
-    expect(bundledDefaultTemplate('daily')).toBeNull();
+    expect(bundledDefaultTemplate('daily')?.name).toBe('Default Daily');
+    expect(bundledDefaultTemplate('extra')).toBeNull();
   });
 
   it('creates a template and returns exactly the PageTemplate shape', async () => {
@@ -271,7 +272,7 @@ describe('templates', () => {
 
   it('seeds the bundled defaults once and fills in a missing type later', async () => {
     const seeded = await seedDefaultTemplates(db, planner.id, planner.profile_id);
-    expect(seeded.map(t => t.template_type)).toEqual(['weekly_left', 'weekly_right', 'monthly']);
+    expect(seeded.map(t => t.template_type)).toEqual(['weekly_left', 'weekly_right', 'monthly', 'daily']);
     expect(seeded.map(t => t.name)).toEqual(BUNDLED_DEFAULT_TEMPLATES.map(b => b.name));
     expect(seeded.map(t => t.content)).toEqual(BUNDLED_DEFAULT_TEMPLATES.map(b => b.content));
     for (const template of seeded) {
@@ -284,20 +285,28 @@ describe('templates', () => {
 
     // Idempotent.
     expect(await seedDefaultTemplates(db, planner.id, planner.profile_id)).toEqual([]);
-    expect(await listTemplates(db, planner.id)).toHaveLength(3);
+    expect(await listTemplates(db, planner.id)).toHaveLength(4);
 
     // A deleted default is replaced by a fresh row of that type only.
     await deleteTemplate(db, seeded[2].id);
     const again = await seedDefaultTemplates(db, planner.id, planner.profile_id);
     expect(again.map(t => t.template_type)).toEqual(['monthly']);
     expect(again[0].id).not.toBe(seeded[2].id);
-    expect(await listTemplates(db, planner.id)).toHaveLength(3);
+    expect(await listTemplates(db, planner.id)).toHaveLength(4);
 
     // A user-made default of a type counts as present.
     await deleteTemplate(db, again[0].id);
     const custom = await saveTemplate(db, input({ name: 'My monthly', template_type: 'monthly', is_default: true }));
     expect(await seedDefaultTemplates(db, planner.id, planner.profile_id)).toEqual([]);
     expect((await findDefaultTemplate(db, planner.id, 'monthly'))?.id).toBe(custom.id);
+  });
+
+  it('seeds only the requested types when asked', async () => {
+    const seeded = await seedDefaultTemplates(db, planner.id, planner.profile_id, ['daily']);
+    expect(seeded.map(t => t.template_type)).toEqual(['daily']);
+    expect(await seedDefaultTemplates(db, planner.id, planner.profile_id, ['daily'])).toEqual([]);
+    expect(await findDefaultTemplate(db, planner.id, 'weekly_left')).toBeNull();
+    expect(await listTemplates(db, planner.id)).toHaveLength(1);
   });
 
   it('seeding rejects unknown planners', async () => {

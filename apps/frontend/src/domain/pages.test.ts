@@ -6,11 +6,21 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { SqlJsDatabase } from '../db/adapters/sqljs.ts';
 import { createTestDb } from '../db/testing.ts';
 import seed from './__fixtures__/seed.json';
+import { moonPhases } from './calendar/moon.ts';
 import { formatWeekId, resolveWeek } from './calendar/weeks.ts';
 import { daysInclusive, firstOfMonth, lastOfMonth, todayISO } from './dates.ts';
 import { upsertEntry } from './entries.ts';
 import { isId } from './ids.ts';
-import { currentMonthId, currentWeekId, findOrCreatePage, getPage, loadMonthlyPage, loadWeeklyPage } from './pages.ts';
+import {
+  currentDayId,
+  currentMonthId,
+  currentWeekId,
+  findOrCreatePage,
+  getPage,
+  loadDailyPage,
+  loadMonthlyPage,
+  loadWeeklyPage,
+} from './pages.ts';
 import { createPlanner, plannerWeekStartIndex, requirePlanner } from './planners.ts';
 import { saveSnapshot } from './snapshots.ts';
 import { deleteTemplate, saveTemplate } from './templates.ts';
@@ -95,16 +105,18 @@ function expectedTemplateRecord(templateType: TemplateType, plannerId: string, p
 }
 
 /**
- * weekData minus everything that depends on the holiday library: the holidays map itself and the
- * per-day holidays arrays. Those are asserted structurally in the test instead.
+ * weekData minus everything that depends on the holiday library (the holidays map itself and the
+ * per-day holidays arrays) and on the moon display rule, which deliberately differs from the Rust
+ * build (see calendar/moon.ts). Both are asserted separately in the test instead.
  */
-function withoutHolidays(weekData: WeekData): Record<string, unknown> {
+function withoutHolidaysOrMoon(weekData: WeekData): Record<string, unknown> {
   const copy: Record<string, unknown> = {
     ...weekData,
-    templateData: weekData.templateData.map((day) => ({ ...day, holidays: [] })),
-    lastDayData: { ...weekData.lastDayData, holidays: [] },
+    templateData: weekData.templateData.map((day) => ({ ...day, holidays: [], moon_phase: '' })),
+    lastDayData: { ...weekData.lastDayData, holidays: [], moon_phase: '' },
   };
   delete copy.holidays;
+  delete copy.moonPhases;
   return copy;
 }
 
@@ -163,8 +175,15 @@ describe('pages', () => {
 
         const result = await loadWeeklyPage(db, payload.planner_id, payload.week_id);
 
-        // (a) Everything in weekData except the holiday names.
-        expect(withoutHolidays(result.weekData)).toEqual(withoutHolidays(expected.weekData));
+        // (a) Everything in weekData except the holiday names and the moon labels.
+        expect(withoutHolidaysOrMoon(result.weekData)).toEqual(withoutHolidaysOrMoon(expected.weekData));
+
+        // (a2) Moon labels follow the display rule (moon.test.ts relates them to the Rust labels),
+        //      and each day carries its map emoji.
+        expect(result.weekData.moonPhases).toEqual(moonPhases(result.weekData.mainDates));
+        for (const day of [...result.weekData.templateData, result.weekData.lastDayData]) {
+          expect(day.moon_phase).toBe(result.weekData.moonPhases[day.entryDate].emoji);
+        }
 
         // (b) Holidays: structurally sound, inside the week, and (Monday variant) a subset of the
         //     keys the Rust side produced with every US subdivision merged in.
@@ -249,7 +268,7 @@ describe('pages', () => {
         expect(result.monthData.year).toBe(year);
         expect(result.monthData.days).toEqual(days);
         expect(Object.keys(result.monthData.moonPhases)).toEqual(days);
-        expect(result.monthData.moonPhases[first].emoji).not.toBe('');
+        expect(result.monthData.moonPhases).toEqual(moonPhases(days));
         for (const date of Object.keys(result.monthData.holidays)) {
           expect(date >= first && date <= last, `${date} outside ${payload.month_id}`).toBe(true);
           expect(result.monthData.holidays[date].length).toBeGreaterThan(0);
@@ -309,6 +328,64 @@ describe('pages', () => {
       expect(result.monthData.holidays['2025-12-25']).toContain('Christmas Day');
       expect(result.monthData.holidays['2025-12-26']).toContain('Boxing Day');
       expect(Object.keys(result.monthData.moonPhases)).toHaveLength(31);
+    });
+  });
+
+  // -------------------------------------------------------------------------------------------
+  // 2b. Daily (no Rust fixtures: daily pages are new in the TypeScript port)
+  // -------------------------------------------------------------------------------------------
+
+  describe('loadDailyPage', () => {
+    it('builds the day once, keyed by its ISO date, with the day fields and neighbours', async () => {
+      const planner = await createPlanner(db, {
+        name: 'us',
+        planner_settings: { holiday_countries: ['us'] },
+      });
+      const result = await loadDailyPage(db, planner.id, '2025-07-04');
+      expect(result.template.template_type).toBe('daily');
+      expect(result.dayData).toStrictEqual({
+        entryDate: '2025-07-04',
+        day_number: 4,
+        day_name: 'Friday',
+        holidays: expect.arrayContaining(['Independence Day']),
+        moon_phase: expect.any(String),
+        month_year: 'July 2025',
+        nextDayId: '2025-07-05',
+        prevDayId: '2025-07-03',
+      });
+      expect(result.dayData.moon_phase).toBe(moonPhases(['2025-07-04'])['2025-07-04'].emoji);
+
+      const rows = await storedPages(db, planner.id, 'daily', '2025-07-04');
+      expect(rows).toHaveLength(1);
+      expect(rows[0].id).toBe(result.page_id);
+      expect(rows[0].page_date).toBe('2025-07-04');
+      expect((await loadDailyPage(db, planner.id, '2025-07-04')).page_id).toBe(result.page_id);
+      expect(await pageRowCount(db, planner.id)).toBe(1);
+    });
+
+    it("returns only that day's entries", async () => {
+      const planner = await createPlanner(db, { name: 'entries' });
+      const page = await loadDailyPage(db, planner.id, '2025-10-09');
+      await upsertEntry(db, { page_id: page.page_id, tiptap_id: '9', entry_date: '2025-10-09', content: DOC });
+      const again = await loadDailyPage(db, planner.id, '2025-10-09');
+      expect(Object.keys(again.plannerEntries)).toEqual(['2025-10-09']);
+      expect(again.plannerEntries['2025-10-09'][0].content).toEqual(DOC);
+    });
+
+    it('seeds the daily default into an older planner without reviving other types', async () => {
+      const planner = await createPlanner(db, { name: 'older', seedDefaultTemplates: false });
+      const page = await loadDailyPage(db, planner.id, '2025-10-09');
+      expect(page.template.name).toBe('Default Daily');
+      expect(await errorMessage(loadMonthlyPage(db, planner.id, '10_2025'))).toBe('Default monthly template not found');
+    });
+
+    it('rejects a malformed day id and creates no page', async () => {
+      const planner = await createPlanner(db, { name: 'bad ids' });
+      for (const id of ['2025-02-30', '2025-10-9', '10_2025', 'today']) {
+        expect(await errorMessage(loadDailyPage(db, planner.id, id))).toBe('invalid day_id format');
+      }
+      expect(await pageRowCount(db, planner.id)).toBe(0);
+      expect(await errorMessage(loadDailyPage(db, 'not-a-uuid', 'x'))).toBe('invalid planner_id (expected UUID)');
     });
   });
 
@@ -598,6 +675,11 @@ describe('pages', () => {
       expect(id.endsWith('_l')).toBe(true);
       expect(resolveWeek(id, plannerWeekStartIndex(planner)).mainDates).toContain(todayISO());
       expect(currentMonthId()).toBe(`${todayISO().slice(5, 7)}_${todayISO().slice(0, 4)}`);
+    });
+
+    it("names today's daily page by its ISO date", () => {
+      expect(currentDayId()).toBe(todayISO());
+      expect(currentDayId('2025-10-09')).toBe('2025-10-09');
     });
 
     it('formats the month id with a two-digit month', () => {

@@ -97,7 +97,7 @@ export interface Page {
   profile_id: string;
   page_template_id: string;
   page_type: PageType;
-  /** "MM_YYYY" for monthly, "W_YYYY_l" / "W_YYYY_r" (week not zero-padded) for weekly. */
+  /** "MM_YYYY" for monthly, "W_YYYY_l" / "W_YYYY_r" (week not zero-padded) for weekly, "YYYY-MM-DD" for daily. */
   period_identifier: string;
   /** First day of the period. */
   page_date: ISODate;
@@ -114,7 +114,7 @@ export interface PlannerEntry {
   page_id: string;
   planner_id: string;
   profile_id: string;
-  /** The editor slot on the page ("1" … "7" on weekly pages, "1" … "42" on monthly). */
+  /** The editor slot on the page ("1" … "7" on weekly pages, "1" … "42" on monthly, "1" … "24" on daily). */
   tiptap_id: string;
   entry_date: ISODate;
   content: EntryContent;
@@ -235,6 +235,21 @@ export interface WeeklyPage {
   plannerEntries: GroupedEntries;
   tldraw_snapshots: SnapshotRecord[];
   weekData: WeekData;
+  page_id: string;
+  planner_id: string;
+}
+
+/** One day as the daily template renders it: the weekly day fields plus where prev/next go. */
+export interface DayData extends WeekDayData {
+  nextDayId: string;
+  prevDayId: string;
+}
+
+export interface DailyPage {
+  template: TemplateRecord;
+  plannerEntries: GroupedEntries;
+  tldraw_snapshots: SnapshotRecord[];
+  dayData: DayData;
   page_id: string;
   planner_id: string;
 }

@@ -15,7 +15,9 @@
  *     the one just saved.
  *   - The bundled defaults under src/templates/defaults are what every new planner gets. Seeding
  *     is per type and skips types that already have a live default, so it is safe to run again
- *     after a partial failure or after a default was deleted.
+ *     after a partial failure or after a default was deleted. It can be limited to some types, so
+ *     a page type added later (daily) can be seeded into older planners on first use without
+ *     reviving defaults of other types the user deleted on purpose.
  *   - Validation keeps the Rust error strings ("invalid template_type: x", "invalid template
  *     structure: content must be a JSON object") because the template editor shows them, and adds
  *     the shape check the renderers rely on (metadata object, structure array). The allow-list is
@@ -26,6 +28,7 @@
  */
 
 import type { Database } from '../db/Database.ts';
+import dailyDefault from '../templates/defaults/daily.json';
 import monthlyDefault from '../templates/defaults/monthly.json';
 import weeklyLeftDefault from '../templates/defaults/weekly_left.json';
 import weeklyRightDefault from '../templates/defaults/weekly_right.json';
@@ -68,6 +71,7 @@ export const BUNDLED_DEFAULT_TEMPLATES: ReadonlyArray<BundledTemplate> = [
   weeklyLeftDefault,
   weeklyRightDefault,
   monthlyDefault,
+  dailyDefault,
 ];
 
 export interface SaveTemplateInput {
@@ -244,19 +248,22 @@ export async function deleteTemplate(db: Database, id: string): Promise<void> {
 }
 
 /**
- * Insert the bundled default templates the planner is still missing (one live default per type).
- * Returns only the templates inserted by this call, so a second call returns [].
+ * Insert the bundled default templates the planner is still missing (one live default per type),
+ * or only those of `onlyTypes` when given. Returns only the templates inserted by this call, so a
+ * second call returns [].
  */
 export async function seedDefaultTemplates(
   db: Database,
   plannerId: string,
   profileId: string,
+  onlyTypes?: readonly TemplateType[],
 ): Promise<PageTemplate[]> {
   assertId(plannerId, 'planner_id');
   const inserted: PageTemplate[] = [];
   for (const bundled of BUNDLED_DEFAULT_TEMPLATES) {
     const type = bundled.template_type;
     if (!isTemplateType(type)) throw new Error(`invalid template_type: ${type}`);
+    if (onlyTypes !== undefined && !onlyTypes.includes(type)) continue;
     validateTemplateContent(bundled.content);
     if ((await findDefaultTemplate(db, plannerId, type)) !== null) continue;
     inserted.push(

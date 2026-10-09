@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getMoonIllumination } from 'suncalc';
 import { describe, expect, it } from 'vitest';
-import { daysInclusive, type ISODate } from '../dates.ts';
+import { addDays, daysInclusive, type ISODate } from '../dates.ts';
 import type { MoonPhaseMap, WeekDayData } from '../types.ts';
 import {
   MOON_EMOJI,
@@ -11,6 +11,7 @@ import {
   moonPhaseForDate,
   moonPhaseName,
   moonPhases,
+  showsMoonPhase,
   type MoonPhaseName,
 } from './moon.ts';
 
@@ -95,20 +96,20 @@ describe('moon phases: parity with the Rust capture', () => {
     }
   });
 
-  it.each(successfulFixtures)('$name: moonPhases(mainDates) equals weekData.moonPhases', ({ fixture }) => {
+  // The display rule departs from Rust on purpose (see the module header): Rust labelled the first
+  // day of every week. Every label shown now is one Rust showed too; a Rust label is dropped only
+  // when the phase did not change since the day before, or the day before already shows one.
+  it.each(successfulFixtures)('$name: shows a subset of the Rust labels, dropping only what the rule forbids', ({ fixture }) => {
     const week = fixture.response.data!.weekData;
-    expect(moonPhases(week.mainDates)).toEqual(week.moonPhases);
-  });
-
-  it.each(successfulFixtures)('$name: templateData and lastDayData carry the map emoji', ({ fixture }) => {
-    const week = fixture.response.data!.weekData;
-    const map = moonPhases(week.mainDates);
-    const rows = [...week.templateData, week.lastDayData];
-    expect(rows.map((r) => r.entryDate)).toEqual(week.mainDates);
-    for (const row of rows) {
-      expect(row.moon_phase).toBe(map[row.entryDate].emoji);
-      if (row.moon_phase !== '') {
-        expect(row.moon_phase).toBe(MOON_EMOJI[moonPhaseForDate(row.entryDate).name]);
+    const ours = moonPhases(week.mainDates);
+    expect(Object.keys(ours)).toEqual(week.mainDates);
+    for (const date of week.mainDates) {
+      if (ours[date].emoji !== '') {
+        expect(ours[date]).toEqual(week.moonPhases[date]);
+      } else if (week.moonPhases[date].emoji !== '') {
+        const yesterday = addDays(date, -1);
+        const unchanged = moonPhaseForDate(yesterday).name === moonPhaseForDate(date).name;
+        expect(unchanged || showsMoonPhase(yesterday), date).toBe(true);
       }
     }
   });
@@ -241,32 +242,48 @@ describe('moonPhases', () => {
     expect(moonPhases([])).toEqual({});
   });
 
-  it('always labels the first date in a list, even mid-run', () => {
-    // 2025-10-01 and 2025-10-02 are both waxing gibbous; alone, 10-02 still gets the emoji.
-    for (const iso of ['2025-10-02', '2025-10-03', '2025-10-05', '2024-02-29', '2026-01-01']) {
-      const single = moonPhases([iso]);
-      const emoji = MOON_EMOJI[moonPhaseForDate(iso).name];
-      expect(emoji).not.toBe('');
-      expect(single).toEqual({ [iso]: labelled(emoji) });
-    }
-  });
-
-  it('labels a date only when its phase name differs from the previous date in the list', () => {
+  it('does not label the first date of a list unless its phase changed that day', () => {
+    // 2025-10-01 and 2025-10-02 are both waxing gibbous: 10-02 is blank on its own too.
+    expect(moonPhases(['2025-10-02'])).toEqual({ '2025-10-02': BLANK });
+    expect(moonPhases(['2025-10-01'])).toEqual({ '2025-10-01': labelled('🌔') });
     expect(moonPhases(['2025-10-01', '2025-10-02'])).toEqual({
       '2025-10-01': labelled('🌔'),
       '2025-10-02': BLANK,
     });
-    expect(moonPhases(['2025-10-02'])).toEqual({ '2025-10-02': labelled('🌔') });
+  });
 
-    // The same rule restated over four months: blank iff the name repeats.
+  it('gives a date the same label whatever else is in the list', () => {
     const dates = daysInclusive('2025-09-01', '2025-12-31');
     const map = moonPhases(dates);
-    expect(Object.keys(map)).toEqual(dates);
+    for (const iso of dates) expect(moonPhases([iso])[iso]).toEqual(map[iso]);
+  });
+
+  it('shows a phase only on a day it changed, and never on two consecutive days', () => {
+    const dates = daysInclusive('2000-01-01', '2030-12-31');
+    const map = moonPhases(dates);
+    const changed = (iso: ISODate) => moonPhaseForDate(addDays(iso, -1)).name !== moonPhaseForDate(iso).name;
+    let backToBackChanges = 0;
     dates.forEach((iso, i) => {
-      const { name } = moonPhaseForDate(iso);
-      const changed = i === 0 || moonPhaseForDate(dates[i - 1]).name !== name;
-      expect(map[iso]).toEqual(changed ? labelled(MOON_EMOJI[name]) : BLANK);
+      const previous = i > 0 ? map[dates[i - 1]] : undefined;
+      if (map[iso].emoji !== '') {
+        expect(changed(iso), iso).toBe(true);
+        expect(map[iso]).toEqual(labelled(MOON_EMOJI[moonPhaseForDate(iso).name]));
+        if (previous) expect(previous.emoji, `${dates[i - 1]} and ${iso}`).toBe('');
+      } else {
+        expect(map[iso]).toEqual(BLANK);
+        // A change is hidden only because the day before shows one.
+        if (changed(iso) && previous) expect(previous.emoji, iso).not.toBe('');
+      }
+      if (i > 0 && changed(iso) && changed(dates[i - 1])) backToBackChanges++;
     });
+    // The one-day buckets really do produce back-to-back changes, so the second rule matters.
+    expect(backToBackChanges).toBeGreaterThan(0);
+  });
+
+  it('shows the first, third, … day of a run of daily changes', () => {
+    // 09-21 waning crescent → 09-22 new → 09-23 waxing crescent: 09-22 shows, 09-23 does not.
+    expect(showsMoonPhase('2025-09-22')).toBe(true);
+    expect(showsMoonPhase('2025-09-23')).toBe(false);
   });
 
   it('walks the whole cycle across a lunar month starting at a new moon', () => {
@@ -275,7 +292,6 @@ describe('moonPhases', () => {
     const changes = dates.filter((iso) => map[iso].emoji !== '').map((iso) => [iso, map[iso].emoji]);
     expect(changes).toEqual([
       ['2025-09-22', '🌑'],
-      ['2025-09-23', '🌒'],
       ['2025-09-28', '🌓'],
       ['2025-10-01', '🌔'],
       ['2025-10-06', '🌕'],

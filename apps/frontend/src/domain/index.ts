@@ -19,6 +19,7 @@ export * from './pages.ts';
 
 export * from './calendar/weeks.ts';
 export * from './calendar/months.ts';
+export * from './calendar/days.ts';
 export * from './calendar/grids.ts';
 export * from './calendar/moon.ts';
 export * from './calendar/holidays.ts';

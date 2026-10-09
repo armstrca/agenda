@@ -5,7 +5,7 @@ import { weekIdForDate } from '../domain/calendar/weeks.ts';
 import { formatMonthId } from '../domain/calendar/months.ts';
 import { monthOf, todayISO, yearOf } from '../domain/dates.ts';
 
-/** The planners in the database, each linking to its current week and month. */
+/** The planners in the database, each linking to its current day, week and month. */
 export default function PlannerList({ planners }: { planners: Planner[] }) {
   const today = todayISO();
   if (planners.length === 0) {
@@ -20,6 +20,13 @@ export default function PlannerList({ planners }: { planners: Planner[] }) {
       {planners.map((p) => (
         <li key={p.id}>
           <strong>{p.name}</strong>{' '}
+          <Link
+            to="/planners/$plannerId/daily/$dayId"
+            params={{ plannerId: p.id, dayId: today }}
+          >
+            Today
+          </Link>
+          {' · '}
           <Link
             to="/planners/$plannerId/weekly/$weekId"
             params={{ plannerId: p.id, weekId: weekIdForDate(today, 'l', plannerWeekStartIndex(p)) }}
