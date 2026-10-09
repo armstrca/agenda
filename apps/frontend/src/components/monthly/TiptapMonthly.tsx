@@ -1,44 +1,84 @@
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import type { Content, JSONContent } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getDb } from '../../db/index.ts';
+import { getEntry, upsertEntry } from '../../domain/entries.ts';
+import { toISO } from '../../domain/dates.ts';
+import type { EntryContent } from '../../domain/types.ts';
 
-const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth, plannerId }) => {
-  const [initialContent, setInitialContent] = useState('<p></p>');
-  const [isSaving, setIsSaving] = useState(false);
+interface TiptapMonthlyProps {
+  tiptap_id: string | number;
+  pageId: string;
+  className: string;
+  date?: Date;
+  isCurrentMonth?: boolean;
+}
 
-  // Fetch existing planner_entry data
+// One day cell of the monthly page. Keyed by (pageId, tiptap_id) like the weekly slots; the entry
+// date is the cell's calendar day, formatted from local components (never toISOString, which is UTC).
+const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth }: TiptapMonthlyProps) => {
+  const [initialContent, setInitialContent] = useState<Content>('<p></p>');
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pending = useRef<EntryContent | null>(null);
+  const slot = String(tiptap_id);
+  const entryDate = date instanceof Date ? toISO(date) : null;
+
   useEffect(() => {
-    const fetchPlannerEntry = async () => {
+    if (!pageId) return undefined;
+    let cancelled = false;
+    (async () => {
       try {
-        const response = await fetch(
-          `/api/planners/${plannerId}/pages/${pageId}/planner_entries?tiptap_id=${tiptap_id}`
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setInitialContent(data[0].content || '<p></p>');
-          } else if (data.content) {
-            setInitialContent(data.content || '<p></p>');
-          }
-        } else {
-          console.error('Failed to fetch planner entry:', response.status);
-        }
+        const db = await getDb();
+        const entry = await getEntry(db, pageId, slot);
+        if (!cancelled && entry) setInitialContent(entry.content as JSONContent);
       } catch (error) {
         console.error('Error fetching planner entry:', error);
       }
+    })();
+    return () => {
+      cancelled = true;
     };
+  }, [pageId, slot]);
 
-    fetchPlannerEntry();
-  }, [pageId, tiptap_id, plannerId]);
+  const savePlannerEntry = async (content: EntryContent) => {
+    if (!pageId || !entryDate) {
+      console.error('Cannot save planner entry: missing pageId or date', { pageId, entryDate, slot });
+      return;
+    }
+    try {
+      const db = await getDb();
+      await upsertEntry(db, { page_id: pageId, tiptap_id: slot, entry_date: entryDate, content });
+    } catch (error) {
+      console.error('Error saving planner entry:', error);
+    }
+  };
+
+  const debouncedSave = (content: EntryContent) => {
+    pending.current = content;
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(() => {
+      pending.current = null;
+      savePlannerEntry(content);
+    }, 2000);
+  };
+
+  useEffect(() => () => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    if (pending.current !== null) {
+      const content = pending.current;
+      pending.current = null;
+      void savePlannerEntry(content);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageId, slot, entryDate]);
 
   const editor = useEditor({
     editable: true,
     content: initialContent,
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      savePlannerEntry(pageId, html, tiptap_id);
+      debouncedSave(editor.getJSON());
     },
     extensions: [
       StarterKit,
@@ -81,46 +121,6 @@ const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth, pla
       editor.commands.setContent(initialContent);
     }
   }, [editor, initialContent]);
-
-  const savePlannerEntry = async (pageId, content, tiptap_id) => {
-    if (!pageId) {
-      console.error('Cannot save - pageId is missing');
-      return;
-    }
-
-    if (isSaving) return;
-    setIsSaving(true);
-
-    try {
-      const response = await fetch(
-        `/api/planners/${plannerId}/pages/${pageId}/planner_entries`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content,
-            tiptap_id,
-            entry_date: date.toISOString().split('T')[0]
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error saving planner entry:', errorData);
-        throw new Error(errorData.error || 'Failed to save planner entry');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error saving planner entry:', error);
-      // Optionally show error to user
-    } finally {
-      setIsSaving(false);
-    }
-  };
 
   return (
     <div className={className} style={{ opacity: isCurrentMonth ? 1 : 0.5 }}>

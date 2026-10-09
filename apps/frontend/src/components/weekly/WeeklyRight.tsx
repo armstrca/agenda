@@ -1,15 +1,33 @@
-// apps/frontend/src/components/weekly/WeeklyRight.jsx
-import React from 'react';
-import TemplateRenderer from './TemplateRenderer';
-import Tiptap from '../Tiptap';
-import TlDrawComponent from '../TLDrawComponent';
-import SvgColorizer from '../shared/SvgColorizer';
+import TemplateRenderer from './TemplateRenderer.tsx';
+import Tiptap from '../Tiptap.tsx';
+import TlDrawComponent from '../TLDrawComponent.tsx';
+import SvgColorizer from '../shared/SvgColorizer.tsx';
+import type { ComponentMap } from '../templateNodes.ts';
+import type { ISODate } from '../../domain/dates.ts';
+import type {
+    CalendarMonthData,
+    SnapshotRecord,
+    TemplateRecord,
+    WeekDayData,
+} from '../../domain/types.ts';
+
+interface WeeklyRightProps {
+    template: TemplateRecord;
+    page_id: string;
+    tldraw_snapshots: SnapshotRecord[];
+    plannerId: string;
+    leftCalendar: CalendarMonthData;
+    rightCalendar: CalendarMonthData;
+    lastDayData: WeekDayData;
+    daysOrder: string[];
+    nextWeekId: string;
+    prevWeekId: string;
+    weekStart: ISODate;
+}
 
 const WeeklyRight = ({
     template,
     page_id,
-    weekNumber,
-    year,
     tldraw_snapshots,
     plannerId,
     leftCalendar,
@@ -17,20 +35,20 @@ const WeeklyRight = ({
     lastDayData,
     daysOrder,
     nextWeekId,
-    prevWeekId
-}) => {
-    const components = {
-        Tiptap: (props) => <Tiptap {...props} weekId={`${weekNumber}_${year}_r`} />,
+    prevWeekId,
+    weekStart
+}: WeeklyRightProps) => {
+    const components: ComponentMap = {
+        Tiptap,
         TlDrawComponent: () => (
             <TlDrawComponent
-                persistenceKey={`weekly-${weekNumber}-${year}-r`}
-                plannerId={plannerId}
+                pageId={page_id}
                 tldraw_snapshots={tldraw_snapshots}
             />
         )
     };
 
-    const monthColors = template?.content?.metadata?.default_styles?.["month-colors"] || {};
+    const monthColors = (template?.content?.metadata?.default_styles?.["month-colors"] || {}) as Record<string, string>;
     const currentMonthName = lastDayData?.month_year?.split(' ')[0]?.toLowerCase() || '';
     const primaryColor = monthColors[currentMonthName] || '#ffffff';
     const svgPath = template?.content?.metadata?.svgBackground;
@@ -46,9 +64,10 @@ const WeeklyRight = ({
             plannerId={plannerId}
             leftCalendarData={leftCalendar}
             rightCalendarData={rightCalendar}
-            daysOrder={daysOrder} // <-- add this line
+            daysOrder={daysOrder}
             nextWeekId={nextWeekId}
             prevWeekId={prevWeekId}
+            defaultEntryDate={weekStart}
         >
             <SvgColorizer
                 svgUrl={`${svgPath}?v=${Date.now()}`}

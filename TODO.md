@@ -6,6 +6,7 @@
 - Blank template pages with drag and drop options
 - User profiles
 - Each calendar cell needs to function as a link to that day's weekly or daily page, allow for event creation, and show existing events
+- ~~Convert .jsx files to .tsx files wherever possible~~
 - ~~TLDRaw is now implemented, but need to make sure regular typing functionality of original setup is preserved~~
 - ~~Figure out what the models even are, NBD~~
 - ~~Need to make sure canvas/TLDraw UI is always the same size as page content so that shapes/scribbles will always maintain position relative to page content~~

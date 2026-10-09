@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useNavigate } from '@tanstack/react-router';
-import { apiClient } from '../api/api.js';
+import { getDb } from '../db/index.ts';
+import { createProfile } from '../domain/profiles.ts';
 
+// Profiles replace the old user accounts: a local profile is just a name. Accounts for the
+// optional online features live on a server later, not in this database.
 export const Route = createFileRoute('/users/create' as any)({
-  component: UserCreate,
+  component: ProfileCreate,
 });
 
-function UserCreate() {
+function ProfileCreate() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -20,16 +21,11 @@ function UserCreate() {
     setIsSubmitting(true);
     setError('');
     try {
-      const payload = { name, email, password };
-      const result = await apiClient.createUser(payload);
-      if (result && result.id) {
-        // created: navigate to planner creation next step
-        navigate({ to: '/planners/create' });
-      } else {
-        setError('Failed to create user.');
-      }
+      const db = await getDb();
+      await createProfile(db, { name });
+      navigate({ to: '/planners/create' });
     } catch (err: any) {
-      setError(err?.message || 'Error creating user.');
+      setError(err?.message || 'Error creating profile.');
     } finally {
       setIsSubmitting(false);
     }
@@ -37,21 +33,13 @@ function UserCreate() {
 
   return (
     <div className="user-create-container" style={{ padding: 16 }}>
-      <h2>Create your user</h2>
+      <h2>Create a profile</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: 8 }}>
           <label>Name:</label>
           <input value={name} onChange={e => setName(e.target.value)} required />
         </div>
-        <div style={{ marginBottom: 8 }}>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        </div>
-        <div style={{ marginBottom: 8 }}>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit" disabled={isSubmitting}>Create User</button>
+        <button type="submit" disabled={isSubmitting}>Create Profile</button>
         {error && <div className="error" style={{ color: 'red', marginTop: 8 }}>{error}</div>}
       </form>
     </div>

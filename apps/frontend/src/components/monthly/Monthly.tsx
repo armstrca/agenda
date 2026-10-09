@@ -1,36 +1,38 @@
-import React from 'react';
-import MonthlyRenderer from '../monthly/MonthlyRenderer';
-import TiptapMonthly from './TiptapMonthly';
-import TlDrawComponent from '../TLDrawComponent';
+import MonthlyRenderer, { type MonthDay, type MonthTemplateData } from './MonthlyRenderer.tsx';
+import TiptapMonthly from './TiptapMonthly.tsx';
+import TlDrawComponent from '../TLDrawComponent.tsx';
+import type { ComponentMap } from '../templateNodes.ts';
+import type { SnapshotRecord, TemplateRecord } from '../../domain/types.ts';
+
+interface MonthlyProps {
+    template: TemplateRecord;
+    page_id: string;
+    /** 1-based. */
+    month: number;
+    year: number;
+    tldraw_snapshots: SnapshotRecord[];
+    plannerId: string;
+}
 
 const Monthly = ({
     template,
     page_id,
     month,
     year,
-    days,
-    holidays,
-    moonPhases,
     tldraw_snapshots,
     plannerId
-}) => {
-    const components = {
-        TiptapMonthly: (props) =>
-            <TiptapMonthly
-                {...props}
-                monthId={`${month}_${year}`}
-                plannerId={plannerId}
-            />,
+}: MonthlyProps) => {
+    const components: ComponentMap = {
+        TiptapMonthly,
         TlDrawComponent: () => (
             <TlDrawComponent
-                persistenceKey={`monthly-${month}-${year}`}
-                plannerId={plannerId}
+                pageId={page_id}
                 tldraw_snapshots={tldraw_snapshots}
             />
         )
     };
 
-    const monthColors = template?.content?.metadata?.default_styles?.["month-colors"] || {};
+    const monthColors = (template?.content?.metadata?.default_styles?.["month-colors"] || {}) as Record<string, string>;
     const currentMonthName = new Date(year, month - 1).toLocaleString('en-US', { month: 'long' }).toLowerCase();
     const primaryColor = monthColors[currentMonthName] || '#ffffff';
 
@@ -51,7 +53,7 @@ const Monthly = ({
         const totalCells = 42;
         const daysFromNextMonth = totalCells - daysInMonth - daysFromPrevMonth;
 
-        const dates = [];
+        const dates: { date: Date; isCurrentMonth: boolean }[] = [];
 
         // Add days from previous month
         for (let i = daysFromPrevMonth; i > 0; i--) {
@@ -82,11 +84,11 @@ const Monthly = ({
 
     const gridDates = getMonthlyGridDates();
 
-    const templateData = {
+    const templateData: MonthTemplateData = {
         monthInfo: {
             month_year: new Date(year, month - 1).toLocaleString('en-US', { month: 'long' }) + ' ' + year
         },
-        days: gridDates.map((dateObj, index) => ({
+        days: gridDates.map((dateObj, index): MonthDay => ({
             date: dateObj.date,
             day_number: dateObj.date.getDate(),
             isCurrentMonth: dateObj.isCurrentMonth,

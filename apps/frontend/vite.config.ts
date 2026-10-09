@@ -10,6 +10,11 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  // @tldraw/assets/imports.vite resolves its icons and fonts with Vite `?url` imports; those only
+  // work when Vite transforms the package itself, not when esbuild pre-bundles it.
+  optimizeDeps: {
+    exclude: ['@tldraw/assets'],
+  },
   esbuild: {
     jsx: 'automatic',
     loader: 'tsx',

@@ -1,12 +1,24 @@
-import { Extension } from '@tiptap/core';
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Extension, type Content, type JSONContent } from '@tiptap/core';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import { useEffect, useState, useRef } from 'react';
-import { ipcInvoke } from '../utils/ipc';
+import { getDb } from '../db/index.ts';
+import { getEntry, upsertEntry } from '../domain/entries.ts';
+import type { ISODate } from '../domain/dates.ts';
+import type { EntryContent } from '../domain/types.ts';
 
-const NoWrapValidator = Extension.create({
+interface NoWrapValidatorOptions {
+  /** CSS selector of the box the text must fit in; defaults to the editor's parent element. */
+  container: string | null;
+  maxWidth: number;
+}
+
+// Rejects edits that would overflow the fixed-size text box on the paper page: too many
+// paragraphs for its height, or a line wider than it. Transactions flagged 'init-content' (loading
+// a saved entry) are always let through.
+const NoWrapValidator = Extension.create<NoWrapValidatorOptions>({
   name: 'noWrapValidator',
   addOptions() {
     return {
@@ -18,7 +30,7 @@ const NoWrapValidator = Extension.create({
     return [
       new Plugin({
         key: new PluginKey('noWrapValidator'),
-        filterTransaction: (tr, state) => {
+        filterTransaction: (tr) => {
           if (tr.getMeta('init-content')) return true
           if (!tr.docChanged) return true
 
@@ -26,7 +38,7 @@ const NoWrapValidator = Extension.create({
           const selector = this.options.container
           const el = selector
             ? document.querySelector(selector)
-            : state.view.dom.parentElement
+            : this.editor.view.dom.parentElement
 
           if (!el) {
             return true
@@ -40,21 +52,22 @@ const NoWrapValidator = Extension.create({
           const maxParagraphs = Math.floor(containerInner / lineHeight)
           const preciseWidth = el.getBoundingClientRect().width;
 
-
           // 4. Count paragraphs in the new doc
           const newDoc = tr.doc
-          const paragraphs = newDoc.content.content.filter(
-            node => node.type.name === 'paragraph'
-          ).length
+          let paragraphs = 0
+          newDoc.forEach(node => {
+            if (node.type.name === 'paragraph') paragraphs++
+          })
 
           if (paragraphs > maxParagraphs) return false
 
           // 5. (Optional) your existing text‑width check
           const canvas = document.createElement('canvas')
           const ctx = canvas.getContext('2d')
+          if (!ctx) return true
           ctx.font = `${fontSize}px ${style.fontFamily}`
           let allowed = true
-          newDoc.content.content.forEach(paragraph => {
+          newDoc.forEach(paragraph => {
             const text = paragraph.textContent
             const w = ctx.measureText(text).width
             if (w > preciseWidth) allowed = false
@@ -67,61 +80,76 @@ const NoWrapValidator = Extension.create({
   },
 })
 
-const Tiptap = ({ tiptap_id, pageId, className }) => {
-  const [initialContent, setInitialContent] = useState('<p></p>');
-  const plannerId = "38e012ec-0ab2-4fbe-8e68-8a75e4716a35";
-  const debounceTimeout = useRef();
+interface TiptapProps {
+  tiptap_id: string | number;
+  pageId: string;
+  className: string;
+  entryDate?: ISODate;
+}
+
+// One editor slot on a page. The slot is identified by (pageId, tiptap_id); its text is stored as
+// the TipTap JSON document under that key, dated with the day it belongs to (entryDate).
+const Tiptap = ({ tiptap_id, pageId, className, entryDate }: TiptapProps) => {
+  const [initialContent, setInitialContent] = useState<Content>('<p></p>');
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pending = useRef<EntryContent | null>(null);
+  const slot = String(tiptap_id);
 
   useEffect(() => {
-    const fetchPlannerEntry = async () => {
+    if (!pageId) return undefined;
+    let cancelled = false;
+    (async () => {
       try {
-        const data = await ipcInvoke('planner_entries_index', {
-          page_id: pageId,
-          planner_id: plannerId,
-          tiptap_id: tiptap_id
-        });
-
-        // Handle IPC response format
-        if (data.planner_entries?.length > 0) {
-          const rawContent = data.planner_entries[0].content;
-          const decodedContent = new DOMParser().parseFromString(rawContent, 'text/html').body.innerHTML;
-          setInitialContent(decodedContent);
-        }
+        const db = await getDb();
+        const entry = await getEntry(db, pageId, slot);
+        if (!cancelled && entry) setInitialContent(entry.content as JSONContent);
       } catch (error) {
-        console.error('Failed to fetch planner entry:', error);
+        console.error('Failed to load planner entry:', error);
       }
+    })();
+    return () => {
+      cancelled = true;
     };
+  }, [pageId, slot]);
 
-    fetchPlannerEntry();
-  }, [pageId, tiptap_id, plannerId]);
-
-  const savePlannerEntry = async (content) => {
+  const savePlannerEntry = async (content: EntryContent) => {
+    if (!pageId || !entryDate) {
+      console.error('Cannot save planner entry: missing pageId or entryDate', { pageId, entryDate, slot });
+      return;
+    }
     try {
-      await ipcInvoke('planner_entries_create', {
-        page_id: pageId,
-        planner_id: plannerId,
-        tiptap_id: String(tiptap_id),
-        content: content
-      });
+      const db = await getDb();
+      await upsertEntry(db, { page_id: pageId, tiptap_id: slot, entry_date: entryDate, content });
     } catch (error) {
       console.error('Failed to save planner entry:', error);
     }
   };
 
-  // Debounced save
-  const debouncedSave = (content) => {
+  // Debounced save; a pending save is flushed when the editor unmounts (navigation) so nothing is lost.
+  const debouncedSave = (content: EntryContent) => {
+    pending.current = content;
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = setTimeout(() => {
+      pending.current = null;
       savePlannerEntry(content);
     }, 2000); // 2s debounce
   };
+
+  useEffect(() => () => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    if (pending.current !== null) {
+      const content = pending.current;
+      pending.current = null;
+      void savePlannerEntry(content);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageId, slot, entryDate]);
 
   const editor = useEditor({
     editable: true,
     content: initialContent,
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      debouncedSave(html);
+      debouncedSave(editor.getJSON());
     },
     extensions: [
       StarterKit.configure({ hardBreak: false }),
@@ -165,10 +193,16 @@ const Tiptap = ({ tiptap_id, pageId, className }) => {
 
   useEffect(() => {
     if (editor && initialContent) {
-      editor.commands.setContent(initialContent, false, {
-        preserveWhitespace: true,
-        meta: { 'init-content': true }
-      });
+      // The 'init-content' meta has to sit on the transaction itself for NoWrapValidator to see it;
+      // setContent's parse options cannot carry it.
+      editor
+        .chain()
+        .command(({ tr }) => {
+          tr.setMeta('init-content', true);
+          return true;
+        })
+        .setContent(initialContent, false, { preserveWhitespace: true })
+        .run();
     }
   }, [editor, initialContent]);
 

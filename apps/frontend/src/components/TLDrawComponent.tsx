@@ -1,23 +1,36 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Tldraw, createTLStore, getSnapshot, loadSnapshot } from 'tldraw';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  DEFAULT_CAMERA_OPTIONS,
+  Tldraw,
+  createTLStore,
+  getSnapshot,
+  loadSnapshot,
   DefaultQuickActions,
   DefaultQuickActionsContent,
   TldrawUiMenuItem,
-  STROKE_SIZES
+  STROKE_SIZES,
+  type Editor,
+  type TLComponents,
+  type TLEditorSnapshot,
+  type TLStore,
+  type TLStoreSnapshot,
 } from 'tldraw';
-import EyeSlashIcon from './EyeSlashIcon';
-import PowerOffIcon from './PowerOffIcon';
+import PowerOffIcon from './PowerOffIcon.tsx';
 import 'tldraw/tldraw.css';
-import { ipcInvoke } from '../utils/ipc';
+import { getAssetUrlsByImport } from '@tldraw/assets/imports.vite.js';
+import { getDb } from '../db/index.ts';
+import { saveSnapshot } from '../domain/snapshots.ts';
+import type { SnapshotRecord, TldrawDocument } from '../domain/types.ts';
+
+// Icons, fonts and translations bundled by Vite instead of fetched from cdn.tldraw.com, so the
+// drawing layer works with no network.
+const assetUrls = getAssetUrlsByImport();
 
 STROKE_SIZES.s = .5
 STROKE_SIZES.m = 2.5
 STROKE_SIZES.l = 4
 STROKE_SIZES.xl = 8
 
-function CustomQuickActions({ onToggleTldraw }) {
+function CustomQuickActions({ onToggleTldraw }: { onToggleTldraw: () => void }) {
   return (
     <DefaultQuickActions>
       <TldrawUiMenuItem
@@ -31,93 +44,103 @@ function CustomQuickActions({ onToggleTldraw }) {
   );
 }
 
-export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snapshots }) {
-  const [storeWithStatus, setStoreWithStatus] = useState({ status: 'loading' });
-  const debounceTimer = useRef();
+interface TlDrawComponentProps {
+  pageId: string;
+  tldraw_snapshots?: SnapshotRecord[];
+}
+
+type StoreState = { status: 'loading' } | { status: 'ready'; store: TLStore };
+
+// The drawing layer of one page. One snapshot row per page; what is persisted is the "document"
+// half of tldraw's getSnapshot() (shapes and schema), never the session (camera, selection).
+export default function TlDrawComponent({ pageId, tldraw_snapshots }: TlDrawComponentProps) {
+  const [storeWithStatus, setStoreWithStatus] = useState<StoreState>({ status: 'loading' });
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pending = useRef<TLEditorSnapshot | null>(null);
+  const pageIdRef = useRef(pageId);
+  pageIdRef.current = pageId;
   const [showTldraw, setShowTldraw] = useState(true);
 
   useEffect(() => {
-    const initializeStore = async () => {
-      const store = createTLStore();
+    const store = createTLStore();
+    const latestSnapshot = tldraw_snapshots?.[0];
 
-      let latestSnapshot = null;
-      let documentData = {};
-
-      if (tldraw_snapshots?.length > 0) {
-        try {
-          latestSnapshot = tldraw_snapshots[0];
-          documentData = latestSnapshot.document_data || {};
-
-          // Parse if it's a string (from backend)
-          if (typeof documentData === 'string') {
-            try {
-              documentData = JSON.parse(documentData);
-            } catch (e) {
-              console.error('[TLDrawComponent] Failed to parse document_data:', documentData, e);
-              documentData = {};
-            }
+    if (latestSnapshot) {
+      let documentData: unknown = latestSnapshot.document_data || {};
+      try {
+        // Parse if it's a string (rows written by the old backend)
+        if (typeof documentData === 'string') {
+          try {
+            documentData = JSON.parse(documentData);
+          } catch (e) {
+            console.error('[TLDrawComponent] Failed to parse document_data:', documentData, e);
+            documentData = {};
           }
-
-          // Pass the parsed object directly!
-          loadSnapshot(store, documentData);
-        } catch (error) {
-          console.error(
-            '[TLDrawComponent] Failed to load snapshot:',
-            error,
-            '\nSnapshots:', tldraw_snapshots,
-            '\nLatest Snapshot:', latestSnapshot,
-            '\nDocument Data:', documentData,
-          );
         }
+
+        // The stored document is tldraw's { store, schema } store snapshot.
+        loadSnapshot(store, documentData as TLStoreSnapshot);
+      } catch (error) {
+        console.error(
+          '[TLDrawComponent] Failed to load snapshot:',
+          error,
+          '\nSnapshots:', tldraw_snapshots,
+          '\nLatest Snapshot:', latestSnapshot,
+          '\nDocument Data:', documentData,
+        );
       }
+    }
 
-      setStoreWithStatus({ store, status: 'ready' });
-    };
-
-    initializeStore();
+    setStoreWithStatus({ store, status: 'ready' });
   }, [tldraw_snapshots]);
 
   const toggleTldrawVisibility = () => {
     setShowTldraw(prev => !prev);
   };
 
-  const debouncedSave = useCallback((documentData) => {
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(async () => {
-      try {
-        await ipcInvoke('create_tldraw_snapshot', {
-          page_id: persistenceKey,
-          planner_id: plannerId,
-          tldraw_snapshot: {
-            document_data: documentData,
-          }
-        });
-      } catch (error) {
-        console.error(
-          '[TLDrawComponent] Failed to save snapshot:',
-          error,
-          '\nPersistence Key:', persistenceKey,
-          '\nPlanner ID:', plannerId,
-          '\nDocument Data:', documentData,
-        );
-      }
-    }, 350);
-  }, [persistenceKey, plannerId, storeWithStatus.store]);
+  const persist = useCallback(async (snapshot: TLEditorSnapshot) => {
+    const page_id = pageIdRef.current;
+    if (!page_id) return;
+    try {
+      const db = await getDb();
+      await saveSnapshot(db, { page_id, document: snapshot.document as unknown as TldrawDocument });
+    } catch (error) {
+      console.error('[TLDrawComponent] Failed to save snapshot:', error, '\nPage ID:', page_id);
+    }
+  }, []);
 
-  const handleMount = useCallback((editor) => {
+  const debouncedSave = useCallback((snapshot: TLEditorSnapshot) => {
+    pending.current = snapshot;
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      pending.current = null;
+      void persist(snapshot);
+    }, 350);
+  }, [persist]);
+
+  // Flush a pending save when the page unmounts (navigation) so a stroke drawn just before leaving is kept.
+  useEffect(() => () => {
+    clearTimeout(debounceTimer.current);
+    if (pending.current !== null) {
+      const snapshot = pending.current;
+      pending.current = null;
+      void persist(snapshot);
+    }
+  }, [persist]);
+
+  const handleMount = useCallback((editor: Editor) => {
     const cleanup = editor.store.listen(
       (update) => {
         if (update.source === 'user') {
-          const tldraw_snapshot = getSnapshot(editor.store);
-          debouncedSave(tldraw_snapshot);
+          debouncedSave(getSnapshot(editor.store));
         }
       },
       { scope: 'document', source: 'user' }
     );
     return () => cleanup();
-  }, []);
+  }, [debouncedSave]);
 
-  const components = {
+  const components: TLComponents = {
     QuickActions: () => (
       <CustomQuickActions onToggleTldraw={toggleTldrawVisibility} />
     ),
@@ -143,7 +166,7 @@ export default function TlDrawComponent({ persistenceKey, plannerId, tldraw_snap
         {showTldraw && storeWithStatus.status === 'ready' && (
           <Tldraw
             autoFocus={false}
-            persistenceKey={persistenceKey}
+            assetUrls={assetUrls}
             components={components}
             store={storeWithStatus.store}
             onMount={handleMount}

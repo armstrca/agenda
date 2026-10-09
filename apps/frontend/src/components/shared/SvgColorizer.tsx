@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import chroma from 'chroma-js';
 
-const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
-    const [svgContent, setSvgContent] = useState(null);
-    const [error, setError] = useState(null);
+interface SvgColorizerProps {
+    svgUrl: string;
+    primaryColor?: string;
+}
+
+const SvgColorizer = ({ svgUrl, primaryColor = '#000' }: SvgColorizerProps) => {
+    const [svgContent, setSvgContent] = useState<string | null>(null);
+    const [, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const processSvg = async () => {
@@ -12,7 +17,7 @@ const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
                 const normalizedUrl = svgUrl.startsWith('/') ? svgUrl : `/${svgUrl}`;
                 console.log("Fetching SVG from:", normalizedUrl);
                 const response = await fetch(normalizedUrl);
-                
+
                 if (!response.ok) throw new Error(`Failed to fetch SVG: ${response.status}`);
                 const svgText = await response.text();
 
@@ -24,8 +29,11 @@ const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
                     throw new Error('SVG XML Error: ' + parserErrors[0].textContent);
                 }
 
-                // Calculate color variants FIRST
-                const colors = {
+                // Calculate color variants FIRST.
+                // Note: chroma.mix(color, 0.15) treats 0.15 as a colour (effectively black) and mixes
+                // half-way, so secondary/ternary here are darker shades of the primary. The weekly
+                // renderer mixes with white instead. Kept as-is so existing backgrounds look the same.
+                const colors: Record<string, string> = {
                     primary: primaryColor,
                     secondary: chroma.mix(primaryColor, 0.15).hex(),
                     ternary: chroma.mix(primaryColor, 0.05).hex(),
@@ -71,7 +79,7 @@ const SvgColorizer = ({ svgUrl, primaryColor = '#000' }) => {
                 setSvgContent(URL.createObjectURL(blob));
 
             } catch (error) {
-                setError(error.message);
+                setError(error instanceof Error ? error.message : String(error));
                 console.error('SVG Error:', error);
             }
         };

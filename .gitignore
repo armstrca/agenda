@@ -3,3 +3,6 @@ node_modules
 apps/frontend/dist
 apps/dist
 .trunk
+.env
+*.sqlite3
+__fixtures__

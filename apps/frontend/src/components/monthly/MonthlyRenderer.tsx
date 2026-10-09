@@ -1,21 +1,46 @@
 import React, { useRef } from 'react';
-import TiptapMonthly from './TiptapMonthly';
-import chroma from 'chroma-js';
-import PageNavigation from '../PageNavigation';
+import TiptapMonthly from './TiptapMonthly.tsx';
+import TlDrawComponent from '../TLDrawComponent.tsx';
+import PageNavigation from '../PageNavigation.tsx';
+import { templateStructure, type ComponentMap, type TemplateNode } from '../templateNodes.ts';
+import type { SnapshotRecord, TemplateRecord } from '../../domain/types.ts';
+
+/** One of the 42 cells of the month grid. */
+export interface MonthDay {
+  date: Date;
+  day_number: number;
+  isCurrentMonth: boolean;
+  tiptap_id: number;
+}
+
+export interface MonthTemplateData {
+  monthInfo: { month_year: string };
+  days: MonthDay[];
+}
+
+interface MonthlyRendererProps {
+  template: TemplateRecord;
+  data: MonthTemplateData;
+  components: ComponentMap;
+  page_id: string;
+  plannerId: string;
+  primaryColor?: string;
+  tldraw_snapshots: SnapshotRecord[];
+  children?: React.ReactNode;
+}
 
 const MonthlyRenderer = ({
   template,
   data,
   components,
   page_id,
-  plannerId,
-  primaryColor,
+  tldraw_snapshots,
   children
-}) => {
-  const structure = template?.content?.structure || [];
+}: MonthlyRendererProps) => {
+  const structure = templateStructure(template?.content);
   const keyCounter = useRef(0);
 
-  const weekStartDay = template?.content?.metadata?.default_styles?.["week-start-day"] || "Mon";
+  const weekStartDay = (template?.content?.metadata?.default_styles?.["week-start-day"] as string | undefined) || "Mon";
 
   const daysOrder = React.useMemo(() => {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -26,7 +51,7 @@ const MonthlyRenderer = ({
     ].slice(0, 7);
   }, [weekStartDay]);
 
-  const renderComponent = (node, currentData, context = {}) => {
+  const renderComponent = (node: TemplateNode): React.ReactNode => {
     const {
       component,
       class: className = '',
@@ -36,7 +61,7 @@ const MonthlyRenderer = ({
       styles = {},
     } = node;
 
-    const Component = component_type ? components[component_type] : component;
+    const Component = (component_type ? components[component_type] : component) as React.ElementType;
     const uniqueKey = `${component}-${keyCounter.current++}`;
 
     if (className === "month-name") {
@@ -58,7 +83,7 @@ const MonthlyRenderer = ({
     }
 
     if (component === "TiptapMonthly") {
-      const dayData = data?.days?.[attributes.tiptap_id - 1] || {};
+      const dayData: Partial<MonthDay> = data?.days?.[Number(attributes.tiptap_id) - 1] || {};
       return (
         <TiptapMonthly
           key={uniqueKey}
@@ -67,7 +92,6 @@ const MonthlyRenderer = ({
           className={className}
           date={dayData.date}
           isCurrentMonth={dayData.isCurrentMonth}
-          plannerId={plannerId}
         />
       );
     }
@@ -79,7 +103,7 @@ const MonthlyRenderer = ({
         style={styles}
         {...attributes}
       >
-        {children?.map((child) => renderComponent(child, currentData, context))}
+        {children?.map((child) => renderComponent(child))}
       </Component>
     );
   };
@@ -88,9 +112,10 @@ const MonthlyRenderer = ({
     <>
       {children}
       <PageNavigation />
+      <TlDrawComponent pageId={page_id} tldraw_snapshots={tldraw_snapshots} />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>
-          {renderComponent(node, undefined, {})}
+          {renderComponent(node)}
         </React.Fragment>
       ))}
     </>

@@ -1,13 +1,47 @@
-import React, { useRef, useEffect, useState } from 'react';
-import Tiptap from '../Tiptap';
-import TlDrawComponent from '../TLDrawComponent';
+import React, { useRef, useEffect } from 'react';
+import Tiptap from '../Tiptap.tsx';
+import TlDrawComponent from '../TLDrawComponent.tsx';
 import chroma from 'chroma-js';
-import PageNavigation from '../PageNavigation';
+import PageNavigation from '../PageNavigation.tsx';
+import { templateStructure, type ComponentMap, type TemplateNode } from '../templateNodes.ts';
+import type { ISODate } from '../../domain/dates.ts';
+import type {
+  CalendarMonthData,
+  SnapshotRecord,
+  TemplateRecord,
+  WeekDayData,
+} from '../../domain/types.ts';
 
 const VOID_ELEMENTS = new Set([
   'img', 'br', 'hr', 'input', 'meta', 'link', 'area',
   'base', 'col', 'embed', 'param', 'source', 'track', 'wbr',
 ]);
+
+/** One day's data as the template reads it. `holiday` is only used by the legacy monthly cell. */
+type DayData = Partial<WeekDayData> & { holiday?: string };
+
+interface RenderContext {
+  dayIndex?: number;
+  calendarSide?: 'left' | 'right';
+}
+
+interface TemplateRendererProps {
+  template: TemplateRecord;
+  data: DayData[];
+  components: ComponentMap;
+  page_id: string;
+  tldraw_snapshots: SnapshotRecord[];
+  plannerId: string;
+  leftCalendarData?: CalendarMonthData;
+  rightCalendarData?: CalendarMonthData;
+  primaryColor?: string;
+  daysOrder?: string[];
+  nextWeekId?: string;
+  prevWeekId?: string;
+  /** Entry date for editors that are not inside a day section (the right page's free text boxes). */
+  defaultEntryDate?: ISODate;
+  children?: React.ReactNode;
+}
 
 const TemplateRenderer = ({
   template,
@@ -22,9 +56,10 @@ const TemplateRenderer = ({
   daysOrder,
   nextWeekId,
   prevWeekId,
+  defaultEntryDate,
   children
-}) => {
-  const structure = template?.content?.structure || [];
+}: TemplateRendererProps) => {
+  const structure = templateStructure(template?.content);
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
   const tiptapCounter = useRef(1);
@@ -33,7 +68,7 @@ const TemplateRenderer = ({
     tiptapCounter.current = 1;
   }, [data]);
 
-  const colors = React.useMemo(() => {
+  const colors = React.useMemo<Record<string, string>>(() => {
     if (!primaryColor) {
       return {
         primary: '#000',
@@ -53,7 +88,11 @@ const TemplateRenderer = ({
 
   dayIndexRef.current = 0;
 
-  const renderComponent = (node, currentData, context = { dayIndex: 0 }) => {
+  const renderComponent = (
+    node: TemplateNode,
+    currentData: DayData | undefined,
+    context: RenderContext = { dayIndex: 0 },
+  ): React.ReactNode => {
     const {
       component,
       class: className = '',
@@ -65,14 +104,14 @@ const TemplateRenderer = ({
       selfClosing,
     } = node;
 
-    const Component = component_type ? components[component_type] : component;
+    const Component = (component_type ? components[component_type] : component) as React.ElementType;
     const isVoidElement = VOID_ELEMENTS.has(component);
     const uniqueKey = `${component}-${keyCounter.current++}`;
 
-    let textContent = null;
+    let textContent: React.ReactNode = null;
     if (className === "month-name") {
       textContent = currentData?.month_year || data?.[0]?.month_year || '';
-    } 
+    }
     else if (className === "week-days") {
       const dayId = parseInt(node.attributes?.id, 10);
       if (dayId >= 1 && dayId <= 7) {
@@ -99,7 +138,7 @@ const TemplateRenderer = ({
         ...attributes,
       });
     }
-    let newContext = { ...context };
+    const newContext: RenderContext = { ...context };
 
     if (className === "monthly-day-cell") {
       const dayNumber = currentData?.day_number;
@@ -130,7 +169,7 @@ const TemplateRenderer = ({
 
     if (className === "wl-day-section" || className === "wr-day-section") {
       const dayIndex = dayIndexRef.current++;
-      const dayData = data[dayIndex] || {};
+      const dayData: DayData = data[dayIndex] || {};
       return (
         <Component
           key={`${className}-${dayIndex}`}
@@ -148,11 +187,11 @@ const TemplateRenderer = ({
     if (className === "wr-cal-right") newContext.calendarSide = "right";
 
     if (className === "wr-calendar-button") {
-      const buttonId = parseInt(node.attributes?.id, 10); // Convert to number
+      const buttonId = parseInt(node.attributes?.id, 10);
       const calendarData = newContext.calendarSide === "left"
         ? leftCalendarData
         : rightCalendarData;
-      const buttonText = calendarData?.buttonData?.[Number(buttonId)] || ''; // Now using numeric key
+      const buttonText = calendarData?.buttonData?.[buttonId] || '';
 
       return React.createElement(Component, {
         key: uniqueKey,
@@ -186,8 +225,7 @@ const TemplateRenderer = ({
           tiptap_id={tiptapId.toString()}
           pageId={page_id}
           className={className}
-          plannerId={plannerId}
-          entryDate={currentData?.entryDate}
+          entryDate={currentData?.entryDate ?? defaultEntryDate}
         />
       );
     }
@@ -203,8 +241,8 @@ const TemplateRenderer = ({
       );
     }
 
-    const attrs = { ...node.attrs };
-    if (attrs && attrs['data-color']) {
+    const attrs: Record<string, string> = { ...node.attrs };
+    if (attrs['data-color']) {
       const colorType = attrs['data-color'];
       const color = colors[colorType] || '#000';
 
@@ -243,14 +281,11 @@ const TemplateRenderer = ({
 
   return (
     <>
-      <>
-        <PageNavigation plannerId={plannerId} nextWeekId={nextWeekId} prevWeekId={prevWeekId} />
-      </>
+      <PageNavigation plannerId={plannerId} nextWeekId={nextWeekId} prevWeekId={prevWeekId} />
       {children}
       <TlDrawComponent
-        persistenceKey={page_id}
+        pageId={page_id}
         tldraw_snapshots={tldraw_snapshots}
-        plannerId={plannerId}
       />
       {structure.map((node) => (
         <React.Fragment key={`fragment-${keyCounter.current++}`}>

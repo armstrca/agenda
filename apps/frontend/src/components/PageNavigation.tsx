@@ -1,70 +1,91 @@
 import React from 'react'
-import { useNavigate, useParams, useMatch } from '@tanstack/react-router'
+import { useNavigate, useMatch } from '@tanstack/react-router'
+import { parseWeekId, weekNavigation, weeksInYear } from '../domain/calendar/weeks.ts'
+import { parseMonthId, monthNavigation } from '../domain/calendar/months.ts'
 
-export default function PageNavigation({ plannerId: plannerIdProp, nextWeekId, prevWeekId }) {
-    const navigate = useNavigate()
-    const match = useMatch({ strict: false })
-    const params = match.params || {}
+interface PageNavigationProps {
+    plannerId?: string
+    /** Provided by the weekly loader; preferred because it already handles year rollover. */
+    nextWeekId?: string
+    prevWeekId?: string
+}
 
-    // Get plannerId from either route type
+type Targets =
+    | { kind: 'weekly'; plannerId: string; prev: string; next: string }
+    | { kind: 'monthly'; plannerId: string; prev: string; next: string }
+
+// Work out where "previous" and "next" go from the current route: weekly pages step left/right
+// page by page, monthly pages step a month. Returns null when the route is neither.
+function resolveTargets(
+    params: { plannerId?: string; weekId?: string; monthId?: string },
+    { plannerId: plannerIdProp, nextWeekId, prevWeekId }: PageNavigationProps,
+): Targets | null {
     const plannerId = plannerIdProp || params.plannerId
-
-    let prevPath = ''
-    let nextPath = ''
-    let isMonthly = false
+    if (!plannerId) return null
 
     if (params.weekId) {
-        // Handle weekly navigation
-        // Prefer backend-provided navigation ids to handle year rollover correctly
         if (nextWeekId && prevWeekId) {
-            nextPath = `/planners/${plannerId}/weekly/${nextWeekId}`
-            prevPath = `/planners/${plannerId}/weekly/${prevWeekId}`
-        } else {
-            const match = params.weekId.match(/^(\d{1,2})_(\d{4})_([lr])$/)
-            if (!match) return null
-            const [, weekNumStr, year, side] = match
-            const weekNumber = parseInt(weekNumStr, 10)
-            const nextSide = side === 'r' ? 'l' : 'r'
-            const nextWeekNumber = side === 'r' ? weekNumber + 1 : weekNumber
-            nextPath = `/planners/${plannerId}/weekly/${nextWeekNumber}_${year}_${nextSide}`
-            const prevSide = side === 'l' ? 'r' : 'l'
-            const prevWeekNumber = side === 'l' ? weekNumber - 1 : weekNumber
-            prevPath = `/planners/${plannerId}/weekly/${prevWeekNumber}_${year}_${prevSide}`
+            return { kind: 'weekly', plannerId, prev: prevWeekId, next: nextWeekId }
         }
-    } else if (params.monthId) {
-        // Handle monthly navigation
-        isMonthly = true
-        const match = params.monthId.match(/^(\d{2})_(\d{4})$/)
-        if (!match) return null
-
-        let [_, monthStr, yearStr] = match
-        let month = parseInt(monthStr, 10)
-        let year = parseInt(yearStr, 10)
-
-        // Calculate next month
-        const nextMonth = month === 12 ? 1 : month + 1
-        const nextYear = month === 12 ? year + 1 : year
-        const nextMonthId = `${String(nextMonth).padStart(2, '0')}_${nextYear}`
-        nextPath = `/planners/${plannerId}/monthly/${nextMonthId}`
-
-        // Calculate previous month
-        const prevMonth = month === 1 ? 12 : month - 1
-        const prevYear = month === 1 ? year - 1 : year
-        const prevMonthId = `${String(prevMonth).padStart(2, '0')}_${prevYear}`
-        prevPath = `/planners/${plannerId}/monthly/${prevMonthId}`
-    } else {
-        return null
+        try {
+            const { week, year, side } = parseWeekId(params.weekId)
+            const nav = weekNavigation(week, year, side, weeksInYear(year))
+            return { kind: 'weekly', plannerId, prev: nav.prevWeekId, next: nav.nextWeekId }
+        } catch {
+            return null
+        }
     }
+
+    if (params.monthId) {
+        try {
+            const { month, year } = parseMonthId(params.monthId)
+            const nav = monthNavigation(month, year)
+            return { kind: 'monthly', plannerId, prev: nav.prevMonthId, next: nav.nextMonthId }
+        } catch {
+            return null
+        }
+    }
+
+    return null
+}
+
+export default function PageNavigation(props: PageNavigationProps) {
+    const navigate = useNavigate()
+    const match = useMatch({ strict: false })
+    const params = (match?.params ?? {}) as { plannerId?: string; weekId?: string; monthId?: string }
+    const targets = resolveTargets(params, props)
+
+    const go = React.useCallback(
+        (direction: 'prev' | 'next') => {
+            if (!targets) return
+            const id = targets[direction]
+            if (targets.kind === 'weekly') {
+                void navigate({
+                    to: '/planners/$plannerId/weekly/$weekId',
+                    params: { plannerId: targets.plannerId, weekId: id },
+                })
+            } else {
+                void navigate({
+                    to: '/planners/$plannerId/monthly/$monthId',
+                    params: { plannerId: targets.plannerId, monthId: id },
+                })
+            }
+        },
+        // targets is rebuilt each render; its fields are what matter
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [navigate, targets?.kind, targets?.plannerId, targets?.prev, targets?.next],
+    )
 
     // Swipe gesture: right-to-left => next, left-to-right => prev
     React.useEffect(() => {
-        let startX = null
-        let startY = null
+        if (!targets) return undefined
+        let startX: number | null = null
+        let startY: number | null = null
         let tracking = false
         let handled = false
 
-        const isInteractiveTarget = (el) => {
-            if (!el) return false
+        const isInteractiveTarget = (el: EventTarget | null) => {
+            if (!(el instanceof Element)) return false
             const editable = el.closest('[contenteditable="true"]')
             const input = el.closest('input, textarea, select, button')
             const tiptap = el.closest('.tiptap')
@@ -72,7 +93,7 @@ export default function PageNavigation({ plannerId: plannerIdProp, nextWeekId, p
             return !!(editable || input || tiptap || tldraw)
         }
 
-        const onTouchStart = (e) => {
+        const onTouchStart = (e: TouchEvent) => {
             if (handled) return
             // Only track single-finger swipes
             if (e.touches?.length !== 1) return
@@ -84,12 +105,7 @@ export default function PageNavigation({ plannerId: plannerIdProp, nextWeekId, p
             tracking = true
         }
 
-        const onTouchMove = (e) => {
-            if (!tracking || handled) return
-            // Allow movement, but don't preventDefault to keep scrolling
-        }
-
-        const onTouchEnd = (e) => {
+        const onTouchEnd = (e: TouchEvent) => {
             if (!tracking || handled) return
             tracking = false
             const t = e.changedTouches?.[0]
@@ -104,40 +120,34 @@ export default function PageNavigation({ plannerId: plannerIdProp, nextWeekId, p
             if (!horizontalEnough) return
 
             handled = true
-            // Right-to-left (dx < 0) should navigate forward (next)
-            if (dx < 0 && nextPath) {
-                navigate({ to: nextPath })
-            }
-            // Left-to-right (dx > 0) should navigate backward (prev)
-            else if (dx > 0 && prevPath) {
-                navigate({ to: prevPath })
-            }
+            // Right-to-left (dx < 0) navigates forward, left-to-right backward
+            go(dx < 0 ? 'next' : 'prev')
             // Reset handled after a tick to allow subsequent swipes
             setTimeout(() => { handled = false }, 250)
         }
 
         window.addEventListener('touchstart', onTouchStart, { passive: true })
-        window.addEventListener('touchmove', onTouchMove, { passive: true })
         window.addEventListener('touchend', onTouchEnd, { passive: true })
 
         return () => {
             window.removeEventListener('touchstart', onTouchStart)
-            window.removeEventListener('touchmove', onTouchMove)
             window.removeEventListener('touchend', onTouchEnd)
         }
-        // Rebind if the target paths change
-    }, [navigate, nextPath, prevPath])
+    }, [go, targets === null])
+
+    if (!targets) return null
+    const isMonthly = targets.kind === 'monthly'
 
     return (
         <div className="page-navigation">
             <button
                 className="button-prev"
-                onClick={() => navigate({ to: prevPath })}
+                onClick={() => go('prev')}
                 aria-label={isMonthly ? "Previous month" : "Previous week"}
             />
             <button
                 className="button-next"
-                onClick={() => navigate({ to: nextPath })}
+                onClick={() => go('next')}
                 aria-label={isMonthly ? "Next month" : "Next week"}
             />
         </div>

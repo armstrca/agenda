@@ -1,6 +1,9 @@
 import React, { useMemo, useRef, useState, useEffect, Dispatch, SetStateAction } from 'react'
 // import TemplateRenderer from '../weekly/TemplateRenderer.jsx'
-import { savePageTemplate } from '../../services/api.ts'
+import { getDb } from '../../db/index.ts'
+import { saveTemplate } from '../../domain/templates.ts'
+import { listPlanners } from '../../domain/planners.ts'
+import type { Planner } from '../../domain/types.ts'
 
 type TemplateType = 'daily' | 'weekly_left' | 'weekly_right' | 'monthly' | 'extra'
 
@@ -385,8 +388,7 @@ const RightSidebar: React.FC<{
   setTemplateType: (t: TemplateType) => void
   isDefault: boolean
   setIsDefault: (v: boolean) => void
-  userId: string
-  setUserId: (v: string) => void
+  planners: Planner[]
   plannerId: string
   setPlannerId: (v: string) => void
   content: TemplateContent
@@ -403,8 +405,7 @@ const RightSidebar: React.FC<{
   setTemplateType,
   isDefault,
   setIsDefault,
-  userId,
-  setUserId,
+  planners,
   plannerId,
   setPlannerId,
   content,
@@ -523,11 +524,13 @@ const RightSidebar: React.FC<{
       <SidebarField label="Default?">
         <input type="checkbox" checked={isDefault} onChange={(e) => setIsDefault(e.target.checked)} />
       </SidebarField>
-      <SidebarField label="User ID (uuid string)">
-        <input value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="user uuid" />
-      </SidebarField>
-      <SidebarField label="Planner ID (uuid string)">
-        <input value={plannerId} onChange={(e) => setPlannerId(e.target.value)} placeholder="planner uuid" />
+      <SidebarField label="Planner">
+        <select value={plannerId} onChange={(e) => setPlannerId(e.target.value)}>
+          <option value="">(choose a planner)</option>
+          {planners.map((p) => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
       </SidebarField>
       <h4 style={{ marginBottom: 4 }}>Canvas</h4>
       <SidebarField label="Width (px)">
@@ -1190,8 +1193,27 @@ const PageTemplateEditor: React.FC = () => {
   const [name, setName] = useState('My Template')
   const [templateType, setTemplateType] = useState<TemplateType>('weekly_left')
   const [isDefault, setIsDefault] = useState(false)
-  const [userId, setUserId] = useState('')
   const [plannerId, setPlannerId] = useState('')
+  const [planners, setPlanners] = useState<Planner[]>([])
+
+  // The template belongs to a planner; offer the planners in the database and preselect the first.
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const db = await getDb()
+        const list = await listPlanners(db)
+        if (cancelled) return
+        setPlanners(list)
+        setPlannerId((current) => current || list[0]?.id || '')
+      } catch (e) {
+        console.error('Failed to load planners', e)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
   const [content, setContent] = useState<TemplateContent>(() => makeStarter('weekly_left'))
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const canvasApiRef = useRef<null | { placeAtClient: (block: BlockId, x: number, y: number) => void; getCanvasRect: () => DOMRect | null }>(null)
@@ -1209,11 +1231,12 @@ const PageTemplateEditor: React.FC = () => {
 
   const onSave = async () => {
     try {
-      await savePageTemplate({
+      if (!plannerId) throw new Error('choose a planner first')
+      const db = await getDb()
+      await saveTemplate(db, {
         name,
         template_type: templateType,
         is_default: isDefault,
-        user_id: userId,
         planner_id: plannerId,
         content,
       })
@@ -1311,8 +1334,7 @@ const PageTemplateEditor: React.FC = () => {
         setTemplateType={setTemplateType}
         isDefault={isDefault}
         setIsDefault={setIsDefault}
-        userId={userId}
-        setUserId={setUserId}
+        planners={planners}
         plannerId={plannerId}
         setPlannerId={setPlannerId}
         content={content}
