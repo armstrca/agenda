@@ -72,7 +72,7 @@ export default function TlDrawComponent({ pageId, tldraw_snapshots }: TlDrawComp
   const pending = useRef<TLEditorSnapshot | null>(null);
   const pageIdRef = useRef(pageId);
   pageIdRef.current = pageId;
-  const [showTldraw, setShowTldraw] = useState(true);
+  const [showTldraw, setShowTldraw] = useState(false);
 
   useEffect(() => {
     const store = createTLStore();

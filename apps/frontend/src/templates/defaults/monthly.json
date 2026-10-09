@@ -45,7 +45,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -56,7 +56,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -67,7 +67,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -78,7 +78,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -89,7 +89,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -100,7 +100,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }
@@ -111,7 +111,7 @@
             "class": "week-day",
             "children": [
               {
-                "class": "day-name",
+                "class": "m-day-name",
                 "component": "div",
                 "data-color": "primary"
               }

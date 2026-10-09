@@ -9,6 +9,7 @@
  */
 
 import {
+  MONTH_NAMES,
   daysInclusive,
   firstOfMonth,
   lastOfMonth,
@@ -57,6 +58,18 @@ export function monthRange(year: number, month: number): MonthRange {
   const start = firstOfMonth(year, month);
   const end = lastOfMonth(year, month);
   return { start, end, dates: daysInclusive(start, end) };
+}
+
+/**
+ * The first day of the month a "October 2025" label names (the label `monthGrid` and `monthYear`
+ * produce), or null for anything else. Lets a mini-calendar header link to its month without
+ * adding a field to the week data the Rust fixtures pin down.
+ */
+export function firstOfMonthLabel(label: string): ISODate | null {
+  const m = /^([A-Z][a-z]+) (\d{4})$/.exec(label);
+  if (!m) return null;
+  const month = (MONTH_NAMES as readonly string[]).indexOf(m[1]) + 1;
+  return month === 0 ? null : firstOfMonth(Number(m[2]), month);
 }
 
 export function monthNavigation(month: number, year: number): { nextMonthId: string; prevMonthId: string } {

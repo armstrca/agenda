@@ -45,11 +45,11 @@
             "class": "d-day-header",
             "children": [
               {
-                "class": "day-number",
+                "class": "d-day-number",
                 "component": "div"
               },
               {
-                "class": "day-name",
+                "class": "d-day-name",
                 "component": "div"
               },
               {

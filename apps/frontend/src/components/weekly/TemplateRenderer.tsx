@@ -1,10 +1,13 @@
 import React, { useRef, useEffect } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import Tiptap from '../Tiptap.tsx';
 import TlDrawComponent from '../TLDrawComponent.tsx';
 import chroma from 'chroma-js';
 import PageNavigation from '../PageNavigation.tsx';
+import { DayLink, MonthLink, dayPage } from '../shared/PageLinks.tsx';
+import { firstOfMonthLabel } from '../../domain/calendar/months.ts';
 import { templateStructure, type ComponentMap, type TemplateNode } from '../templateNodes.ts';
-import type { ISODate } from '../../domain/dates.ts';
+import { addDays, type ISODate } from '../../domain/dates.ts';
 import type {
   CalendarMonthData,
   SnapshotRecord,
@@ -63,6 +66,7 @@ const TemplateRenderer = ({
   const keyCounter = useRef(0);
   const dayIndexRef = useRef(0);
   const tiptapCounter = useRef(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     tiptapCounter.current = 1;
@@ -110,7 +114,12 @@ const TemplateRenderer = ({
 
     let textContent: React.ReactNode = null;
     if (className === "month-name") {
-      textContent = currentData?.month_year || data?.[0]?.month_year || '';
+      const monthDay = currentData ?? data?.[0];
+      textContent = (
+        <MonthLink plannerId={plannerId} date={monthDay?.entryDate}>
+          {monthDay?.month_year || ''}
+        </MonthLink>
+      );
     }
     else if (className === "week-days") {
       const dayId = parseInt(node.attributes?.id, 10);
@@ -119,11 +128,17 @@ const TemplateRenderer = ({
       }
 
     } else if (currentData) {
-      if (className === "monthly-day-cell-date") {
+      if (className === "m-day-number") {
         textContent = currentData.day_number;
       }
-      if (className === "day-number") textContent = currentData?.day_number;
-      if (className === "day-name") textContent = currentData?.day_name;
+      if (className === "w-day-number") textContent = currentData?.day_number;
+      if (className === "w-day-name") {
+        textContent = (
+          <DayLink plannerId={plannerId} date={currentData.entryDate}>
+            {currentData.day_name}
+          </DayLink>
+        );
+      }
       if (className === "holiday-box") {
         textContent = (currentData?.holidays || []).join(', ');
       }
@@ -153,7 +168,7 @@ const TemplateRenderer = ({
         >
           {!isEmptyCell && (
             <>
-              <div className="day-number">{dayNumber}</div>
+              <div className="m-day-number">{dayNumber}</div>
               {currentData?.holiday && (
                 <div className="holiday-box">{currentData.holiday}</div>
               )}
@@ -186,12 +201,16 @@ const TemplateRenderer = ({
     if (className === "wr-cal-left") newContext.calendarSide = "left";
     if (className === "wr-cal-right") newContext.calendarSide = "right";
 
-    if (className === "wr-calendar-button") {
+    if (className === "w-calendar-button") {
       const buttonId = parseInt(node.attributes?.id, 10);
       const calendarData = newContext.calendarSide === "left"
         ? leftCalendarData
         : rightCalendarData;
-      const buttonText = calendarData?.buttonData?.[buttonId] || '';
+      const dayNumber = calendarData?.buttonData?.[buttonId] || 0;
+      const monthStart = firstOfMonthLabel(calendarData?.month ?? '');
+      // A real button (a link inside a button is invalid HTML) that opens the day's daily page.
+      // Blank cells (0) have no day, so they are disabled.
+      const date = dayNumber > 0 && monthStart ? addDays(monthStart, dayNumber - 1) : undefined;
 
       return React.createElement(Component, {
         key: uniqueKey,
@@ -199,7 +218,11 @@ const TemplateRenderer = ({
         style: styles,
         ...attributes,
         ...component_props,
-      }, buttonText);
+        type: 'button',
+        disabled: date === undefined,
+        'aria-label': date,
+        onClick: date ? () => void navigate(dayPage(plannerId, date)) : undefined,
+      }, dayNumber || '');
     }
 
     if (className === "month-year") {
@@ -213,7 +236,11 @@ const TemplateRenderer = ({
         className,
         style: styles,
         ...attributes,
-      }, monthText);
+      }, (
+        <MonthLink plannerId={plannerId} date={firstOfMonthLabel(monthText) ?? undefined}>
+          {monthText}
+        </MonthLink>
+      ));
     }
 
 

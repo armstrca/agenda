@@ -10,6 +10,8 @@
  */
 
 import init from './0001_init.sql?raw';
+import prefixDayClasses from './0002_prefix_day_classes.sql?raw';
+import renameCalendarButton from './0003_rename_calendar_button.sql?raw';
 
 export interface Migration {
   readonly version: number;
@@ -17,4 +19,8 @@ export interface Migration {
   readonly sql: string;
 }
 
-export const MIGRATIONS: ReadonlyArray<Migration> = [{ version: 1, name: 'init', sql: init }];
+export const MIGRATIONS: ReadonlyArray<Migration> = [
+  { version: 1, name: 'init', sql: init },
+  { version: 2, name: 'prefix_day_classes', sql: prefixDayClasses },
+  { version: 3, name: 'rename_calendar_button', sql: renameCalendarButton },
+];

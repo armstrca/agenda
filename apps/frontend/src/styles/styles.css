@@ -52,7 +52,7 @@ body {
   grid-template-columns: repeat(7, 1fr);
 }
 
-.monthly-week-header>div {
+.monthly-week-header>.m-day-name {
   background-color: white;
   /* user-customizable */
   display: flex;
@@ -110,7 +110,7 @@ body {
   /* user-customizable */
 }
 
-.monthly-day-cell-date {
+.m-day-number {
   justify-content: center;
   display: block;
   /* non-customizable */
@@ -148,7 +148,7 @@ body {
 }
 
 /* fully user-customizable */
-.monthly-week-header>div {
+.monthly-week-header>.m-day-name {
   border-bottom: 1px solid #000000;
 }
 
@@ -264,7 +264,7 @@ body {
   left: 45px;
 }
 
-.day-number {
+.w-day-number {
   position: absolute;
   width: 45px;
   font-weight: normal;
@@ -283,7 +283,7 @@ body {
   font-size: 12px;
 }
 
-.day-name {
+.w-day-name {
   position: absolute;
   width: 200px;
   height: 47px;
@@ -565,6 +565,32 @@ button {
 button:not(.tlui-button):hover {
   background-color: rgba(0, 0, 0, 0.062);
   transition: .2s;
+}
+
+/* A header whose text links to another page (month name → monthly page, day name → daily page).
+   Fills the header element it sits in and looks like its text, with the same hover as buttons. */
+.page-link {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: rgba(0, 0, 0, 0.062);
+  transition: .2s;
+}
+
+/* In a flex header (daily month name) the link has to centre its own text. */
+.d-month-name>.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -1049,7 +1075,7 @@ button:not(.tlui-button):hover {
   color: transparent;
 }
 
-.wr-calendar-button {
+.w-calendar-button {
   width: 22px;
   height: 22px;
   text-align: center;
@@ -1062,6 +1088,15 @@ button:not(.tlui-button):hover {
   font-family: "Aref Ruqaa", Helvetica;
   font-weight: 400;
   word-wrap: break-word;
+}
+
+/* Blank cells of the mini calendar have no day to open. */
+.w-calendar-button:disabled {
+  cursor: default;
+}
+
+.w-calendar-button:disabled:hover {
+  background-color: transparent;
 }
 
 .wr-cal-container {
@@ -1357,24 +1392,38 @@ wr-calendar-week-line-2 {
   line-height: normal;
 }
 
+/* Spans the date circle to the right edge of the holiday text (x 637) and stops short of the
+   month header (x 698): it comes later in the template, so a wider box would cover the month link. */
 .planner-container>.d-day-header {
   position: absolute;
-  width: 900px;
+  width: 607px;
   height: 45px;
   top: 24px;
   left: 30px;
 }
 
-.d-day-header .day-number {
+.d-day-number {
+  position: absolute;
+  width: 45px;
+  height: 45px;
   top: 0;
   left: 0;
-  height: 45px;
+  font-weight: normal;
+  color: black;
+  font-size: 24px;
   line-height: 45px;
+  text-align: center;
 }
 
-.d-day-header .day-name {
+.d-day-name {
+  position: absolute;
   width: 146px;
+  height: 47px;
   top: -2px;
+  left: 59px;
+  font-weight: normal;
+  color: black;
+  font-size: 28px;
 }
 
 .d-day-header .moon-phase {

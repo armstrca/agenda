@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Tiptap from '../Tiptap.tsx';
 import TlDrawComponent from '../TLDrawComponent.tsx';
 import PageNavigation from '../PageNavigation.tsx';
+import { MonthLink } from '../shared/PageLinks.tsx';
 import { templateStructure, type ComponentMap, type TemplateNode } from '../templateNodes.ts';
 import { hourLabel } from '../../domain/calendar/days.ts';
 import type { DayData, SnapshotRecord, TemplateRecord } from '../../domain/types.ts';
@@ -49,9 +50,15 @@ const DailyRenderer = ({
     const uniqueKey = `${component}-${keyCounter.current++}`;
 
     let textContent: React.ReactNode = null;
-    if (className === "d-month-name") textContent = data?.month_year || '';
-    if (className === "day-number") textContent = data?.day_number;
-    if (className === "day-name") textContent = data?.day_name;
+    if (className === "d-month-name") {
+      textContent = (
+        <MonthLink plannerId={plannerId} date={data?.entryDate}>
+          {data?.month_year || ''}
+        </MonthLink>
+      );
+    }
+    if (className === "d-day-number") textContent = data?.day_number;
+    if (className === "d-day-name") textContent = data?.day_name;
     if (className === "moon-phase") textContent = data?.moon_phase;
     if (className === "holiday-box") textContent = (data?.holidays || []).join(', ');
     if (className === "d-hour-label" && context.hour !== undefined) textContent = hourLabel(context.hour);

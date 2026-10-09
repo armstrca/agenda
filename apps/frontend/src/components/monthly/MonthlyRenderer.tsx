@@ -76,7 +76,7 @@ const MonthlyRenderer = ({
       return (
         <section key={uniqueKey} className={className} style={styles}>
           {daysOrder.map((day, index) => (
-            <div key={`day-${index}`}>{day}</div>
+            <div key={`day-${index}`} className="m-day-name">{day}</div>
           ))}
         </section>
       );

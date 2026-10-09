@@ -110,7 +110,7 @@ export default function PageNavigation(props: PageNavigationProps) {
         const isInteractiveTarget = (el: EventTarget | null) => {
             if (!(el instanceof Element)) return false
             const editable = el.closest('[contenteditable="true"]')
-            const input = el.closest('input, textarea, select, button')
+            const input = el.closest('input, textarea, select, button, a')
             const tiptap = el.closest('.tiptap')
             const tldraw = el.closest('[data-tldraw]')
             return !!(editable || input || tiptap || tldraw)

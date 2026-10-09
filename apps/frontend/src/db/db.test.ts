@@ -63,15 +63,20 @@ describe('storage layer', () => {
     expect(rows).toEqual([{ id: DEFAULT_PROFILE_ID, name: 'Default', version: 1 }]);
   });
 
-  it('exposes the migration list built from the raw SQL file', () => {
-    expect(MIGRATIONS.map(m => m.version)).toEqual([1]);
-    expect(MIGRATIONS[0].name).toBe('init');
+  it('exposes the migration list built from the raw SQL files', () => {
+    expect(MIGRATIONS.map(m => [m.version, m.name])).toEqual([
+      [1, 'init'],
+      [2, 'prefix_day_classes'],
+      [3, 'rename_calendar_button'],
+    ]);
     expect(MIGRATIONS[0].sql).toContain('CREATE TABLE profiles');
+    expect(MIGRATIONS[1].sql).toContain('UPDATE page_templates');
+    expect(MIGRATIONS[2].sql).toContain('w-calendar-button');
   });
 
   it('records applied migrations and is idempotent', async () => {
     const before = await db.select('SELECT version, name FROM schema_migrations ORDER BY version');
-    expect(before).toEqual([{ version: 1, name: 'init' }]);
+    expect(before).toEqual(MIGRATIONS.map(m => ({ version: m.version, name: m.name })));
 
     expect(await runMigrations(db)).toEqual([]);
 
@@ -80,36 +85,40 @@ describe('storage layer', () => {
   });
 
   it('applies only pending migrations, in version order, even without a trailing semicolon', async () => {
+    const latest = MIGRATIONS[MIGRATIONS.length - 1].version;
     const extended = [
       ...MIGRATIONS,
-      { version: 3, name: 'three', sql: 'CREATE TABLE three (id INTEGER PRIMARY KEY)' },
-      { version: 2, name: 'two', sql: 'CREATE TABLE two (id INTEGER PRIMARY KEY);\n-- trailing comment' },
+      { version: latest + 2, name: 'second', sql: 'CREATE TABLE second (id INTEGER PRIMARY KEY)' },
+      { version: latest + 1, name: 'first', sql: 'CREATE TABLE first (id INTEGER PRIMARY KEY);\n-- trailing comment' },
     ];
-    expect(await runMigrations(db, extended)).toEqual([2, 3]);
-    expect(await tableNames(db)).toContain('two');
-    expect(await tableNames(db)).toContain('three');
+    expect(await runMigrations(db, extended)).toEqual([latest + 1, latest + 2]);
+    expect(await tableNames(db)).toContain('first');
+    expect(await tableNames(db)).toContain('second');
     expect(await runMigrations(db, extended)).toEqual([]);
 
     const recorded = await db.select<{ version: number; name: string; applied_at: string }>(
       'SELECT version, name, applied_at FROM schema_migrations ORDER BY version',
     );
     expect(recorded.map(r => [r.version, r.name])).toEqual([
-      [1, 'init'],
-      [2, 'two'],
-      [3, 'three'],
+      ...MIGRATIONS.map(m => [m.version, m.name]),
+      [latest + 1, 'first'],
+      [latest + 2, 'second'],
     ]);
-    expect(recorded[2].applied_at).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+    expect(recorded[recorded.length - 1].applied_at).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
   });
 
   it('rolls back a failing migration and records nothing for it', async () => {
+    const next = MIGRATIONS[MIGRATIONS.length - 1].version + 1;
     const broken = [
       ...MIGRATIONS,
-      { version: 2, name: 'broken', sql: 'CREATE TABLE half (id INTEGER PRIMARY KEY);\nTHIS IS NOT SQL;' },
+      { version: next, name: 'broken', sql: 'CREATE TABLE half (id INTEGER PRIMARY KEY);\nTHIS IS NOT SQL;' },
     ];
-    await expect(runMigrations(db, broken)).rejects.toThrow(/migration 2 \(broken\) failed/);
+    await expect(runMigrations(db, broken)).rejects.toThrow(new RegExp(`migration ${next} \\(broken\\) failed`));
 
     expect(await tableNames(db)).not.toContain('half');
-    expect(await db.select('SELECT version FROM schema_migrations')).toEqual([{ version: 1 }]);
+    expect(await db.select('SELECT version FROM schema_migrations ORDER BY version')).toEqual(
+      MIGRATIONS.map(m => ({ version: m.version })),
+    );
 
     // No transaction is left dangling: ordinary writes work afterwards.
     await seedPlanner(db);
@@ -260,5 +269,88 @@ describe('storage layer', () => {
     await expect(fresh.select('SELECT 1')).rejects.toThrow(/closed/);
     await expect(fresh.execute('SELECT 1')).rejects.toThrow(/closed/);
     expect(() => fresh.exportBytes()).toThrow(/closed/);
+  });
+});
+
+describe('migration 0002: prefix day classes', () => {
+  const OLD = (cls: string[]) =>
+    JSON.stringify({ metadata: {}, structure: cls.map(c => ({ class: c, component: 'div' })) });
+  const SPACED = '{"structure": [{"class": "day-name"}, {"class": "day-number"}]}';
+
+  it('rewrites saved templates by page type and leaves other classes alone', async () => {
+    const db = await createSqlJsDatabase();
+    await runMigrations(db, MIGRATIONS.slice(0, 1));
+    await seedPlanner(db);
+    const rows: Array<[string, string, string]> = [
+      ['wl', 'weekly_left', OLD(['day-number', 'day-name', 'week-days', 'day-name-x'])],
+      ['wr', 'weekly_right', SPACED],
+      ['d', 'daily', OLD(['day-number', 'day-name', 'd-hour-label'])],
+      ['m', 'monthly', OLD(['day-name', 'monthly-day-cell-date', 'monthly-day-cell-date-box'])],
+      ['x', 'extra', OLD(['day-name'])],
+      ['done', 'weekly_left', OLD(['w-day-name'])],
+    ];
+    for (const [id, type, content] of rows) {
+      await db.execute(
+        `INSERT INTO page_templates (id, planner_id, profile_id, name, template_type, content, updated_at)
+         VALUES (?, 'planner-1', ?, ?, ?, ?, '2025-01-01T00:00:00.000Z')`,
+        [id, DEFAULT_PROFILE_ID, id, type, content],
+      );
+    }
+
+    expect(await runMigrations(db, MIGRATIONS.slice(0, 2))).toEqual([2]);
+
+    const after = await db.select<{ id: string; content: string; version: number; updated_at: string }>(
+      'SELECT id, content, version, updated_at FROM page_templates',
+    );
+    const byId = Object.fromEntries(after.map(r => [r.id, r]));
+    expect(byId.wl.content).toBe(OLD(['w-day-number', 'w-day-name', 'week-days', 'day-name-x']));
+    expect(byId.wr.content).toBe('{"structure": [{"class": "w-day-name"}, {"class": "w-day-number"}]}');
+    expect(byId.d.content).toBe(OLD(['d-day-number', 'd-day-name', 'd-hour-label']));
+    expect(byId.m.content).toBe(OLD(['m-day-name', 'm-day-number', 'monthly-day-cell-date-box']));
+    expect(byId.x.content).toBe(OLD(['day-name']));
+    expect(byId.done.content).toBe(OLD(['w-day-name']));
+
+    for (const id of ['wl', 'wr', 'd', 'm']) {
+      expect(byId[id].version).toBe(2);
+      expect(byId[id].updated_at).not.toBe('2025-01-01T00:00:00.000Z');
+    }
+    for (const id of ['x', 'done']) {
+      expect(byId[id].version).toBe(1);
+      expect(byId[id].updated_at).toBe('2025-01-01T00:00:00.000Z');
+    }
+    await db.close();
+  });
+});
+
+describe('migration 0003: rename calendar button', () => {
+  it('renames wr-calendar-button in saved templates only where it appears', async () => {
+    const db = await createSqlJsDatabase();
+    await runMigrations(db, MIGRATIONS.slice(0, 2));
+    await seedPlanner(db);
+    const old = JSON.stringify({ structure: [{ class: 'wr-calendar-button' }, { class: 'wr-cal-left' }] });
+    const rows: Array<[string, string]> = [
+      ['old', old],
+      ['spaced', '{"structure": [{"class": "wr-calendar-button"}]}'],
+      ['other', JSON.stringify({ structure: [{ class: 'wr-calendar-button-x' }] })],
+    ];
+    for (const [id, content] of rows) {
+      await db.execute(
+        `INSERT INTO page_templates (id, planner_id, profile_id, name, template_type, content)
+         VALUES (?, 'planner-1', ?, ?, 'weekly_right', ?)`,
+        [id, DEFAULT_PROFILE_ID, id, content],
+      );
+    }
+
+    expect(await runMigrations(db)).toEqual([3]);
+
+    const after = await db.select<{ id: string; content: string; version: number }>(
+      'SELECT id, content, version FROM page_templates ORDER BY id',
+    );
+    expect(after).toEqual([
+      { id: 'old', content: JSON.stringify({ structure: [{ class: 'w-calendar-button' }, { class: 'wr-cal-left' }] }), version: 2 },
+      { id: 'other', content: rows[2][1], version: 1 },
+      { id: 'spaced', content: '{"structure": [{"class": "w-calendar-button"}]}', version: 2 },
+    ]);
+    await db.close();
   });
 });

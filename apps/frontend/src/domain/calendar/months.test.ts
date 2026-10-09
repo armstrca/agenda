@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { formatMonthId, monthNavigation, monthRange, parseMonthId } from './months.ts';
+import { firstOfMonthLabel, formatMonthId, monthNavigation, monthRange, parseMonthId } from './months.ts';
 
 const FIXTURES_DIR = fileURLToPath(new URL('../__fixtures__/', import.meta.url));
 
@@ -111,5 +111,18 @@ describe('monthNavigation', () => {
 
   it('stays within the year otherwise', () => {
     expect(monthNavigation(4, 2025)).toEqual({ nextMonthId: '05_2025', prevMonthId: '03_2025' });
+  });
+});
+
+describe('firstOfMonthLabel', () => {
+  it('reads the "Month YYYY" labels the calendars produce', () => {
+    expect(firstOfMonthLabel('October 2025')).toBe('2025-10-01');
+    expect(firstOfMonthLabel('January 2026')).toBe('2026-01-01');
+  });
+
+  it('returns null for anything else', () => {
+    for (const label of ['', 'Octember 2025', 'october 2025', 'October', '10_2025', 'October 25']) {
+      expect(firstOfMonthLabel(label)).toBeNull();
+    }
   });
 });

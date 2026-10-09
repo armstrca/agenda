@@ -122,7 +122,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "1"
                                           }
@@ -138,7 +138,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "2"
                                           }
@@ -154,7 +154,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "3"
                                           }
@@ -170,7 +170,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "4"
                                           }
@@ -186,7 +186,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "5"
                                           }
@@ -202,7 +202,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "6"
                                           }
@@ -218,7 +218,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "7"
                                           }
@@ -240,7 +240,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "8"
                                           }
@@ -256,7 +256,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "9"
                                           }
@@ -272,7 +272,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "10"
                                           }
@@ -288,7 +288,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "11"
                                           }
@@ -304,7 +304,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "12"
                                           }
@@ -320,7 +320,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "13"
                                           }
@@ -336,7 +336,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "14"
                                           }
@@ -358,7 +358,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "15"
                                           }
@@ -374,7 +374,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "16"
                                           }
@@ -390,7 +390,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "17"
                                           }
@@ -406,7 +406,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "18"
                                           }
@@ -422,7 +422,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "19"
                                           }
@@ -438,7 +438,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "20"
                                           }
@@ -454,7 +454,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "21"
                                           }
@@ -476,7 +476,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "22"
                                           }
@@ -492,7 +492,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "23"
                                           }
@@ -508,7 +508,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "24"
                                           }
@@ -524,7 +524,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "25"
                                           }
@@ -540,7 +540,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "26"
                                           }
@@ -556,7 +556,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "27"
                                           }
@@ -572,7 +572,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "28"
                                           }
@@ -594,7 +594,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "29"
                                           }
@@ -610,7 +610,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "30"
                                           }
@@ -626,7 +626,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "31"
                                           }
@@ -642,7 +642,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "32"
                                           }
@@ -658,7 +658,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "33"
                                           }
@@ -674,7 +674,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "34"
                                           }
@@ -690,7 +690,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "35"
                                           }
@@ -798,7 +798,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "1"
                                           }
@@ -814,7 +814,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "2"
                                           }
@@ -830,7 +830,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "3"
                                           }
@@ -846,7 +846,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "4"
                                           }
@@ -862,7 +862,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "5"
                                           }
@@ -878,7 +878,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "6"
                                           }
@@ -894,7 +894,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "7"
                                           }
@@ -916,7 +916,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "8"
                                           }
@@ -932,7 +932,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "9"
                                           }
@@ -948,7 +948,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "10"
                                           }
@@ -964,7 +964,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "11"
                                           }
@@ -980,7 +980,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "12"
                                           }
@@ -996,7 +996,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "13"
                                           }
@@ -1012,7 +1012,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "14"
                                           }
@@ -1034,7 +1034,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "15"
                                           }
@@ -1050,7 +1050,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "16"
                                           }
@@ -1066,7 +1066,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "17"
                                           }
@@ -1082,7 +1082,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "18"
                                           }
@@ -1098,7 +1098,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "19"
                                           }
@@ -1114,7 +1114,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "20"
                                           }
@@ -1130,7 +1130,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "21"
                                           }
@@ -1152,7 +1152,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "22"
                                           }
@@ -1168,7 +1168,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "23"
                                           }
@@ -1184,7 +1184,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "24"
                                           }
@@ -1200,7 +1200,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "25"
                                           }
@@ -1216,7 +1216,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "26"
                                           }
@@ -1232,7 +1232,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "27"
                                           }
@@ -1248,7 +1248,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "28"
                                           }
@@ -1270,7 +1270,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "29"
                                           }
@@ -1286,7 +1286,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "30"
                                           }
@@ -1302,7 +1302,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "31"
                                           }
@@ -1318,7 +1318,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "32"
                                           }
@@ -1334,7 +1334,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "33"
                                           }
@@ -1350,7 +1350,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "34"
                                           }
@@ -1366,7 +1366,7 @@
                                       "children": [
                                         {
                                           "component": "button",
-                                          "class": "wr-calendar-button",
+                                          "class": "w-calendar-button",
                                           "attributes": {
                                             "id": "35"
                                           }

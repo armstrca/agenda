@@ -136,8 +136,8 @@ const createNodeForBlock = (
             component: 'div',
             class: 'day-inner-block',
             children: [
-              { component: 'div', class: 'day-number', text: '29' },
-              { component: 'div', class: 'day-name', text: 'Monday' },
+              { component: 'div', class: 'w-day-number', text: '29' },
+              { component: 'div', class: 'w-day-name', text: 'Monday' },
               { component: 'div', class: 'holiday-box' },
               { component: 'div', class: 'moon-phase', text: '🌓' },
             ],
@@ -463,13 +463,18 @@ const RightSidebar: React.FC<{
     // weekly_left specific classes
     'wl-day-section',
     'day-inner-block',
-    'day-number',
-    'day-name',
+    'w-day-number',
+    'w-day-name',
     'holiday-box',
     'moon-phase',
     'textarea-container',
     'textarea-bg',
     'wl-tiptap-main',
+    // daily and monthly day labels
+    'd-day-number',
+    'd-day-name',
+    'm-day-number',
+    'm-day-name',
   ]
 
   const root = (content.structure || []).find((n: any) => n.class === 'planner-container')

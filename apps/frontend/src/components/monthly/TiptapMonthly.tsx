@@ -131,7 +131,7 @@ const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth }: T
     <div className={className} style={{ opacity: isCurrentMonth ? 1 : 0.5 }}>
       <div className="content-wrapper">
         <div className="monthly-day-cell-date-box">
-          <div className="monthly-day-cell-date">
+          <div className="m-day-number">
             {date?.getDate()}
           </div>
         </div>

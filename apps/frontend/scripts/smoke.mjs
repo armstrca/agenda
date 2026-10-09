@@ -151,7 +151,7 @@ try {
   check((await page.locator('.wl-tiptap-main .ProseMirror').count()) === 6, 'six TipTap editors rendered');
   await page.waitForSelector('.tl-container', { timeout: 20_000 });
   check((await page.locator('.tl-container').count()) >= 1, 'tldraw canvas mounted');
-  check((await page.locator('.day-number').first().textContent()) !== '', 'day numbers filled from week data');
+  check((await page.locator('.w-day-number').first().textContent()) !== '', 'day numbers filled from week data');
 
   // 4. The drawing layer covers the page by default; a user disables it from tldraw's quick actions
   //    before typing. Type into the first day, wait past the 2 s debounce, reload, and the text is
@@ -203,8 +203,8 @@ try {
   // 6. Page forward: left -> right side of the same week; the right page renders its calendars.
   await page.click('.button-next');
   await page.waitForURL(/_r$/, { timeout: 20_000 });
-  await page.waitForSelector('.wr-day-section, .wr-calendar-button', { timeout: 20_000 });
-  check((await page.locator('.wr-calendar-button').count()) >= 42, 'right page mini calendars rendered');
+  await page.waitForSelector('.wr-day-section, .w-calendar-button', { timeout: 20_000 });
+  check((await page.locator('.w-calendar-button').count()) >= 42, 'right page mini calendars rendered');
 
   // 7. Monthly page.
   await page.goto(`${BASE}/planners/${plannerId}/monthly/10_2025`, { waitUntil: 'networkidle' });
