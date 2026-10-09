@@ -11,8 +11,10 @@
   ],
   "scripts": {
     "start:frontend": "cd apps/frontend && yarn dev",
-    "dev": "cd ../agenda_rust/src-tauri && tauri dev",
-    "build": "cd ../agenda_rust/src-tauri && tauri build"
+    "dev": "cd apps/desktop && tauri dev",
+    "build": "cd apps/desktop && tauri build",
+    "test": "yarn --cwd apps/frontend test",
+    "smoke": "yarn --cwd apps/frontend smoke"
   },
   "dependencies": {
     "@babel/core": "^7.26.10",

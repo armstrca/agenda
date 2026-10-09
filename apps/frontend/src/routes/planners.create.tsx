@@ -2,7 +2,10 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useNavigate } from '@tanstack/react-router';
-import { apiClient } from '../api/api.js';
+import { getDb } from '../db/index.ts';
+import { createPlanner, plannerWeekStartIndex } from '../domain/planners.ts';
+import { weekIdForDate } from '../domain/calendar/weeks.ts';
+import { todayISO, WEEKDAY_ABBRS } from '../domain/dates.ts';
 
 const HOLIDAY_COUNTRIES = [
   { code: 'us', name: 'United States' },
@@ -19,6 +22,7 @@ function PlannerCreate() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [holidayCountries, setHolidayCountries] = useState(['us']);
+  const [weekStartDay, setWeekStartDay] = useState('Mon');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -30,22 +34,16 @@ function PlannerCreate() {
     try {
       const planner_settings = {
         holiday_countries: holidayCountries,
-        // Add more settings as needed
+        metadata: { default_styles: { 'week-start-day': weekStartDay } },
       };
-      const payload = {
-        name,
-        description,
-        planner_settings,
-        // user_id: ... (get from auth context if needed)
-      };
-      const result = await apiClient.createPlanner(payload);
-      if (result && result.id) {
-        navigate({ to: `/planners/${result.id}` });
-      } else {
-        setError('Failed to create planner.');
-      }
-    } catch (err) {
-      setError('Error creating planner.');
+      const db = await getDb();
+      const planner = await createPlanner(db, { name, description, planner_settings });
+      navigate({
+        to: '/planners/$plannerId/weekly/$weekId',
+        params: { plannerId: planner.id, weekId: weekIdForDate(todayISO(), 'l', plannerWeekStartIndex(planner)) },
+      });
+    } catch (err: any) {
+      setError(err?.message || 'Error creating planner.');
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +84,14 @@ function PlannerCreate() {
             ))}
           </div>
         </div>
-        {/* EasyBlocks editor for planner_settings can be added here later */}
+        <div>
+          <label>Week starts on:</label>
+          <select value={weekStartDay} onChange={e => setWeekStartDay(e.target.value)}>
+            {WEEKDAY_ABBRS.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+        </div>
         <button type="submit" disabled={isSubmitting}>Create Planner</button>
         {error && <div className="error">{error}</div>}
       </form>

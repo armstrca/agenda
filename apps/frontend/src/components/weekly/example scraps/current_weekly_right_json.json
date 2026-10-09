@@ -1,0 +1,1767 @@
+{
+    "metadata": {
+        "type": "weekly_right",
+        "svgBackground": "/images/weekly_right/planner-container-2.svg",
+        "default_styles": {
+            "month-colors": {
+                "may": "#799a05",
+                "july": "#da3696",
+                "june": "#00acc8",
+                "april": "#ffc0cb",
+                "march": "#005baa",
+                "august": "#c00d0d",
+                "january": "#764978",
+                "october": "#ec7103",
+                "december": "#8aad84",
+                "february": "#9695d3",
+                "november": "#7d4e24",
+                "september": "#f9b000"
+            },
+            "week-start-day": "Mon",
+            "planner-container": {
+                "width": "960px",
+                "height": "1440px",
+                "z-index": "0",
+                "position": "relative"
+            }
+        },
+        "base_dimensions": {
+            "width": 960,
+            "height": 1440
+        }
+    },
+    "structure": [
+        {
+            "class": "planner-container",
+            "children": [
+                {
+                    "class": "month-name",
+                    "component": "div"
+                },
+                {
+                    "class": "header-footer",
+                    "children": [
+                        {
+                            "class": "overlap",
+                            "children": [
+                                {
+                                    "class": "overlap-group",
+                                    "children": [
+                                        {
+                                            "class": "wr-dividers",
+                                            "children": [
+                                                {
+                                                    "class": "div",
+                                                    "children": [
+                                                        {
+                                                            "class": "overlap-group-2",
+                                                            "component": "div"
+                                                        }
+                                                    ],
+                                                    "component": "div"
+                                                }
+                                            ],
+                                            "component": "div"
+                                        },
+                                        {
+                                            "class": "wr-text-boxes",
+                                            "children": [
+                                                {
+                                                    "class": "overlap-2",
+                                                    "children": [
+                                                        {
+                                                            "class": "wr-right-tiptap-main",
+                                                            "component": "div"
+                                                        },
+                                                        {
+                                                            "class": "overlap-group-wrapper",
+                                                            "children": [
+                                                                {
+                                                                    "class": "overlap-group-3",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "wr-dashed-tiptap-main",
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                }
+                                                            ],
+                                                            "component": "div"
+                                                        }
+                                                    ],
+                                                    "component": "div"
+                                                },
+                                                {
+                                                    "class": "wr-left-tiptap-main",
+                                                    "component": "div"
+                                                },
+                                                {
+                                                    "class": "wr-left-tiptap-main-2",
+                                                    "component": "div"
+                                                },
+                                                {
+                                                    "class": "wr-left-tiptap-main-top",
+                                                    "component": "div"
+                                                }
+                                            ],
+                                            "component": "div"
+                                        },
+                                        {
+                                            "class": "weekly_right",
+                                            "children": [
+                                                {
+                                                    "class": "wr-cal-container",
+                                                    "children": [
+                                                        {
+                                                            "class": "wr-cal-right",
+                                                            "children": [
+                                                                {
+                                                                    "class": "week-one",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "1"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "2"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "3"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "4"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "5"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "6"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "7"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-two",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "8"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "9"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "10"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "11"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "12"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "13"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "14"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-three",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "15"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "16"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "17"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "18"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "19"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "20"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "21"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-four",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "22"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "23"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "24"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "25"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "26"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "27"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "28"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-five",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "29"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "30"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "31"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "32"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "33"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "34"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "35"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-six",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "36"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "37"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "38"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "39"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "40"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "41"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "42"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-header",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 1
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 2
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 3
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 4
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 5
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 6
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 7
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "month-year",
+                                                                    "component": "div"
+                                                                }
+                                                            ],
+                                                            "component": "div"
+                                                        },
+                                                        {
+                                                            "class": "wr-cal-left",
+                                                            "children": [
+                                                                {
+                                                                    "class": "week-one",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "1"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "2"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "3"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "4"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "5"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "6"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "7"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-two",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "8"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "9"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "10"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "11"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "12"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "13"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "14"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-three",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "15"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "16"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "17"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "18"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "19"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "20"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "21"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-four",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "22"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "23"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "24"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "25"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "26"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "27"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "28"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-five",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "29"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "30"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "31"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "32"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "33"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "34"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "35"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-six",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "36"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "37"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "38"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "39"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "40"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "41"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        },
+                                                                        {
+                                                                            "class": "calendar-day",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "children": [
+                                                                                {
+                                                                                    "class": "wr-calendar-button",
+                                                                                    "component": "button",
+                                                                                    "attributes": {
+                                                                                        "id": "42"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "component": "div"
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "week-header",
+                                                                    "children": [
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "-10px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 1
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "15.40px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 2
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "40.81px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 3
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "66.21px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 4
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "91.62px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 5
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "117.02px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 6
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "class": "week-days",
+                                                                            "styles": {
+                                                                                "left": "142.43px"
+                                                                            },
+                                                                            "component": "div",
+                                                                            "attributes": {
+                                                                                "id": 7
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "component": "div"
+                                                                },
+                                                                {
+                                                                    "class": "month-year",
+                                                                    "component": "div"
+                                                                }
+                                                            ],
+                                                            "component": "div"
+                                                        }
+                                                    ],
+                                                    "component": "div"
+                                                }
+                                            ],
+                                            "component": "div"
+                                        }
+                                    ],
+                                    "component": "div"
+                                }
+                            ],
+                            "component": "div"
+                        },
+                        {
+                            "class": "wr-day-section",
+                            "children": [
+                                {
+                                    "class": "day-inner-block",
+                                    "children": [
+                                        {
+                                            "class": "day-number",
+                                            "component": "div"
+                                        },
+                                        {
+                                            "class": "day-name",
+                                            "component": "div"
+                                        },
+                                        {
+                                            "class": "holiday-box",
+                                            "component": "div"
+                                        },
+                                        {
+                                            "class": "moon-phase",
+                                            "component": "div"
+                                        }
+                                    ],
+                                    "component": "div"
+                                },
+                                {
+                                    "class": "textarea-container",
+                                    "children": [
+                                        {
+                                            "class": "textarea-bg",
+                                            "children": [
+                                                {
+                                                    "class": "wl-tiptap-main",
+                                                    "component": "div"
+                                                }
+                                            ],
+                                            "component": "div"
+                                        }
+                                    ],
+                                    "component": "div"
+                                }
+                            ],
+                            "component": "div"
+                        }
+                    ],
+                    "component": "div"
+                }
+            ],
+            "component": "div"
+        }
+    ]
+}

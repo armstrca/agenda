@@ -1,42 +1,21 @@
-import { createFileRoute } from '@tanstack/react-router';
-import React from 'react';
-import WeeklyLeft from '../components/weekly/WeeklyLeft.jsx';
-import WeeklyRight from '../components/weekly/WeeklyRight.jsx';
-import { PageTemplate } from '../types/types.tsx';
-import { useLoaderData } from '@tanstack/react-router';
-import { loadPages, IndexArgs, IndexReply } from './../utils/ipc.ts';
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import WeeklyLeft from '../components/weekly/WeeklyLeft.tsx';
+import WeeklyRight from '../components/weekly/WeeklyRight.tsx';
+import { getDb } from '../db/index.ts';
+import { loadWeeklyPage } from '../domain/pages.ts';
+import type { TemplateRecord } from '../domain/types.ts';
 
 export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
   loader: async ({ params }) => {
-    console.debug("Loading weekly page with params:", params);
-    const [, , side] = params.weekId.split('_');
-    const pageType = side === 'r' ? 'weekly_right' : 'weekly_left';
-
-    try {
-      const args: IndexArgs = {
-        planner_id: params.plannerId,
-        week_id: params.weekId,
-        pageType,
-      };
-
-      const data = await loadPages(args);
-      console.log("Pages index response:", JSON.stringify(data));
-
-      const [weekNumber, year] = params.weekId.split('_');
-
-      if (!data.template) throw new Error("Missing template data");
-      if (!data.weekData) throw new Error("Missing week data");
-
-      return {
-        template: processTemplateAssets(data.template as PageTemplate),
-        weekData: data.weekData,
-        page_id: data.page_id,
-        planner_id: data.planner_id,
-        tldraw_snapshots: data.tldraw_snapshots
-      };
-    } catch (error) {
-      throw error;
-    }
+    const db = await getDb();
+    const page = await loadWeeklyPage(db, params.plannerId, params.weekId);
+    return {
+      template: processTemplateAssets(page.template),
+      weekData: page.weekData,
+      page_id: page.page_id,
+      planner_id: page.planner_id,
+      tldraw_snapshots: page.tldraw_snapshots,
+    };
   },
   pendingComponent: () => <div>Loading weekly view...</div>,
   errorComponent: ({ error }) => (
@@ -67,16 +46,6 @@ function WeeklyComponent() {
     page_id,
     plannerId: planner_id,
     tldraw_snapshots,
-    weekNumber: weekData.weekNumber,
-    year: weekData.year,
-    holidays: weekData.holidays ?? {},
-    moonPhases: weekData.moonPhases ?? {},
-    templateData: weekData.templateData,
-    weekStart: weekData.weekStart,
-    currentMonthName: weekData.currentMonthName,
-    leftCalendar: weekData.leftCalendar ?? {},
-    rightCalendar: weekData.rightCalendar ?? {},
-    lastDayData: weekData.lastDayData ?? {},
   };
 
   return weekData.side === 'r' ? (
@@ -86,8 +55,8 @@ function WeeklyComponent() {
   );
 }
 
-// Helper to replace asset placeholders
-const processTemplateAssets = (template: PageTemplate) => {
+// Templates saved by the old backend may still carry build-time asset paths; strip them to URLs.
+const processTemplateAssets = (template: TemplateRecord): TemplateRecord => {
   if (!template?.content) return template;
   const processed = JSON.parse(
     JSON.stringify(template.content)

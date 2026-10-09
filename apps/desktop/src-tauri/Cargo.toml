@@ -1,0 +1,22 @@
+[package]
+name = "agenda_desktop"
+version = "0.1.0"
+description = "Agenda desktop shell: a Tauri window around the React app, with SQLite provided by tauri-plugin-sql"
+edition = "2021"
+publish = false
+
+# Standalone crate; the Rust code of the retired backend under apps/agenda_rust is a separate workspace.
+[workspace]
+
+[lib]
+name = "agenda_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
