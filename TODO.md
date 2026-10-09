@@ -37,7 +37,7 @@
 
 ## MVP needs
 
-- One weekly right template
+- ~~One weekly right template~~
 - One daily template
 - One monthly template
 - Offline usability
