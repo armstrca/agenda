@@ -133,7 +133,7 @@ try {
         const [{ generateJSON }, { default: StarterKit }, { default: Link }] = await Promise.all([
           import('@tiptap/html'), import('@tiptap/starter-kit'), import('@tiptap/extension-link'),
         ]);
-        toJson = (html) => generateJSON(html, [StarterKit, Link]);
+        toJson = (html) => generateJSON(html, [StarterKit.configure({ link: false }), Link]);
       }
       parsed = toJson(parsed);
       bump('entries_converted_from_html');

@@ -7,9 +7,13 @@ import {
   DefaultQuickActions,
   DefaultQuickActionsContent,
   TldrawUiMenuItem,
-  STROKE_SIZES,
+  ArrowShapeUtil,
+  DrawShapeUtil,
+  GeoShapeUtil,
+  LineShapeUtil,
   type Editor,
   type TLComponents,
+  type TLDefaultSizeStyle,
   type TLEditorSnapshot,
   type TLStore,
   type TLStoreSnapshot,
@@ -25,10 +29,19 @@ import type { SnapshotRecord, TldrawDocument } from '../domain/types.ts';
 // drawing layer works with no network.
 const assetUrls = getAssetUrlsByImport();
 
-STROKE_SIZES.s = .5
-STROKE_SIZES.m = 2.5
-STROKE_SIZES.l = 4
-STROKE_SIZES.xl = 8
+// Thinner pens than tldraw's defaults (2 / 3.5 / 5 / 10 px), suited to writing on a paper page.
+// tldraw 5 removed the global STROKE_SIZES table; stroke widths are now per shape util, so the
+// four utils that used that table are configured with the same widths.
+const STROKE_WIDTHS: Record<TLDefaultSizeStyle, number> = { s: 0.5, m: 2.5, l: 4, xl: 8 };
+const strokeWidthFor = (_editor: unknown, shape: { props: { size: TLDefaultSizeStyle } }) => ({
+  strokeWidth: STROKE_WIDTHS[shape.props.size],
+});
+const shapeUtils = [
+  DrawShapeUtil.configure({ getCustomDisplayValues: strokeWidthFor }),
+  LineShapeUtil.configure({ getCustomDisplayValues: strokeWidthFor }),
+  GeoShapeUtil.configure({ getCustomDisplayValues: strokeWidthFor }),
+  ArrowShapeUtil.configure({ getCustomDisplayValues: strokeWidthFor }),
+];
 
 function CustomQuickActions({ onToggleTldraw }: { onToggleTldraw: () => void }) {
   return (
@@ -168,6 +181,7 @@ export default function TlDrawComponent({ pageId, tldraw_snapshots }: TlDrawComp
             autoFocus={false}
             assetUrls={assetUrls}
             components={components}
+            shapeUtils={shapeUtils}
             store={storeWithStatus.store}
             onMount={handleMount}
           />

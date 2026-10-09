@@ -6,7 +6,7 @@ import { createProfile } from '../domain/profiles.ts';
 
 // Profiles replace the old user accounts: a local profile is just a name. Accounts for the
 // optional online features live on a server later, not in this database.
-export const Route = createFileRoute('/users/create' as any)({
+export const Route = createFileRoute('/users/create')({
   component: ProfileCreate,
 });
 

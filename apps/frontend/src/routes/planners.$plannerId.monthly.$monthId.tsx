@@ -18,7 +18,7 @@ export const Route = createFileRoute('/planners/$plannerId/monthly/$monthId')({
   },
   pendingComponent: () => <div>Loading monthly view...</div>,
   errorComponent: ({ error }) => (
-    <div className="p-4 text-red-500">Error loading monthly page: {error.message}</div>
+    <div className="p-4 text-red-500">Error loading monthly page: {(error instanceof Error ? error.message : String(error))}</div>
   ),
   component: MonthlyComponent
 });

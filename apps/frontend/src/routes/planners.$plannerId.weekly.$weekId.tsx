@@ -20,7 +20,7 @@ export const Route = createFileRoute('/planners/$plannerId/weekly/$weekId')({
   pendingComponent: () => <div>Loading weekly view...</div>,
   errorComponent: ({ error }) => (
     <div className="p-4 text-red-500">
-      Error loading weekly page: {error.message}
+      Error loading weekly page: {(error instanceof Error ? error.message : String(error))}
       <button
         onClick={() => window.location.reload()}
         className="ml-4 px-4 py-2 bg-blue-500 text-white rounded"

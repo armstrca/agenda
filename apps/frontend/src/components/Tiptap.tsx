@@ -1,6 +1,7 @@
 import { Extension, type Content, type JSONContent } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import { useEffect, useState, useRef } from 'react';
@@ -80,6 +81,12 @@ const NoWrapValidator = Extension.create<NoWrapValidatorOptions>({
   },
 })
 
+// Bubble menu props are module constants on purpose: TipTap 3's BubbleMenu re-sends its options to
+// the editor whenever these props change identity, and with re-render-per-transaction on, inline
+// objects would loop forever.
+const BUBBLE_MENU_OPTIONS = { placement: 'top', offset: 10 } as const;
+const appendBubbleMenuToBody = () => document.body;
+
 interface TiptapProps {
   tiptap_id: string | number;
   pageId: string;
@@ -148,11 +155,15 @@ const Tiptap = ({ tiptap_id, pageId, className, entryDate }: TiptapProps) => {
   const editor = useEditor({
     editable: true,
     content: initialContent,
+    // TipTap 3 no longer re-renders on every transaction by default; the bubble menu reads
+    // editor.isActive() during render, so keep the TipTap 2 behaviour.
+    shouldRerenderOnTransaction: true,
     onUpdate: ({ editor }) => {
       debouncedSave(editor.getJSON());
     },
     extensions: [
-      StarterKit.configure({ hardBreak: false }),
+      // StarterKit 3 bundles Link; it is disabled here because Link is configured below.
+      StarterKit.configure({ hardBreak: false, link: false }),
       Link.configure({
         autolink: true,
         defaultProtocol: 'https',
@@ -201,7 +212,7 @@ const Tiptap = ({ tiptap_id, pageId, className, entryDate }: TiptapProps) => {
           tr.setMeta('init-content', true);
           return true;
         })
-        .setContent(initialContent, false, { preserveWhitespace: true })
+        .setContent(initialContent, { emitUpdate: false, parseOptions: { preserveWhitespace: true } })
         .run();
     }
   }, [editor, initialContent]);
@@ -250,12 +261,8 @@ const Tiptap = ({ tiptap_id, pageId, className, entryDate }: TiptapProps) => {
       {editor && (
         <BubbleMenu
           editor={editor}
-          tippyOptions={{
-            duration: 100,
-            placement: 'top',
-            offset: [0, 10],
-            appendTo: () => document.body,
-          }}
+          options={BUBBLE_MENU_OPTIONS}
+          appendTo={appendBubbleMenuToBody}
         >
           <div className="bubble-menu">
             <button

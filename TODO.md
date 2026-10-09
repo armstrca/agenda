@@ -23,6 +23,7 @@
 - Turn handwriting into events
 - Heavy duty responsiveness stuff
 - UI accessibility, general accessibility
+- Replace holidays crate with just an in-repo JSON file
 - ~~Toolbar for inputs~~
 - ~~What if user wants to differentiate between mouse/touch/stylus interaction?~~
 
@@ -59,3 +60,21 @@
 - textarea-container
 - textarea-bg
 - wl-textarea
+
+
+### CSS Template requirements for template builder
+
+- month-name
+- header-footer?
+- w-day-section
+- w-day-inner-block
+- day-number-circle
+- day-number
+- day-name
+- holiday-box (optional)
+- moon-phase (optional)
+- textarea-container
+- textarea-bg
+- w-textarea
+- d-day-section
+- d-

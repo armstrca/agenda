@@ -1,4 +1,5 @@
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import type { Content, JSONContent } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -77,11 +78,14 @@ const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth }: T
   const editor = useEditor({
     editable: true,
     content: initialContent,
+    // Keep TipTap 2's re-render-per-transaction so the bubble menu's active states update.
+    shouldRerenderOnTransaction: true,
     onUpdate: ({ editor }) => {
       debouncedSave(editor.getJSON());
     },
     extensions: [
-      StarterKit,
+      // StarterKit 3 bundles Link; disabled because Link is configured below.
+      StarterKit.configure({ link: false }),
       Link.configure({
         autolink: true,
         defaultProtocol: 'https',
@@ -118,7 +122,8 @@ const TiptapMonthly = ({ tiptap_id, pageId, className, date, isCurrentMonth }: T
 
   useEffect(() => {
     if (editor && initialContent) {
-      editor.commands.setContent(initialContent);
+      // TipTap 3 emits an update for setContent by default, which would re-save what was just loaded.
+      editor.commands.setContent(initialContent, { emitUpdate: false });
     }
   }, [editor, initialContent]);
 

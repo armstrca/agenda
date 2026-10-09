@@ -5,7 +5,7 @@ export const Route = createRootRoute({
   component: () => <Outlet />,
   errorComponent: ({ error }) => (
     <div className="p-4 text-red-500">
-      Root Error Boundary: {error.message}
+      Root Error Boundary: {(error instanceof Error ? error.message : String(error))}
     </div>
   )
 });
